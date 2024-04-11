@@ -8,26 +8,41 @@
   }
 
   .spaced {
-    @apply p-5 lg:p-8
+    @apply p-5 lg:p-8;
   }
   .spaced-x {
-    @apply px-5 lg:px-8
+    @apply px-5 lg:px-8;
   }
   .spaced-y {
-    @apply py-5 lg:py-8
+    @apply py-5 lg:py-8;
   }
   .spaced-t {
-    @apply pt-5 lg:pt-8
+    @apply pt-5 lg:pt-8;
   }
   .spaced-r {
-    @apply pr-5 lg:pr-8
+    @apply pr-5 lg:pr-8;
   }
   .spaced-b {
-    @apply pb-5 lg:pb-8
+    @apply pb-5 lg:pb-8;
   }
   .spaced-l {
-    @apply pl-5 lg:pl-8
+    @apply pl-5 lg:pl-8;
+  }
+  .spaced-no-r {
+    @apply pt-5 pb-5 pl-5 lg:pt-8 lg:pb-8 lg:pl-8;
   }
 
-  
+  .gap-spaced {
+    @apply gap-5 lg:gap-8;
+  }
+  .gap-x-spaced {
+    @apply gap-x-5 lg:gap-x-8;
+  }
+  .gap-y-spaced {
+    @apply gap-y-5 lg:gap-y-8;
+  }
+
+  .debug-border {
+    @apply border-2 border-solid;
+  }
 }
