@@ -42,6 +42,10 @@
     @apply gap-y-5 lg:gap-y-8;
   }
 
+  .rounded {
+    @apply rounded-2xl lg:rounded-[2.5rem];
+  }
+
   .debug-border {
     @apply border-2 border-solid;
   }
