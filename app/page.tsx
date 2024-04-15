@@ -45,15 +45,15 @@ export default function Home() {
           </h1>
         </div>
       </div>
-      <div className="w-2/3 overflow-hidden border-2 border-solid border-dark bg-dark py-[50vh]">
+      <div className="w-2/3 overflow-hidden border-2 border-solid border-dark bg-dark">
         <div className="grid grid-cols-3">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((el) => {
             return (
               <div
                 key={el}
-                className={`max-w-sm overflow-hidden transition-all bg-white border rounded shadow border-dark dark:bg-gray-800 dark:border-gray-700 hover:rounded-none bg-dark hover:shadow-light hover:shadow-2xl ${productSpacing(
-                  el
-                )} hover:z-10`}
+                className={`overflow-hidden transition-all bg-white border rounded shadow border-dark dark:bg-gray-800 dark:border-gray-700 bg-dark ${
+                  el === 2 || el === 10 ? "row-span-2 col-span-2" : ""
+                }`}
                 onMouseEnter={(e) => onHoverProduct(e, el)}
                 onMouseLeave={() => setHoveredProduct(null)}
               >
@@ -63,8 +63,9 @@ export default function Home() {
                   }`}
                   src="https://res.cloudinary.com/dfdw1yzkk/image/upload/v1712994720/E%20and%20B%20Farm/products/images/square/af8k4pwotuc9p9nlb6aa.png"
                   alt=""
-                  width={500}
-                  height={500}
+                  width={1080}
+                  height={1080}
+                  objectFit="contain"
                 />
               </div>
             );

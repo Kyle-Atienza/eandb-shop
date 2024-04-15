@@ -19,10 +19,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   return (
     <div>
-      <div
+      {/* <div
         id="productHover"
         className={`fixed border-2 pointer-events-none border-primary z-50`}
-      ></div>
+      ></div> */}
       {children}
     </div>
   );
