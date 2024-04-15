@@ -7,7 +7,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const { top, left, width, height } = useProductCardHoveredStore();
 
   useEffect(() => {
-    console.log(top, left, width, height);
     const productHover = document.getElementById("productHover");
     if (productHover) {
       productHover.style.top = `${top}px`;
