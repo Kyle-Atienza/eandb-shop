@@ -1,5 +1,8 @@
-on click product card
-    - image will transform y 100% reveal bg-primary
-    - producthover el opacity 100%
-    - animate fill up screen
-    - transition to product page
+configure user
+conditional buttons
+    - show login if no user
+    - show cart and logout if user
+login
+register
+storing token
+adding to cartkyl3Fr@nc!screen

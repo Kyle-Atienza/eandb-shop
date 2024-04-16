@@ -1,19 +1,23 @@
 "use client";
 
 import { Navbar } from "@/components";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useProductCardHoveredStore } from "@/state/animation";
 import { useProductsStore } from "@/state/products";
 
 export default function Home() {
+  const [hoveredProduct, setHoveredProduct] = useState<Product | null>(null);
+
+  const router = useRouter();
+
   const { setValues } = useProductCardHoveredStore();
   const { products, getProducts } = useProductsStore();
 
-  const [hoveredProduct, setHoveredProduct] = useState<Product | null>(null);
-
   function onHoverProduct(e: any, product: Product) {
+    // for page transition animation
     const { top, left, width, height } = e.target.getBoundingClientRect();
     setValues(top, left, width, height);
 
@@ -42,17 +46,19 @@ export default function Home() {
       </div>
       <div className="w-2/3 overflow-hidden border-2 border-solid border-dark bg-dark">
         <div className="grid grid-cols-3">
-          {products.map((el, elIndex) => {
+          {products.map((product, index) => {
             return (
               <div
-                key={elIndex}
+                key={index}
                 className={`overflow-hidden transition-all bg-white border rounded shadow border-dark dark:bg-gray-800 dark:border-gray-700 bg-dark`}
-                onMouseEnter={(e) => onHoverProduct(e, el)}
+                onMouseEnter={(e) => onHoverProduct(e, product)}
                 onMouseLeave={() => setHoveredProduct(null)}
+                onClick={() => router.push(`/product/${product._id}`)}
               >
                 <Image
                   className={`transition-all ${
-                    hoveredProduct?._id !== el._id && hoveredProduct !== null
+                    hoveredProduct?._id !== product._id &&
+                    hoveredProduct !== null
                       ? "opacity-50"
                       : ""
                   }`}
@@ -62,7 +68,7 @@ export default function Home() {
                   height={500}
                   objectFit="contain"
                 />
-                {el.name}
+                {product.name}
               </div>
             );
           })}
