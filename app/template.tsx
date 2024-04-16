@@ -3,10 +3,13 @@
 import React, { use, useEffect } from "react";
 import { useProductCardHoveredStore } from "@/state/animation";
 import { useOptionsStore } from "@/state/options";
+import { useRouter } from "next/navigation";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
   const { top, left, width, height } = useProductCardHoveredStore();
-  const { cart, toggleCart } = useOptionsStore();
+  const { cart, toggleCart, closeCart } = useOptionsStore();
 
   useEffect(() => {
     const productHover = document.getElementById("productHover");
@@ -17,6 +20,13 @@ export default function Template({ children }: { children: React.ReactNode }) {
       productHover.style.height = `${height}px`;
     }
   }, [top, left, width, height]);
+
+  useEffect(() => {
+    console.log("page change", cart);
+    if (cart) {
+      closeCart();
+    }
+  }, [router]);
 
   return (
     <div>
@@ -31,7 +41,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <div>
           <button
             className="self-start p-2 bg-dark text-light"
-            onClick={toggleCart}
+            onClick={() => toggleCart()}
           >
             Cart
           </button>
