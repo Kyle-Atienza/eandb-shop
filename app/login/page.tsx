@@ -1,8 +1,22 @@
 "use client";
 
+import { useUserStore } from "@/state/user";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
 export default function Page() {
+  const router = useRouter();
+
+  const { user, signIn } = useUserStore();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
+
   return (
-    <form className="max-w-sm mx-auto">
+    <form method="POST" action={signIn} className="max-w-sm mx-auto">
       <div className="mb-5">
         <label
           htmlFor="email"
@@ -13,6 +27,7 @@ export default function Page() {
         <input
           type="email"
           id="email"
+          name="email"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="name@flowbite.com"
           required
@@ -28,6 +43,7 @@ export default function Page() {
         <input
           type="password"
           id="password"
+          name="password"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
         />

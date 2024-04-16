@@ -21,6 +21,11 @@ declare global {
     address: string;
     status: number;
   }
+
+  interface SignInData {
+    email: string;
+    password: string;
+  }
 }
 
 export default global;
