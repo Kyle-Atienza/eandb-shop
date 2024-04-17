@@ -10,6 +10,7 @@ interface OrdersState {
   cart: Order;
   addToCart: (productId: string, count?: number) => void;
   updateCartItemQuantity: (data: FormData) => void;
+  deleteCartItem: (productId: string) => void;
   setCart: (cartItems: Order) => void;
   getCart: () => void;
   resetOrdersStore: () => void;
@@ -78,6 +79,26 @@ export const useOrdersStore = create<OrdersState>((set) => ({
           set({ isLoading: false });
         });
     }
+  },
+  deleteCartItem: async (productId: string) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .post(`${API_URL}/cart/remove`, { productId }, config)
+      .then((res) => {
+        set({ cart: res.data });
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
   },
   setCart: (cart: Order) => set({ cart }),
   getCart: async () => {

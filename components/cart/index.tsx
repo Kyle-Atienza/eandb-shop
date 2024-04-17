@@ -14,11 +14,7 @@ function CartItemQuantity({ item }: { item: CartItem }) {
   }, [item.count]);
 
   return (
-    <form
-      method="POST"
-      action={updateCartItemQuantity}
-      className="max-w-xs mx-auto"
-    >
+    <form method="POST" action={updateCartItemQuantity} className="max-w-xs">
       <div className="relative flex items-center max-w-[8rem]">
         <button
           onClick={() => addToCart(item.product._id, -1)}
@@ -97,6 +93,8 @@ function CartItemQuantity({ item }: { item: CartItem }) {
 }
 
 function CartItem({ item }: { item: CartItem }) {
+  const { deleteCartItem } = useOrdersStore();
+
   return (
     <a
       href="#"
@@ -113,7 +111,7 @@ function CartItem({ item }: { item: CartItem }) {
         height={100}
         alt="Cart Item"
       />
-      <div className="flex flex-col justify-between p-4 leading-normal">
+      <div className="flex flex-col items-start justify-between p-4 leading-normal">
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {item.product.name}{" "}
           {item.product.attribute ? ` - ${item.product.attribute}` : ""}
@@ -125,6 +123,12 @@ function CartItem({ item }: { item: CartItem }) {
           {item.price * item.count}
         </p>
         <CartItemQuantity item={item} />
+        <button
+          onClick={() => deleteCartItem(item.product._id)}
+          className="self-start p-2 bg-dark text-light"
+        >
+          Delete
+        </button>
       </div>
     </a>
   );
@@ -134,12 +138,20 @@ type CartProps = {
   cart: Order;
 };
 
-export default function Cart({ cart }: { cart: Order }) {
+export default function Cart() {
+  const { cart } = useOrdersStore();
+
+  const totalAmount = cart.items.reduce((total, cartItem) => {
+    total += cartItem.count * cartItem.price;
+    return total;
+  }, 0);
+
   return (
     <div className="overflow-scroll">
       {cart.items.map((cartItem, index) => {
         return <CartItem item={cartItem} key={index} />;
       })}
+      <p>Total Amount: {totalAmount}</p>
     </div>
   );
 }

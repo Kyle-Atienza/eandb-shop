@@ -6,12 +6,13 @@ import { useOptionsStore } from "@/state/options";
 import { useUserStore } from "@/state/user";
 import { useOrdersStore } from "@/state/orders";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import Cart from "@/components/cart";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const { top, left, width, height } = useProductCardHoveredStore();
   const { drawer, toggleDrawer, closeDrawer } = useOptionsStore();
@@ -30,7 +31,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (drawer) {
-      // closeDrawer();
+      closeDrawer();
     }
   }, [router]);
 
@@ -50,12 +51,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <div>
         {user ? (
           <div>
-            <button
-              className="self-start p-2 bg-dark text-light"
-              onClick={() => toggleDrawer()}
-            >
-              Cart
-            </button>
+            {pathname !== "/checkout" ? (
+              <button
+                className="self-start p-2 bg-dark text-light"
+                onClick={() => toggleDrawer()}
+              >
+                Cart
+              </button>
+            ) : null}
             <button
               onClick={() => {
                 signOut();
@@ -79,12 +82,24 @@ export default function Template({ children }: { children: React.ReactNode }) {
         )}
       </div>
       <div
-        className={`cart-drawer fixed min-h-screen max-h-screen flex flex-col w-[500px] bg-light right-0 transition-all spaced ${
+        className={`drawer fixed min-h-screen max-h-screen flex flex-col w-[500px] bg-light right-0 transition-all spaced ${
           drawer ? "" : "translate-x-full"
         }`}
       >
-        Your Cart
-        <Cart cart={cart} />
+        {pathname !== "/checkout" ? (
+          <div>
+            <div className="flex justify-between">
+              <div>Your Cart</div>
+              <button
+                onClick={() => router.push("/checkout")}
+                className="self-start p-2 bg-dark text-light"
+              >
+                Checkout
+              </button>
+            </div>
+            <Cart />
+          </div>
+        ) : null}
       </div>
       {children}
     </div>
