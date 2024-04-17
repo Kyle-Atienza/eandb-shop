@@ -30,7 +30,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (drawer) {
-      closeDrawer();
+      // closeDrawer();
     }
   }, [router]);
 
@@ -79,7 +79,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         )}
       </div>
       <div
-        className={`cart-drawer fixed min-h-screen w-[300px] bg-light right-0 transition-all spaced ${
+        className={`cart-drawer fixed min-h-screen max-h-screen flex flex-col w-[500px] bg-light right-0 transition-all spaced ${
           drawer ? "" : "translate-x-full"
         }`}
       >

@@ -8,7 +8,8 @@ interface OrdersState {
   isError: boolean;
   orders: Order[];
   cart: Order;
-  addToCart: (productId: string) => void;
+  addToCart: (productId: string, count?: number) => void;
+  updateCartItemQuantity: (data: FormData) => void;
   setCart: (cartItems: Order) => void;
   getCart: () => void;
   resetOrdersStore: () => void;
@@ -28,14 +29,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   ...initialState,
   isLoading: false,
   isError: false,
-  /* orders: [],
-  cart: {
-    _id: "",
-    address: "",
-    amount: 0,
-    items: [],
-  }, */
-  addToCart: async (productId: string) => {
+  addToCart: async (productId: string, count?: number) => {
     set({ isLoading: true });
     const config = {
       headers: {
@@ -44,9 +38,9 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     };
 
     await axios
-      .post(`${API_URL}/cart/add`, { productId }, config)
+      .post(`${API_URL}/cart/add`, { productId, count: count ?? 1 }, config)
       .then((res) => {
-        console.log(res);
+        set({ cart: res.data });
       })
       .catch((e) => {
         console.log(e);
@@ -55,6 +49,35 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .finally(() => {
         set({ isLoading: false });
       });
+  },
+  updateCartItemQuantity: async (data: FormData) => {
+    const productId = data.get("product-id");
+    const product = useOrdersStore
+      .getState()
+      .cart.items.find((item) => item.product._id === productId);
+    const count = Number(data.get("quantity")) - (product?.count || 0);
+
+    if (count !== 0) {
+      set({ isLoading: true });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+        },
+      };
+
+      await axios
+        .post(`${API_URL}/cart/add`, { productId, count }, config)
+        .then((res) => {
+          set({ cart: res.data });
+        })
+        .catch((e) => {
+          console.log(e);
+          set({ isError: true });
+        })
+        .finally(() => {
+          set({ isLoading: false });
+        });
+    }
   },
   setCart: (cart: Order) => set({ cart }),
   getCart: async () => {
