@@ -1,8 +1,1 @@
-configure user
-conditional buttons
-    - show login if no user
-    - show cart and logout if user
-login
-register
-storing token
-adding to cartkyl3Fr@nc!screen
+adding to cart

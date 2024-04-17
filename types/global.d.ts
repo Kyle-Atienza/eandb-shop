@@ -13,13 +13,18 @@ declare global {
     email: string;
     token: string;
   }
+  interface CartItem {
+    _id: string;
+    product: Product;
+    price: number;
+    count: number;
+  }
 
   interface Order {
     _id: string;
-    items: [string];
+    items: CartItem[];
     amount: number;
     address: string;
-    status: number;
   }
 
   interface SignInData {

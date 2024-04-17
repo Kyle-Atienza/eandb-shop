@@ -44,13 +44,13 @@ export default function Home() {
           </h1>
         </div>
       </div>
-      <div className="w-2/3 overflow-hidden border-2 border-solid border-dark bg-dark">
+      <div className="w-2/3 overflow-hidden ">
         <div className="grid grid-cols-3">
           {products.map((product, index) => {
             return (
               <div
                 key={index}
-                className={`overflow-hidden transition-all bg-white border rounded shadow border-dark dark:bg-gray-800 dark:border-gray-700 bg-dark`}
+                className={`overflow-hidden transition-all bg-white  `}
                 onMouseEnter={(e) => onHoverProduct(e, product)}
                 onMouseLeave={() => setHoveredProduct(null)}
                 onClick={() => router.push(`/product/${product._id}`)}

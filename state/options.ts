@@ -1,14 +1,14 @@
 import { create } from "zustand";
 
 interface OptionsState {
-  cart: boolean;
-  toggleCart: (val?: boolean) => void;
-  closeCart: () => void;
+  drawer: boolean;
+  toggleDrawer: (val?: boolean) => void;
+  closeDrawer: () => void;
 }
 
 export const useOptionsStore = create<OptionsState>((set) => ({
-  cart: false,
-  toggleCart: (val?: boolean) =>
-    set((state) => ({ cart: val ? val : !state.cart })),
-  closeCart: () => set({ cart: false }),
+  drawer: false,
+  toggleDrawer: (val?: boolean) =>
+    set((state) => ({ drawer: val ? val : !state.drawer })),
+  closeDrawer: () => set({ drawer: false }),
 }));

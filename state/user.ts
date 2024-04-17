@@ -1,12 +1,13 @@
 import { create } from "zustand";
 import axios from "axios";
+import { useOrdersStore } from "./orders";
+
 const API_URL = `${process.env.BASE_URL}/users`;
 
 interface UserState {
   isLoading: boolean;
   isError: boolean;
   user: User | null;
-  orders: Order[];
   signIn: (data: FormData) => void;
   signOut: () => void;
 }
@@ -32,7 +33,6 @@ export const useUserStore = create<UserState>((set) => ({
   isLoading: false,
   isError: false,
   user: checkSavedUser() ?? null,
-  orders: [],
   signIn: async (data: FormData) => {
     set({ isLoading: true, isError: false });
 
@@ -45,8 +45,8 @@ export const useUserStore = create<UserState>((set) => ({
       },
     })
       .then((res) => {
-        console.log(res);
         set({ user: res.data });
+        // useOrdersStore.setState({ cart: res.data.cart });
         localStorage.setItem("user", JSON.stringify(res.data));
       })
       .catch((e) => {
@@ -54,7 +54,6 @@ export const useUserStore = create<UserState>((set) => ({
         set({ isError: true });
       })
       .finally(() => {
-        console.log(data.get("email"));
         set({ isLoading: false });
       });
   },

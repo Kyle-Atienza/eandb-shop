@@ -4,14 +4,19 @@ import React, { use, useEffect } from "react";
 import { useProductCardHoveredStore } from "@/state/animation";
 import { useOptionsStore } from "@/state/options";
 import { useUserStore } from "@/state/user";
+import { useOrdersStore } from "@/state/orders";
+
 import { useRouter } from "next/navigation";
+
+import Cart from "@/components/cart";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const { top, left, width, height } = useProductCardHoveredStore();
-  const { cart, toggleCart, closeCart } = useOptionsStore();
+  const { drawer, toggleDrawer, closeDrawer } = useOptionsStore();
   const { user, signOut } = useUserStore();
+  const { cart, getCart, resetOrdersStore } = useOrdersStore();
 
   useEffect(() => {
     const productHover = document.getElementById("productHover");
@@ -24,10 +29,16 @@ export default function Template({ children }: { children: React.ReactNode }) {
   }, [top, left, width, height]);
 
   useEffect(() => {
-    if (cart) {
-      closeCart();
+    if (drawer) {
+      closeDrawer();
     }
   }, [router]);
+
+  useEffect(() => {
+    if (user) {
+      getCart();
+    }
+  }, []);
 
   return (
     <div>
@@ -41,13 +52,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
           <div>
             <button
               className="self-start p-2 bg-dark text-light"
-              onClick={() => toggleCart()}
+              onClick={() => toggleDrawer()}
             >
               Cart
             </button>
             <button
               onClick={() => {
                 signOut();
+                resetOrdersStore();
                 router.push("/");
               }}
               className="self-start p-2 bg-dark text-light"
@@ -68,10 +80,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
       </div>
       <div
         className={`cart-drawer fixed min-h-screen w-[300px] bg-light right-0 transition-all spaced ${
-          cart ? "" : "translate-x-full"
+          drawer ? "" : "translate-x-full"
         }`}
       >
         Your Cart
+        <Cart cart={cart} />
       </div>
       {children}
     </div>
