@@ -1,8 +1,39 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const ranille = localFont({
+  src: "../fonts/Ranille.otf",
+  variable: "--font-ranille",
+});
+const gopher = localFont({
+  src: [
+    {
+      path: "../fonts/Gopher-Light.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Gopher-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Gopher-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Gopher-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-gopher",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +47,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-base`}>{children}</body>
+      <body
+        className={`${inter.className} ${ranille.variable} ${gopher.variable} bg-base`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

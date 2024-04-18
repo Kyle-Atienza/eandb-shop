@@ -8,6 +8,8 @@ import { useOrdersStore } from "@/state/orders";
 
 import { useRouter, usePathname } from "next/navigation";
 
+import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
+
 import Cart from "@/components/cart";
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -42,44 +44,48 @@ export default function Template({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col max-h-screen">
       {/* <div
         id="productHover"
         className={`fixed border-2 pointer-events-none border-primary z-50`}
       ></div> */}
-      Name: {user?.name}
-      <div>
-        {user ? (
-          <div>
-            {pathname !== "/checkout" ? (
+      {/* Name: {user?.name} */}
+      <div className="sticky spaced-x bg-base top-0 z-10">
+        <div className="spaced-y relative">
+          {user ? (
+            <div className="flex gap-spaced">
+              {pathname !== "/checkout" ? (
+                <button
+                  className="text-3xl text-light"
+                  onClick={() => toggleDrawer()}
+                >
+                  <i className="bi bi-bag"></i>
+                </button>
+              ) : null}
               <button
-                className="self-start p-2 bg-dark text-light"
-                onClick={() => toggleDrawer()}
+                onClick={() => {
+                  signOut();
+                  resetOrdersStore();
+                  router.push("/");
+                }}
+                className="text-3xl text-light"
               >
-                Cart
+                <i className="bi bi-box-arrow-right"></i>
               </button>
-            ) : null}
-            <button
-              onClick={() => {
-                signOut();
-                resetOrdersStore();
-                router.push("/");
-              }}
-              className="self-start p-2 bg-dark text-light"
-            >
-              Logout
-            </button>
-          </div>
-        ) : (
-          <div>
-            <button
-              onClick={() => router.push("/login")}
-              className="self-start p-2 bg-dark text-light"
-            >
-              Login
-            </button>
-          </div>
-        )}
+            </div>
+          ) : (
+            <div>
+              <button
+                onClick={() => router.push("/login")}
+                className="self-start p-2 bg-dark text-light"
+              >
+                Login
+              </button>
+            </div>
+          )}
+          <FakeBorderRadius position="topLeft" className="top-full" />
+          <FakeBorderRadius position="topRight" className="right-0 top-full" />
+        </div>
       </div>
       <div
         className={`drawer fixed min-h-screen max-h-screen flex flex-col w-[500px] bg-light right-0 transition-all spaced ${
@@ -101,7 +107,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
           </div>
         ) : null}
       </div>
-      {children}
+      <div className="spaced-x">{children}</div>
     </div>
   );
 }

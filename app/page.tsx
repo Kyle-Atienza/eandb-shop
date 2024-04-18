@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { useProductCardHoveredStore } from "@/state/animation";
 import { useProductsStore } from "@/state/products";
 
+import { ProductCard } from "@/components/products/card";
+
 export default function Home() {
   const [hoveredProduct, setHoveredProduct] = useState<Product | null>(null);
 
@@ -29,50 +31,54 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex min-h-screen">
-      <div className="sticky top-0 flex flex-col justify-between w-1/3 max-h-screen spaced-no-r">
-        <div>
-          <Navbar />
+    <main className="">
+      <div className="grid gap-spaced grid-cols-2 lg:grid-cols-3">
+        <div className="col-span-2 min-h-[400px] flex flex-col justify-end rounded overflow-hidden relative">
+          <div className="absolute">
+            {/* <p className="text-[10vw] font-ranille text-light whitespace-nowrap translate-y-[0.4em]">
+              Shop Organic, Fresh, and Local Produce!
+            </p> */}
+          </div>
         </div>
-        <div>
-          <h1>
-            {hoveredProduct?.name}
-            {/* {hoveredProduct?.name
-              ? `Discover the bounty of our organic, freshly sourced, locally
-              produced products!`
-              : ""} */}
-          </h1>
+
+        {products.slice(0, 4).map((product, index) => {
+          return (
+            <ProductCard
+              product={product}
+              index={index}
+              key={index}
+              rowSpanItems={[1]}
+            />
+          );
+        })}
+
+        <div className="lg:col-span-2 h-[200px] flex flex-col justify-end rounded overflow-hidden relative">
+          <div className="absolute"></div>
         </div>
-      </div>
-      <div className="w-2/3 overflow-hidden ">
-        <div className="grid grid-cols-3">
-          {products.map((product, index) => {
-            return (
-              <div
-                key={index}
-                className={`overflow-hidden transition-all bg-white  `}
-                onMouseEnter={(e) => onHoverProduct(e, product)}
-                onMouseLeave={() => setHoveredProduct(null)}
-                onClick={() => router.push(`/product/${product._id}`)}
-              >
-                <Image
-                  className={`transition-all ${
-                    hoveredProduct?._id !== product._id &&
-                    hoveredProduct !== null
-                      ? "opacity-50"
-                      : ""
-                  }`}
-                  src="https://res.cloudinary.com/dfdw1yzkk/image/upload/v1712994720/E%20and%20B%20Farm/products/images/square/af8k4pwotuc9p9nlb6aa.png"
-                  alt=""
-                  width={500}
-                  height={500}
-                  objectFit="contain"
-                />
-                {product.name}
-              </div>
-            );
-          })}
+
+        {products.slice(5, 11).map((product, index) => {
+          return (
+            <ProductCard
+              product={product}
+              index={index}
+              key={index}
+              rowSpanItems={[5]}
+              colSpanItems={[4]}
+            />
+          );
+        })}
+
+        <div className=" h-[200px] flex flex-col justify-end rounded overflow-hidden relative">
+          <div className="absolute">
+            {/* <p className="text-[10vw] font-ranille text-light whitespace-nowrap translate-y-[0.4em]">
+              Shop Organic, Fresh, and Local Produce!
+            </p> */}
+          </div>
         </div>
+
+        {products.slice(12).map((product, index) => {
+          return <ProductCard product={product} index={index} key={index} />;
+        })}
       </div>
     </main>
   );

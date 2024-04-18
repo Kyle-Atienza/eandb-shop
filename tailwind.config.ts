@@ -8,10 +8,10 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      'primary': "#00BC89",
-      'light': "#F9EACD",
-      'dark': "#003135",
-      'base': "#3F6C4B",
+      primary: "#00BC89",
+      light: "#F9EACD",
+      dark: "#003135",
+      base: "#3F6C4B",
     },
     extend: {
       backgroundImage: {
@@ -20,10 +20,13 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       borderRadius: {
-        '4xl': '2.5rem'
-      }
+        "4xl": "2.5rem",
+      },
+      fontFamily: {
+        ranille: ["var(--font-ranille)"],
+        gopher: ["var(--font-gopher)"],
+      },
     },
-
   },
   plugins: [],
 };
