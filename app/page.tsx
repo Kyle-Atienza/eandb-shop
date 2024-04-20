@@ -52,59 +52,62 @@ export default function Home() {
 
   return (
     <main className="">
-      <div className="grid grid-cols-2 gap-spaced lg:grid-cols-3 spaced-b">
+      <div className="grid grid-cols-2 gap-spaced lg:grid-cols-4 spaced-b mt-[25vh]">
         <div
           ref={mainCard}
-          className="flex flex-col relative justify-end col-span-2 z-10 text-[8vw] font-ranille text-light"
+          className="flex flex-col relative justify-end col-span-3 z-10 text-[7vw] font-ranille text-light"
         >
-          <p>Welcome! Discover what's in store for you!</p>
-          <div className="w-[12vw] aspect-square bg-light rounded-full absolute -bottom-[35%] -right-[15%]"></div>
+          <p className="whitespace-pre-line">
+            Welcome!
+            {"\n"}
+            Discover what's in store for you!
+          </p>
+          <div className="w-[9vw] aspect-square bg-light rounded-full absolute -bottom-[26%] -right-[8%]"></div>
         </div>
 
-        {products.slice(0, 3).map((product, index) => {
+        {products.slice(0, 4).map((product, index) => {
           return (
             <ProductCard
               product={product}
               index={index}
               key={index}
-              colSpanItems={[2]}
+              rowSpanItems={[0]}
             />
           );
         })}
 
         <div
           ref={marqueeCard}
-          className="lg:col-span-3 h-[11vw] flex items-center overflow-hidden relative"
+          className="relative flex items-center overflow-hidden lg:col-span-4"
         >
-          <div id="marquee" className="absolute flex gap-[2vw]">
-            <p className="marquee__part text-[10vw] font-ranille text-light whitespace-nowrap translate-y-[0.05em]">
+          <div id="marquee" className=" flex gap-[2vw] text-[7vw]">
+            <p className="marquee__part  font-ranille text-light whitespace-nowrap translate-y-[0.05em]">
               Organic, Fresh, and Local Produce!
             </p>
-            <p className="marquee__part text-[10vw] font-ranille text-light whitespace-nowrap translate-y-[0.05em]">
+            <p className="marquee__part font-ranille text-light whitespace-nowrap translate-y-[0.05em]">
               Organic, Fresh, and Local Produce!
             </p>
           </div>
         </div>
 
-        {products.slice(4, 10).map((product, index) => {
+        {products.slice(5, 10).map((product, index) => {
           return (
             <ProductCard
               product={product}
               index={index}
               key={index}
-              rowSpanItems={[5]}
-              colSpanItems={[4]}
+              colSpanItems={[0]}
             />
           );
         })}
 
-        <div className="flex flex-col relative row-span-2 z-10 text-[2.5vw] font-gopher ">
+        <div className="relative z-10 flex flex-col row-span-2 text-3xl font-gopher ">
           <div className="w-[12vw] aspect-square bg-light rounded-full absolute -top-[35%] -left-[15%]"></div>
 
-          <div className="sticky top-[50vh] spaced text-dark bg-primary rounded items-center justify-between flex">
+          <div className="sticky top-[50vh] spaced text-dark bg-primary rounded items-center justify-between flex gap-4">
             <div className="flex flex-col gap-4">
               <p>Want to be our reseller?</p>
-              <p className="uppercase text-[1vw] tracking-widest">
+              <p className="text-sm tracking-widest uppercase">
                 Check our wholesale rates!
               </p>
             </div>
@@ -113,7 +116,14 @@ export default function Home() {
         </div>
 
         {products.slice(11).map((product, index) => {
-          return <ProductCard product={product} index={index} key={index} />;
+          return (
+            <ProductCard
+              product={product}
+              index={index}
+              key={index}
+              rowSpanItems={[0]}
+            />
+          );
         })}
       </div>
     </main>
