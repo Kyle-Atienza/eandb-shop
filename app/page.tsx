@@ -26,7 +26,9 @@ export default function Home() {
         <LabelButton>Taro</LabelButton>
         <LabelButton>All</LabelButton>
       </div>
-      <BentoProducts />
+      <div className="spaced-t">
+        <BentoProducts />
+      </div>
     </main>
   );
 }

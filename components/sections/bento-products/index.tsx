@@ -28,10 +28,10 @@ export function BentoProducts() {
   );
 
   return (
-    <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 spaced-b mt-2">
+    <div className="grid grid-cols-2 gap-spaced lg:grid-cols-4 spaced-b">
       <div
         ref={mainCard}
-        className="relative z-10 flex flex-col justify-end col-span-3 font-ranille text-light spaced-y"
+        className="relative z-10 flex flex-col justify-end col-span-3 font-ranille text-light"
       >
         <Label>Welcome</Label>
         <p className="mt-[2vw] text-[7vw]">Discover what's in store for you!</p>
