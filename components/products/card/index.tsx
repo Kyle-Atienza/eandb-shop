@@ -56,12 +56,12 @@ export function ProductCard({
       <div className="relative flex w-full h-full overflow-hidden rounded ">
         <div className="relative flex-1 transition-opacity group-hover:opacity-80">
           <Image
-            className={`transition-all`}
+            className={`transition-all object-cover object-center`}
             src="https://res.cloudinary.com/dfdw1yzkk/image/upload/v1712994720/E%20and%20B%20Farm/products/images/square/af8k4pwotuc9p9nlb6aa.png"
             alt=""
             fill={true}
-            objectFit="cover"
-            objectPosition="center"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority
           />
         </div>
         <div className="absolute w-full h-full spaced-small font-gopher group">

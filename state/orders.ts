@@ -109,8 +109,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       },
     };
 
-    await axios
-      .get(`${API_URL}/cart`, config)
+    await axios(`${API_URL}/cart`, config)
       .then((res) => {
         set({ cart: res.data });
       })

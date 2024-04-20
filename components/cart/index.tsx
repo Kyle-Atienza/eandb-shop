@@ -46,6 +46,7 @@ function CartItemQuantity({ item }: { item: CartItem }) {
           id="product-id"
           className="hidden"
           value={item.product._id}
+          onChange={() => {}}
         />
         <input
           name="quantity"
