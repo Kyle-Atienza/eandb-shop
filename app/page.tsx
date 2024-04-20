@@ -9,6 +9,8 @@ import { useProductCardHoveredStore } from "@/state/animation";
 import { useProductsStore } from "@/state/products";
 
 import { ProductCard } from "@/components/products/card";
+import { Label } from "@/components/common/label";
+import { LabelButton } from "@/components/common/button";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -52,14 +54,19 @@ export default function Home() {
 
   return (
     <main className="">
-      <div className="grid grid-cols-2 gap-spaced lg:grid-cols-4 spaced-b mt-[25vh]">
+      <div className=" mt-[25vh] flex gap-2">
+        <LabelButton>Oyster Mushroom</LabelButton>
+        <LabelButton>Banana</LabelButton>
+        <LabelButton>Taro</LabelButton>
+        <LabelButton>All</LabelButton>
+      </div>
+      <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 spaced-b mt-[2vw]">
         <div
           ref={mainCard}
-          className="flex flex-col relative justify-end col-span-3 z-10 text-[7vw] font-ranille text-light"
+          className="relative z-10 flex flex-col justify-end col-span-3 font-ranille text-light"
         >
-          <p className="whitespace-pre-line">
-            Welcome!
-            {"\n"}
+          <Label>Welcome</Label>
+          <p className="mt-[2vw] text-[7vw]">
             Discover what's in store for you!
           </p>
           <div className="w-[9vw] aspect-square bg-light rounded-full absolute -bottom-[26%] -right-[8%]"></div>
@@ -78,7 +85,7 @@ export default function Home() {
 
         <div
           ref={marqueeCard}
-          className="relative flex items-center overflow-hidden lg:col-span-4"
+          className="relative flex items-center overflow-hidden lg:col-span-4 spaced-y"
         >
           <div id="marquee" className=" flex gap-[2vw] text-[7vw]">
             <p className="marquee__part  font-ranille text-light whitespace-nowrap translate-y-[0.05em]">
@@ -102,7 +109,7 @@ export default function Home() {
         })}
 
         <div className="relative z-10 flex flex-col row-span-2 text-3xl font-gopher ">
-          <div className="w-[12vw] aspect-square bg-light rounded-full absolute -top-[35%] -left-[15%]"></div>
+          <div className="w-[9vw] aspect-square bg-light rounded-full absolute -top-[35%] -left-[15%]"></div>
 
           <div className="sticky top-[50vh] spaced text-dark bg-primary rounded items-center justify-between flex gap-4">
             <div className="flex flex-col gap-4">

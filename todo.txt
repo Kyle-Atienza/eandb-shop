@@ -1,1 +1,15 @@
-adding to cart
+on filter/search just display in normal grid
+reoragnize files put into separate components (it's getting messy)
+make this responsive
+
+ui:
+product page
+cart component 
+
+animations:
+scroll trigger "floating elements"
+
+update color scheme
+
+pending:
+payment integration

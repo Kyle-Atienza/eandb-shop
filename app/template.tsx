@@ -36,6 +36,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     () => {
       const mouseAnimation = (e: MouseEvent) => {
         const { target, x, y } = e;
+        const onButtons = (target as HTMLElement).closest("button");
         const onProductCard = (target as HTMLElement).closest(
           ".product-card .hover-trigger"
         );
