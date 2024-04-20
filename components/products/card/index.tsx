@@ -14,29 +14,18 @@ export function ProductCard({
   rowSpanItems = [],
   colSpanItems = [],
   rowAutoItems = [],
+  className,
 }: {
   product: Product;
   index: number;
   rowSpanItems?: number[];
   colSpanItems?: number[];
   rowAutoItems?: number[];
+  className?: string;
 }) {
   const router = useRouter();
 
   const container = useRef(null);
-  const pickMeSvg = useRef(null);
-
-  /* useGSAP(
-    () => {
-      gsap.to(pickMeSvg.current, {
-        rotation: 360,
-        duration: 8,
-        repeat: -1,
-        ease: "linear",
-      });
-    },
-    { scope: container }
-  ); */
 
   return (
     <div
@@ -49,6 +38,7 @@ export function ProductCard({
           ? ""
           : "aspect-square"
       }
+      ${className || ""}
       `}
       onClick={() => router.push(`/product/${product._id}`)}
     >

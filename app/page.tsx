@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <main className="">
-      <div className=" mt-[25vh] flex gap-2">
+      <div className=" mt-[25vh] flex flex-wrap gap-spaced-small">
         <LabelButton>Oyster Mushroom</LabelButton>
         <LabelButton>Banana</LabelButton>
         <LabelButton>Taro</LabelButton>
