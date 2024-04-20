@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.0",
     "axios": "^1.6.8",
     "bootstrap-icons": "^1.11.3",
     "gsap": "^3.12.5",
