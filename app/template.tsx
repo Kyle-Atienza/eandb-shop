@@ -7,8 +7,8 @@ import { useOrdersStore } from "@/state/orders";
 
 import { useRouter, usePathname } from "next/navigation";
 
-import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
 import { AnimatedCursor } from "@/components/template/animated-cursor";
+import { Navbar } from "@/components/template/navbar";
 
 import Cart from "@/components/cart";
 
@@ -21,9 +21,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const { drawer, toggleDrawer, closeDrawer } = useOptionsStore();
-  const { user, signOut } = useUserStore();
-  const { cart, getCart, resetOrdersStore } = useOrdersStore();
+  const { drawer, closeDrawer } = useOptionsStore();
+  const { user } = useUserStore();
+  const { getCart } = useOrdersStore();
 
   useEffect(() => {
     if (drawer) {
@@ -40,43 +40,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col">
       <AnimatedCursor />
-      <div className="sticky top-0 z-50 spaced-x bg-base">
-        <div className="relative spaced-y">
-          {user ? (
-            <div className="flex gap-spaced">
-              {pathname !== "/checkout" ? (
-                <button
-                  className="text-3xl text-light"
-                  onClick={() => toggleDrawer()}
-                >
-                  <i className="bi bi-bag"></i>
-                </button>
-              ) : null}
-              <button
-                onClick={() => {
-                  signOut();
-                  resetOrdersStore();
-                  router.push("/");
-                }}
-                className="text-3xl text-light"
-              >
-                <i className="bi bi-box-arrow-right"></i>
-              </button>
-            </div>
-          ) : (
-            <div>
-              <button
-                onClick={() => router.push("/login")}
-                className="self-start p-2 bg-dark text-light"
-              >
-                Login
-              </button>
-            </div>
-          )}
-          <FakeBorderRadius position="topLeft" className="top-full" />
-          <FakeBorderRadius position="topRight" className="right-0 top-full" />
-        </div>
-      </div>
+      <Navbar />
       <div
         className={`drawer fixed min-h-screen max-h-screen flex flex-col w-[500px] bg-light right-0 transition-all spaced ${
           drawer ? "" : "translate-x-full"
