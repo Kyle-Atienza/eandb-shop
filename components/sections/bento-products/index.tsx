@@ -65,7 +65,7 @@ export function BentoProducts() {
       >
         <Label>Welcome!</Label>
         <p className=" text-[10vw] lg:text-[7vw]">
-          Discover what's in store for you!
+          {"Discover what's in store for you!"}
           <span ref={scrollDown} className="relative group">
             <span className="opacity-0">M</span>
             <div className="absolute top-0 w-4/5 overflow-hidden transition-colors -translate-x-1/2 rounded-full bg-dark group-hover:bg-primary aspect-square left-1/2">

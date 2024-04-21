@@ -21,8 +21,12 @@ export function AnimatedCursor() {
         const productCardRect = onProductCard?.getBoundingClientRect();
 
         gsap.to(hoverCursorContainer.current, {
-          x: onProductCard ? productCardRect?.left : x,
-          y: onProductCard ? productCardRect?.top : y,
+          x: onProductCard
+            ? (productCardRect?.left || 0) + (productCardRect?.width || 0) / 2
+            : x,
+          y: onProductCard
+            ? (productCardRect?.top || 0) + (productCardRect?.height || 0) / 2
+            : y,
           duration: onProductCard ? 1 : 0.7,
           ease: "power4",
         });
