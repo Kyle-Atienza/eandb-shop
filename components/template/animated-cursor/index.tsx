@@ -32,9 +32,10 @@ export function AnimatedCursor() {
         });
 
         gsap.to(hoverCursor.current, {
-          // scale: onProductCard ? 1 : 0.1,
           width: onProductCard ? productCardRect?.width : 20,
           height: onProductCard ? productCardRect?.height : 20,
+          xPercent: -50,
+          yPercent: -50,
           scale: 1,
           ease: "power4",
         });

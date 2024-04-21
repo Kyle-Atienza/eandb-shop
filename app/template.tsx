@@ -35,11 +35,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <AnimatedCursor />
       <Navbar />
       <Drawer />
-      <div className="spaced-x">{children}</div>
+      <div className="grid flex-1 spaced-x">{children}</div>
     </div>
   );
 }

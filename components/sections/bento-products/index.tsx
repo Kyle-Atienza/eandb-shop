@@ -77,7 +77,7 @@ export function BentoProducts() {
             </div>
           </span>
         </p>
-        <div className="gawang-mindoro spaced-small aspect-square rounded-full text-center absolute -bottom-[20%] xl:bottom-[0%] -right-[15%] xl:-right-[5%] bg-light text-dark flex items-center justify-center rotate-12 glow">
+        <div className="gawang-mindoro spaced-md aspect-square rounded-full text-center absolute -bottom-[20%] xl:bottom-[0%] -right-[15%] xl:-right-[5%] bg-light text-dark flex items-center justify-center rotate-12 glow">
           <p className="font-gopher text-[1.5vw] whitespace-pre-line">
             Gawang{"\n"}
             <span className="font-bold uppercase">Mindoro</span>

@@ -17,6 +17,10 @@
   h1 {
     line-height: 1em !important;
   }
+
+  select {
+    background: transparent;
+  }
 }
 
 @layer utilities {
@@ -56,8 +60,12 @@
     @apply pt-5 pb-5 pl-5 lg:pt-8 lg:pb-8 lg:pl-8;
   }
 
-  .spaced-small {
+  .spaced-md {
     @apply p-3 lg:p-5;
+  }
+
+  .spaced-sm {
+    @apply p-2 lg:p-3;
   }
 
   .gap-spaced {
@@ -69,16 +77,22 @@
   .gap-y-spaced {
     @apply gap-y-5 lg:gap-y-8;
   }
-  .gap-spaced-small {
+  .gap-spaced-md {
     @apply gap-3 lg:gap-5;
+  }
+  .gap-spaced-sm {
+    @apply gap-2 lg:gap-3;
   }
 
   .rounded {
     @apply rounded-3xl lg:rounded-[2.5rem];
   }
 
-  .rounded-small {
+  .rounded-md {
     @apply rounded-2xl lg:rounded-3xl;
+  }
+  .rounded-sm {
+    @apply rounded-xl lg:rounded-2xl;
   }
 
   .debug-border {

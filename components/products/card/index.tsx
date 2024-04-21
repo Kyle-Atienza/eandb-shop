@@ -58,13 +58,13 @@ export function ProductCard({
             priority
           />
         </div>
-        <div className="absolute w-full h-full spaced-small font-gopher group">
+        <div className="absolute w-full h-full spaced-md font-gopher group">
           <div className="relative w-full h-full">
-            <div className="bg-light text-dark p-4 rounded-small font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
+            <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
               <p className="text-sm lg:text-xl">{product.name}</p>
             </div>
             {product.attribute ? (
-              <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-small transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
+              <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-md transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
                 <p className="text-xs lg:text-xl">{product.attribute}</p>
               </div>
             ) : null}
