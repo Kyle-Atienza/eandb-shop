@@ -21,18 +21,17 @@ export function AnimatedCursor() {
         const productCardRect = onProductCard?.getBoundingClientRect();
 
         gsap.to(hoverCursorContainer.current, {
-          x: onProductCard
-            ? (productCardRect?.left || 0) + (productCardRect?.width || 0) / 2
-            : x,
-          y: onProductCard
-            ? (productCardRect?.top || 0) + (productCardRect?.height || 0) / 2
-            : y,
+          x: onProductCard ? productCardRect?.left : x,
+          y: onProductCard ? productCardRect?.top : y,
           duration: onProductCard ? 1 : 0.7,
           ease: "power4",
         });
 
         gsap.to(hoverCursor.current, {
-          scale: onProductCard ? 1 : 0.1,
+          // scale: onProductCard ? 1 : 0.1,
+          width: onProductCard ? productCardRect?.width : 20,
+          height: onProductCard ? productCardRect?.height : 20,
+          scale: 1,
           ease: "power4",
         });
 
@@ -68,7 +67,7 @@ export function AnimatedCursor() {
       <div ref={hoverCursorContainer} className="">
         <div
           ref={hoverCursor}
-          className="w-[28vw] scale-0 aspect-square border-2 overflow-hidden border-light border-solid rounded-full absolute z-10 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+          className="w-[2vw] aspect-square border-2 overflow-hidden border-light border-solid rounded-[100%] absolute z-10 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
         >
           <div
             ref={hoverCursorSolid}
