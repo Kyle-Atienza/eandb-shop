@@ -50,7 +50,7 @@ export function BentoProducts() {
       gsap.to(".arrow-down", {
         yPercent: 100,
         repeat: -1,
-        duration: 0.8,
+        duration: 1.2,
         ease: "none",
       });
     },
@@ -113,7 +113,6 @@ export function BentoProducts() {
         </div>
       </div>
 
-      {/* workaround for responsive params */}
       {products.slice(5, 10).map((product, index) => {
         return (
           <ProductCard
@@ -121,23 +120,12 @@ export function BentoProducts() {
             index={index}
             key={index}
             colSpanItems={[0]}
-            // className="hidden lg:block"
           />
         );
       })}
-      {/* {products.slice(5, 10).map((product, index) => {
-        return (
-          <ProductCard
-            product={product}
-            index={index}
-            key={index}
-            className="lg:hidden"
-          />
-        );
-      })} */}
 
       <div className="relative z-10 flex flex-col min-h-[100vw] lg:min-h-0 row-span-2 lg:row-span-2 font-gopher ">
-        <div className="w-[20vw] lg:w-[9vw] aspect-square bg-light rounded-full absolute -top-[35%] -left-[15%]"></div>
+        <div className="w-[20vw] lg:w-[9vw] aspect-square bg-light rounded-full absolute top-1/2 -left-[120%]"></div>
 
         <div className="sticky top-[50vh] spaced text-dark bg-light rounded lg:items-center items-start lg:justify-between flex flex-col lg:flex-row gap-4 hover:bg-primary transition-colors">
           <div className="flex flex-col gap-4">

@@ -26,6 +26,10 @@ const config: Config = {
         ranille: ["var(--font-ranille)"],
         gopher: ["var(--font-gopher)"],
       },
+      spacing: {
+        space: "2rem",
+        "space-md": "1.25rem",
+      },
     },
   },
   plugins: [],
