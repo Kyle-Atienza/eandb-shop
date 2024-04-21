@@ -32,11 +32,15 @@ export function ProductCard({
       ref={container}
       className={`product-card transition-all bg-white rounded bg-dark flex flex-col relative group
       ${rowSpanItems.includes(index) ? "row-span-2 aspect-auto" : ""}
-      ${colSpanItems.includes(index) ? "col-span-2 aspect-auto" : ""}
+      ${
+        colSpanItems.includes(index)
+          ? "min-h-[45vw] lg:min-h-0 col-span-2 aspect-auto"
+          : ""
+      }
       ${
         rowSpanItems.includes(index) || colSpanItems.includes(index)
           ? ""
-          : "aspect-square"
+          : "aspect-[2/3] lg:aspect-square"
       }
       ${className || ""}
       `}
@@ -56,16 +60,12 @@ export function ProductCard({
         </div>
         <div className="absolute w-full h-full spaced-small font-gopher group">
           <div className="relative w-full h-full">
-            <div className="bg-light text-dark p-4 rounded-small font-medium absolute top-0 transition-transform -translate-y-[200%] group-hover:-translate-y-0">
-              <p className="text-xl">
-                {/* {index} */}
-
-                {product.name}
-              </p>
+            <div className="bg-light text-dark p-4 rounded-small font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
+              <p className="text-sm lg:text-xl">{product.name}</p>
             </div>
             {product.attribute ? (
-              <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-small transition-transform translate-y-[200%] group-hover:translate-y-0">
-                <p className="text-xl">{product.attribute}</p>
+              <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-small transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
+                <p className="text-xs lg:text-xl">{product.attribute}</p>
               </div>
             ) : null}
           </div>
