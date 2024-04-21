@@ -110,4 +110,9 @@
 
 .glow {
   box-shadow: 0px 0px 100px 10px var(--light-color);
+  transition: 0.5s ease-in-out all;
+}
+
+.glow:hover {
+  box-shadow: 0px 0px 80px 30px var(--light-color);
 }

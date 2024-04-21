@@ -4,6 +4,7 @@ import { AsteriskSvg } from "@/components/decorations/svg/asterisk";
 
 import { useProductsStore } from "@/state/products";
 import { useRef } from "react";
+import { useRouter, redirect } from "next/navigation";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -12,9 +13,12 @@ gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 
 export function BentoProducts() {
+  const router = useRouter();
+
   const { products } = useProductsStore();
 
   const mainCard = useRef(null);
+  const container = useRef(null);
   const marqueeCard = useRef(null);
   const scrollDown = useRef(null);
 
@@ -30,12 +34,12 @@ export function BentoProducts() {
     { scope: marqueeCard }
   );
 
-  useGSAP(
+  /* useGSAP(
     () => {
       gsap.to(".gawang-mindoro", {
-        yPercent: 110,
+        yPercent: 40,
         scrollTrigger: {
-          trigger: ".main-card",
+          trigger: ".gawang-mindoro",
           start: "top center",
           end: "bottom top",
           scrub: 1,
@@ -43,7 +47,7 @@ export function BentoProducts() {
       });
     },
     { scope: mainCard }
-  );
+  ); */
 
   useGSAP(
     () => {
@@ -58,10 +62,13 @@ export function BentoProducts() {
   );
 
   return (
-    <div className="grid grid-cols-2 gap-spaced lg:grid-cols-3 xl:grid-cols-4 spaced-b">
+    <div
+      ref={container}
+      className="grid grid-cols-2 gap-spaced lg:grid-cols-3 xl:grid-cols-4 spaced-b"
+    >
       <div
         ref={mainCard}
-        className=".main-card relative z-10 flex flex-col justify-end col-span-1 gap-spaced lg:col-span-2 xl:col-span-3 font-ranille text-light"
+        className="main-card relative z-30 flex flex-col justify-end col-span-1 gap-spaced lg:col-span-2 xl:col-span-3 font-ranille text-light"
       >
         <Label>Welcome!</Label>
         <p className=" text-[10vw] lg:text-[7vw]">
@@ -77,12 +84,22 @@ export function BentoProducts() {
             </div>
           </span>
         </p>
-        <div className="gawang-mindoro spaced-md aspect-square rounded-full text-center absolute -bottom-[20%] xl:bottom-[0%] -right-[15%] xl:-right-[5%] bg-light text-dark flex items-center justify-center rotate-12 glow">
-          <p className="font-gopher text-[1.5vw] whitespace-pre-line">
-            Gawang{"\n"}
-            <span className="font-bold uppercase">Mindoro</span>
-          </p>
-        </div>
+        {/* <div
+          className="gawang-mindoro aspect-square overflow-hidden rounded-full text-center absolute -bottom-[20%] xl:-bottom-[25%] -right-[15%] xl:-right-[10%] bg-light text-dark flex items-center justify-center group cursor-pointer"
+          onClick={() =>
+            router.replace("https://maps.app.goo.gl/w25cX796UMcyZG7Y7")
+          }
+        >
+          <div className="spaced">
+            <p className=" whitespace-pre-line">
+              <span className="font-gopher text-[1.5vw]">
+                <Label>Gawang</Label>
+                {"\n"}
+              </span>
+              <span className="font-bold text-[2vw] font-ranille">Mindoro</span>
+            </p>
+          </div>
+        </div> */}
       </div>
 
       {products.slice(0, 4).map((product, index) => {
@@ -125,7 +142,7 @@ export function BentoProducts() {
       })}
 
       <div className="relative z-10 flex flex-col min-h-[100vw] lg:min-h-0 row-span-2 lg:row-span-2 font-gopher ">
-        <div className="w-[20vw] lg:w-[9vw] aspect-square bg-light rounded-full absolute top-1/2 -left-[120%]"></div>
+        {/* <div className="w-[20vw] lg:w-[9vw] aspect-square bg-light rounded-full absolute top-1/2 -left-[120%]"></div> */}
 
         <div className="sticky top-[50vh] spaced text-dark bg-light rounded lg:items-center items-start lg:justify-between flex flex-col lg:flex-row gap-4 hover:bg-primary transition-colors">
           <div className="flex flex-col gap-4">
