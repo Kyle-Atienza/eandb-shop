@@ -61,7 +61,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         </div>
         <div className="w-full h-[1px] divider bg-light" />
         <div className="flex flex-col gap-spaced">
-          {/* select component */}
+          {/* select component (no functionality) */}
           <div className="flex flex-col gap-spaced-sm">
             <label htmlFor="flavors" className="text-light">
               <Label>Flavors:</Label>
@@ -84,6 +84,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               </select>
             </div>
           </div>
+          {/* set quantity component (no functionality) */}
           <div className="flex flex-col gap-spaced-sm w-min">
             <label htmlFor="flavors" className="text-light">
               <Label>Quantity:</Label>
@@ -105,7 +106,10 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
         <div className="sticky bottom-0 flex mt-auto spaced-b">
-          <button className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher">
+          <button
+            className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
+            onClick={() => addToCart(product?._id ?? "")}
+          >
             Add to Cart
           </button>
         </div>
