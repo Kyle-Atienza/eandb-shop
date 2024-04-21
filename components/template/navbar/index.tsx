@@ -14,9 +14,15 @@ export function Navbar() {
 
   return (
     <div className="sticky top-0 z-50 spaced-x bg-base">
-      <div className="relative spaced-y">
+      <div className="relative flex spaced-y gap-spaced-md">
+        <button
+          className="text-3xl text-light"
+          onClick={() => router.push("/")}
+        >
+          <i className="bi bi-house"></i>
+        </button>
         {user ? (
-          <div className="flex gap-spaced">
+          <>
             {pathname !== "/checkout" ? (
               <button
                 className="text-3xl text-light"
@@ -35,7 +41,7 @@ export function Navbar() {
             >
               <i className="bi bi-box-arrow-right"></i>
             </button>
-          </div>
+          </>
         ) : (
           <div>
             <button

@@ -67,7 +67,7 @@ export function AnimatedCursor() {
   return (
     <div
       ref={container}
-      className="fixed top-0 left-0 z-20 w-screen h-screen pointer-events-none "
+      className="fixed top-0 left-0 w-screen h-screen pointer-events-none z-70"
     >
       <div ref={hoverCursorContainer} className="">
         <div
