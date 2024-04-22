@@ -12,6 +12,14 @@ import { ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 
+function BentoItem({ className }: { className?: string }) {
+  return (
+    <div
+      className={`rounded bg-light ${className ? className : "aspect-square"}`}
+    ></div>
+  );
+}
+
 export function BentoProducts() {
   const router = useRouter();
 
@@ -102,7 +110,7 @@ export function BentoProducts() {
         </div> */}
       </div>
 
-      {products.slice(0, 4).map((product, index) => {
+      {/* {products.slice(0, 4).map((product, index) => {
         return (
           <ProductCard
             product={product}
@@ -111,7 +119,12 @@ export function BentoProducts() {
             rowSpanItems={[0]}
           />
         );
-      })}
+      })} */}
+
+      <BentoItem className="row-span-2" />
+      <BentoItem />
+      <BentoItem />
+      <BentoItem />
 
       <div
         ref={marqueeCard}
@@ -130,7 +143,13 @@ export function BentoProducts() {
         </div>
       </div>
 
-      {products.slice(5, 10).map((product, index) => {
+      <BentoItem className="col-span-2" />
+      <BentoItem />
+      <BentoItem />
+      <BentoItem />
+      <BentoItem />
+
+      {/* {products.slice(5, 10).map((product, index) => {
         return (
           <ProductCard
             product={product}
@@ -139,7 +158,7 @@ export function BentoProducts() {
             colSpanItems={[0]}
           />
         );
-      })}
+      })} */}
 
       <div className="relative z-10 flex flex-col min-h-[100vw] lg:min-h-0 row-span-2 lg:row-span-2 font-gopher ">
         {/* <div className="w-[20vw] lg:w-[9vw] aspect-square bg-light rounded-full absolute top-1/2 -left-[120%]"></div> */}
@@ -153,7 +172,11 @@ export function BentoProducts() {
         </div>
       </div>
 
-      {products.slice(11).map((product, index) => {
+      <BentoItem />
+      <BentoItem />
+      <BentoItem />
+
+      {/* {products.slice(11).map((product, index) => {
         return (
           <ProductCard
             product={product}
@@ -162,7 +185,7 @@ export function BentoProducts() {
             rowSpanItems={[0]}
           />
         );
-      })}
+      })} */}
     </div>
   );
 }
