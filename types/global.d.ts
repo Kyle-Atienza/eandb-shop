@@ -7,7 +7,7 @@ declare global {
     items: {
       name: string;
       options: ProductItem[];
-    };
+    }[];
   }
   interface ProductOption {
     type: string;
