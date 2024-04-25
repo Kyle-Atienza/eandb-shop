@@ -42,21 +42,6 @@ export function BentoProducts() {
     { scope: marqueeCard }
   );
 
-  /* useGSAP(
-    () => {
-      gsap.to(".gawang-mindoro", {
-        yPercent: 40,
-        scrollTrigger: {
-          trigger: ".gawang-mindoro",
-          start: "top center",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
-    },
-    { scope: mainCard }
-  ); */
-
   useGSAP(
     () => {
       gsap.to(".arrow-down", {
@@ -92,34 +77,7 @@ export function BentoProducts() {
             </div>
           </span>
         </p>
-        {/* <div
-          className="gawang-mindoro aspect-square overflow-hidden rounded-full text-center absolute -bottom-[20%] xl:-bottom-[25%] -right-[15%] xl:-right-[10%] bg-light text-dark flex items-center justify-center group cursor-pointer"
-          onClick={() =>
-            router.replace("https://maps.app.goo.gl/w25cX796UMcyZG7Y7")
-          }
-        >
-          <div className="spaced">
-            <p className=" whitespace-pre-line">
-              <span className="font-gopher text-[1.5vw]">
-                <Label>Gawang</Label>
-                {"\n"}
-              </span>
-              <span className="font-bold text-[2vw] font-ranille">Mindoro</span>
-            </p>
-          </div>
-        </div> */}
       </div>
-
-      {/* {products.slice(0, 4).map((product, index) => {
-        return (
-          <ProductCard
-            product={product}
-            index={index}
-            key={index}
-            rowSpanItems={[0]}
-          />
-        );
-      })} */}
 
       <BentoItem className="row-span-2" />
       <BentoItem />
@@ -149,20 +107,7 @@ export function BentoProducts() {
       <BentoItem />
       <BentoItem />
 
-      {/* {products.slice(5, 10).map((product, index) => {
-        return (
-          <ProductCard
-            product={product}
-            index={index}
-            key={index}
-            colSpanItems={[0]}
-          />
-        );
-      })} */}
-
       <div className="relative z-10 flex flex-col min-h-[100vw] lg:min-h-0 row-span-2 lg:row-span-2 font-gopher ">
-        {/* <div className="w-[20vw] lg:w-[9vw] aspect-square bg-light rounded-full absolute top-1/2 -left-[120%]"></div> */}
-
         <div className="sticky top-[50vh] spaced text-dark bg-light rounded lg:items-center items-start lg:justify-between flex flex-col lg:flex-row gap-4 hover:bg-primary transition-colors">
           <div className="flex flex-col gap-4">
             <p className="text-2xl lg:text-3xl">Want to be our reseller?</p>
@@ -175,17 +120,6 @@ export function BentoProducts() {
       <BentoItem />
       <BentoItem />
       <BentoItem />
-
-      {/* {products.slice(11).map((product, index) => {
-        return (
-          <ProductCard
-            product={product}
-            index={index}
-            key={index}
-            rowSpanItems={[0]}
-          />
-        );
-      })} */}
     </div>
   );
 }

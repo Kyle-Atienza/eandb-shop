@@ -5,11 +5,19 @@ export function ProductFilter() {
   const router = useRouter();
 
   return (
-    <div className=" mt-[25vh] flex flex-wrap gap-spaced-md">
-      <LabelButton>Oyster Mushroom</LabelButton>
-      <LabelButton>Banana</LabelButton>
-      <LabelButton>Taro</LabelButton>
-      <LabelButton onClick={() => router.push("/products")}>All</LabelButton>
+    <div className=" flex flex-wrap gap-spaced-md">
+      <LabelButton onClick={() => router.push("/products/oyster-mushroom")}>
+        Oyster Mushroom
+      </LabelButton>
+      <LabelButton onClick={() => router.push("/products/banana")}>
+        Banana
+      </LabelButton>
+      <LabelButton onClick={() => router.push("/products/taro")}>
+        Taro
+      </LabelButton>
+      <LabelButton onClick={() => router.push("/products/all")}>
+        All
+      </LabelButton>
     </div>
   );
 }

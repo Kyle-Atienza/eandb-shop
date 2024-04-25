@@ -1,1 +1,4 @@
-// on change function on product page
+fix sort of products
+- sort alphabetically
+
+sort by tags (banana, mushroom ,taro)

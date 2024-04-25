@@ -8,6 +8,12 @@ gsap.registerPlugin(useGSAP);
 
 import { useRef } from "react";
 
+interface ProductCard {
+  _id: string;
+  details: Product;
+  options: ProductItem[];
+}
+
 export function ProductCard({
   product,
   index,
@@ -16,7 +22,7 @@ export function ProductCard({
   rowAutoItems = [],
   className,
 }: {
-  product: Product;
+  product: ProductCard;
   index: number;
   rowSpanItems?: number[];
   colSpanItems?: number[];
@@ -27,48 +33,48 @@ export function ProductCard({
 
   const container = useRef(null);
 
+  console.log(product);
+
   return (
     <div
       ref={container}
-      className={`product-card transition-all rounded bg-dark flex flex-col relative group
-      ${rowSpanItems.includes(index) ? "row-span-2 aspect-auto" : ""}
-      ${
-        colSpanItems.includes(index)
-          ? "min-h-[45vw] lg:min-h-0 col-span-2 aspect-auto"
-          : ""
-      }
-      ${
-        rowSpanItems.includes(index) || colSpanItems.includes(index)
-          ? ""
-          : "aspect-[2/3] lg:aspect-square"
-      }
-      ${className || ""}
+      className={`product-card transition-all flex flex-col relative group mt-auto
+      
       `}
       onClick={() => router.push(`/product/${product._id}`)}
     >
-      <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] aspect-square flex items-center justify-center"></div>
-      <div className="relative flex w-full h-full overflow-hidden rounded ">
-        <div className="relative flex-1 transition-opacity group-hover:opacity-80">
+      <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[110%] h-[110%] flex items-center justify-center bg-light opacity-0"></div>
+      <div className="relative flex flex-col gap-spaced-sm ">
+        {/* <div className="flex justify-between gap-spaced-sm text-light">
+
+          <div className=" text-dark bg-light p-4 rounded-md font-medium self-start">
+            <p className="text-md lg:text-xl font-gopher">
+              {product.details.name}
+            </p>
+          </div>
+          <div className=" text-dark bg-light p-4 rounded-md font-medium self-start">
+            <p className="text-sm lg:text-md font-gopher">100.00</p>
+          </div>
+        </div> */}
+        <div className="flex justify-between items-end gap-spaced-sm text-light">
+          <p className="text-md lg:text-xl font-gopher w-[30%]">
+            {product.details.name}
+          </p>
+          <p className="text-md lg:text-xl font-gopher">
+            100.00 <span className="text-xs lg:text-sm">PHP</span>
+          </p>
+        </div>
+        <div className="w-full h-[2px] divider bg-light" />
+
+        <div className="aspect-square rounded-md overflow-hidden relative transition-shadow group-hover:shadow-2xl">
           <Image
-            className={`transition-all object-cover object-center`}
+            className={`transition-all object-cover object-center `}
             src="https://res.cloudinary.com/dfdw1yzkk/image/upload/v1712994720/E%20and%20B%20Farm/products/images/square/af8k4pwotuc9p9nlb6aa.png"
             alt=""
             fill={true}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority
           />
-        </div>
-        <div className="absolute w-full h-full spaced-md font-gopher group">
-          <div className="relative w-full h-full">
-            <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
-              <p className="text-sm lg:text-xl">{product.name}</p>
-            </div>
-            {/* {product.attribute ? (
-              <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-md transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
-                <p className="text-xs lg:text-xl">{product.attribute}</p>
-              </div>
-            ) : null} */}
-          </div>
         </div>
       </div>
     </div>
