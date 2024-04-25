@@ -30,7 +30,7 @@ export function ProductCard({
   return (
     <div
       ref={container}
-      className={`product-card transition-all bg-white rounded bg-dark flex flex-col relative group
+      className={`product-card transition-all rounded bg-dark flex flex-col relative group
       ${rowSpanItems.includes(index) ? "row-span-2 aspect-auto" : ""}
       ${
         colSpanItems.includes(index)
@@ -63,11 +63,11 @@ export function ProductCard({
             <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
               <p className="text-sm lg:text-xl">{product.name}</p>
             </div>
-            {product.attribute ? (
+            {/* {product.attribute ? (
               <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-md transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
                 <p className="text-xs lg:text-xl">{product.attribute}</p>
               </div>
-            ) : null}
+            ) : null} */}
           </div>
         </div>
       </div>

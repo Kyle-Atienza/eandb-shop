@@ -11,7 +11,6 @@ interface OrdersState {
   addToCart: (productId: string, count?: number) => void;
   updateCartItemQuantity: (data: FormData) => void;
   deleteCartItem: (productId: string) => void;
-  setCart: (cartItems: Order) => void;
   getCart: () => void;
   resetOrdersStore: () => void;
 }
@@ -100,7 +99,6 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         set({ isLoading: false });
       });
   },
-  setCart: (cart: Order) => set({ cart }),
   getCart: async () => {
     set({ isLoading: true });
     const config = {

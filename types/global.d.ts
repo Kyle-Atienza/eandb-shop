@@ -2,9 +2,24 @@ declare global {
   interface Product {
     _id: string;
     name: string;
-    attribute?: string;
-    image?: string;
+    description?: string;
+    gallery: string[];
+  }
+  interface ProductOption {
+    type: string;
+    value: string;
+  }
+  interface ProductItem {
+    _id: string;
+    name: string;
     amount: number;
+    details: Product;
+    attributes: ProductOption[];
+  }
+  interface ProductListingItem {
+    _id: string;
+    options: ProductItem[];
+    details: Product;
   }
 
   interface User {
@@ -15,7 +30,7 @@ declare global {
   }
   interface CartItem {
     _id: string;
-    product: Product;
+    product: ProductItem;
     price: number;
     count: number;
   }

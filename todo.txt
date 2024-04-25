@@ -1,9 +1,1 @@
-on filter/search just display in normal grid
-
-ui:
-cart component 
-
-update color scheme
-
-pending:
-payment integration
+// on change function on product page

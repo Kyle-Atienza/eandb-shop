@@ -3,40 +3,123 @@
 import { useProductsStore } from "@/state/products";
 import { useOrdersStore } from "@/state/orders";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+
+import { parseProductListItemId } from "@/utils/products";
 
 import Image from "next/image";
 
 import { Label } from "@/components/common/label";
-import { LabelButton } from "@/components/common/button";
+import { selector } from "gsap";
+
+interface ProductOptionSelect extends ProductOption {
+  selected: boolean;
+}
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const { products, getProducts } = useProductsStore();
+  const { productList, getProductList } = useProductsStore();
   const { addToCart } = useOrdersStore();
 
-  const [product, setProduct] = useState<Product>();
+  const [product, setProduct] = useState<ProductListingItem>();
+  const [productItem, setProductItem] = useState<ProductItem>();
+  const [productOptions, setProductOptions] = useState<
+    {
+      name: string;
+      options: ProductOptionSelect[];
+    }[]
+  >();
+
+  const getSelectedOption = (name: string) => {
+    if (productOptions) {
+      return productOptions
+        .find((option) => option.name === name)
+        ?.options.find((option) => !!option.selected);
+    }
+  };
+
+  const onChageProductOption = (value: string, optionName?: string) => {
+    setProductOptions(
+      productOptions?.map((productOption) => {
+        if (productOption.name === optionName) {
+          productOption.options.forEach((optionItem) => {
+            optionItem.selected = optionItem.value === value;
+          });
+        }
+        return productOption;
+      })
+    );
+  };
 
   useEffect(() => {
-    if (products.length) {
-      setProduct(products.find((el) => el._id === params.slug));
+    if (productList.length) {
+      setProduct(
+        productList.find(
+          (listItem) => parseProductListItemId(listItem._id) === params.slug
+        )
+      );
+
+      setProductOptions(
+        product?.options.reduce((options: any, option, index) => {
+          option.attributes.forEach((optionListItem) => {
+            const { type } = optionListItem;
+            const optionValue = {
+              ...optionListItem,
+              _id: option._id,
+              selected: !index,
+            };
+            const existingOption = options.find(
+              (opt: any) => opt.name === type
+            );
+
+            if (!existingOption) {
+              options.push({
+                name: type,
+                options: [optionValue],
+              });
+            } else {
+              existingOption.options.push(optionValue);
+            }
+          });
+
+          return options;
+        }, [])
+      );
     } else {
-      getProducts();
+      getProductList();
     }
-  }, [products]);
+  }, [productList, product]);
+
+  useEffect(() => {
+    const selectedOptions = productOptions?.map(
+      (option) =>
+        option.options.find((selectedOption) => selectedOption.selected)?.value
+    );
+    setProductItem(
+      product?.options.find((productOption: ProductItem) => {
+        const productItemAttributes = productOption.attributes.map(
+          (attribute) => attribute.value
+        );
+
+        return productItemAttributes.every(
+          (value, index) => value === selectedOptions?.sort()[index]
+        );
+      })
+    );
+  }, [productOptions]);
 
   return (
     <div className="flex h-full gap-spaced">
       <div className="flex flex-col flex-1 sticky top-[100px] h-[calc(100vh-100px)] spaced-b">
         <div className="relative w-full h-full overflow-hidden rounded bg-light">
-          {product?.image ? (
+          {/* {product?.details.gallery[0] ? (
             <Image
-              src={product?.image}
+              src={product?.details.gallery[0]}
               fill
               alt={`${product.name} image`}
               objectFit="cover"
               priority
             />
-          ) : null}
+          ) : null} */}
         </div>
         {/* <div>{product?.amount}</div>
         <button
@@ -48,7 +131,13 @@ export default function Page({ params }: { params: { slug: string } }) {
       </div>
       <div className="flex flex-col flex-1 gap-spaced h-[200vh]">
         <div className="flex flex-col gap-spaced-sm">
-          <h1 className="text-5xl text-light font-ranille">{product?.name}</h1>
+          <h1 className="text-5xl text-light font-ranille">{product?._id}</h1>
+          <h2 className="text-3xl text-light font-ranille flex gap-2 items-baseline">
+            {productItem?.amount.toFixed(2)}
+            <span className="">
+              <Label>PHP</Label>
+            </span>
+          </h2>
           <p className="text-md font-gopher text-light">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -62,28 +151,34 @@ export default function Page({ params }: { params: { slug: string } }) {
         <div className="w-full h-[1px] divider bg-light" />
         <div className="flex flex-col gap-spaced">
           {/* select component (no functionality) */}
-          <div className="flex flex-col gap-spaced-sm">
-            <label htmlFor="flavors" className="text-light">
-              <Label>Flavors:</Label>
-            </label>
-            <div className="flex rounded-md spaced-sm bg-light">
-              <select
-                className="w-full font-gopher focus:outline-0"
-                name=""
-                id="flavors"
-              >
-                {/* <option value="" selected hidden>
-                Flavors
-              </option> */}
-                <option value="" selected>
-                  Plain
-                </option>
-                <option value="">Barbeque</option>
-                <option value="">Sour Cream</option>
-                <option value="">Cheese</option>
-              </select>
-            </div>
-          </div>
+          {productOptions?.map((productOption, index) => {
+            return (
+              <div className="flex flex-col gap-spaced-sm" key={index}>
+                <label htmlFor={productOption.name} className="text-light">
+                  <Label>{productOption.name}: </Label>
+                </label>
+                <div className="flex rounded-md spaced-sm bg-light">
+                  <select
+                    className="w-full font-gopher focus:outline-0"
+                    name={productOption.name}
+                    id={productOption.name}
+                    value={getSelectedOption(productOption.name)?.value}
+                    onChange={(e) =>
+                      onChageProductOption(e.target.value, productOption.name)
+                    }
+                  >
+                    {productOption.options.map((option, index) => {
+                      return (
+                        <option value={option.value} key={index}>
+                          {option.value}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            );
+          })}
           {/* set quantity component (no functionality) */}
           <div className="flex flex-col gap-spaced-sm w-min">
             <label htmlFor="flavors" className="text-light">
@@ -100,7 +195,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 id="quantity"
               />
               <button className="transition-colors rounded-sm bg-light spaced-md text-dark hover:bg-primary font-gopher">
-                +
+                -
               </button>
             </div>
           </div>
@@ -108,7 +203,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         <div className="sticky bottom-0 flex mt-auto spaced-b">
           <button
             className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
-            onClick={() => addToCart(product?._id ?? "")}
+            onClick={() => addToCart(productItem?._id ?? "")}
           >
             Add to Cart
           </button>
