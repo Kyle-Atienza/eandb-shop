@@ -6,38 +6,35 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
-import { useRef } from "react";
-
 interface ProductCard {
   _id: string;
   details: Product;
   options: ProductItem[];
 }
 
-export function ProductCard({
-  product,
-  index,
-  rowSpanItems = [],
-  colSpanItems = [],
-  rowAutoItems = [],
-  className,
-}: {
-  product: ProductCard;
-  index: number;
-  rowSpanItems?: number[];
-  colSpanItems?: number[];
-  rowAutoItems?: number[];
-  className?: string;
-}) {
+export function ProductCard({ product }: { product: ProductCard }) {
   const router = useRouter();
+  const amount = () => {
+    const prizes = product.options
+      .reduce((prizes: any, option: any) => {
+        if (!prizes.includes(option.amount)) {
+          prizes.push(option.amount);
+        }
+        return prizes;
+      }, [])
+      .sort((a: any, b: any) => a - b);
 
-  const container = useRef(null);
+    if (prizes.length > 1) {
+      return <>{`${prizes[0]} - ${prizes[prizes.length - 1]}`}</>;
+    } else {
+      return <>{`${prizes[0]}`}</>;
+    }
+  };
 
-  console.log(product);
+  console.log(amount);
 
   return (
     <div
-      ref={container}
       className={`product-card transition-all flex flex-col relative group mt-auto
       
       `}
@@ -45,23 +42,12 @@ export function ProductCard({
     >
       <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[110%] h-[110%] flex items-center justify-center bg-light opacity-0"></div>
       <div className="relative flex flex-col gap-spaced-sm ">
-        {/* <div className="flex justify-between gap-spaced-sm text-light">
-
-          <div className=" text-dark bg-light p-4 rounded-md font-medium self-start">
-            <p className="text-md lg:text-xl font-gopher">
-              {product.details.name}
-            </p>
-          </div>
-          <div className=" text-dark bg-light p-4 rounded-md font-medium self-start">
-            <p className="text-sm lg:text-md font-gopher">100.00</p>
-          </div>
-        </div> */}
         <div className="flex justify-between items-end gap-spaced-sm text-light">
           <p className="text-md lg:text-xl font-gopher w-[30%]">
             {product.details.name}
           </p>
           <p className="text-md lg:text-xl font-gopher">
-            100.00 <span className="text-xs lg:text-sm">PHP</span>
+            {amount()} <span className="text-xs lg:text-sm">PHP</span>
           </p>
         </div>
         <div className="w-full h-[2px] divider bg-light" />

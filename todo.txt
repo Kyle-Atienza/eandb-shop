@@ -2,3 +2,6 @@ fix sort of products
 - sort alphabetically
 
 sort by tags (banana, mushroom ,taro)
+
+configure ssg/ssr
+use swr for data fetching

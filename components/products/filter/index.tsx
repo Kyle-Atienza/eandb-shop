@@ -1,3 +1,5 @@
+"use client";
+
 import { LabelButton } from "@/components/common/button";
 import { useRouter } from "next/navigation";
 
