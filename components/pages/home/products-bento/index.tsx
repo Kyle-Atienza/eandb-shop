@@ -1,3 +1,5 @@
+"use client";
+
 import { Label } from "@/components/common/label";
 import { ProductCard } from "@/components/products/card";
 import { AsteriskSvg } from "@/components/decorations/svg/asterisk";
@@ -9,6 +11,8 @@ import { useRouter, redirect } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import axios from "axios";
+import { ProductBentoCard } from "@/components/products/bento-card";
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +24,14 @@ function BentoItem({ className }: { className?: string }) {
   );
 }
 
+/* const getProducts = async () => {
+  const res = await axios.get(`${process.env.BASE_URL}/products`);
+  return await res.data;
+}; */
+
 export function BentoProducts() {
+  // const products: Product[] = await getProducts();
+
   const router = useRouter();
 
   const { products } = useProductsStore();
@@ -79,10 +90,15 @@ export function BentoProducts() {
         </p>
       </div>
 
-      <BentoItem className="row-span-2" />
-      <BentoItem />
-      <BentoItem />
-      <BentoItem />
+      {products ? (
+        <>
+          {/* <BentoItem className="row-span-2" /> */}
+          <ProductBentoCard className="row-span-2" product={products[0]} />
+          <ProductBentoCard product={products[1]} />
+          <ProductBentoCard product={products[2]} />
+          <ProductBentoCard product={products[3]} />
+        </>
+      ) : null}
 
       <div
         ref={marqueeCard}
@@ -101,25 +117,39 @@ export function BentoProducts() {
         </div>
       </div>
 
-      <BentoItem className="col-span-2" />
+      {/* <BentoItem className="col-span-2" />
       <BentoItem />
       <BentoItem />
       <BentoItem />
-      <BentoItem />
+      <BentoItem /> */}
 
-      <div className="relative z-10 flex flex-col min-h-[100vw] lg:min-h-0 row-span-2 lg:row-span-2 font-gopher ">
-        <div className="sticky top-[50vh] spaced text-dark bg-light rounded lg:items-center items-start lg:justify-between flex flex-col lg:flex-row gap-4 hover:bg-primary transition-colors">
-          <div className="flex flex-col gap-4">
-            <p className="text-2xl lg:text-3xl">Want to be our reseller?</p>
-            <Label>Check our wholesale rates!</Label>
+      {products ? (
+        <>
+          {/* <BentoItem className="row-span-2" /> */}
+          <ProductBentoCard className="col-span-2" product={products[4]} />
+          <ProductBentoCard product={products[5]} />
+          <ProductBentoCard product={products[6]} />
+          <ProductBentoCard product={products[7]} />
+        </>
+      ) : null}
+
+      <div className="relative z-10 flex flex-col min-h-[100vw] lg:min-h-0 row-span-2 lg:row-span-2 font-gopher">
+        <div className="sticky bottom-0 mt-auto spaced-b">
+          <div className="spaced text-dark bg-light rounded lg:items-center items-start lg:justify-between flex flex-col lg:flex-row gap-4 hover:bg-primary transition-colors">
+            <div className="flex flex-col gap-4 ">
+              <p className="text-2xl lg:text-3xl">Want to be our reseller?</p>
+              <Label>Check our wholesale rates!</Label>
+            </div>
+            <i className="text-4xl lg:text-3xl bi bi-shop-window"></i>
           </div>
-          <i className="text-4xl lg:text-3xl bi bi-shop-window"></i>
         </div>
       </div>
 
-      <BentoItem />
-      <BentoItem />
-      <BentoItem />
+      {products ? (
+        <>
+          <ProductBentoCard product={products[8]} />
+        </>
+      ) : null}
     </div>
   );
 }

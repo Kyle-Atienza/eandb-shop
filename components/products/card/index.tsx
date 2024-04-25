@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -15,7 +17,7 @@ interface ProductCard {
 export function ProductCard({ product }: { product: ProductCard }) {
   const router = useRouter();
   const amount = () => {
-    const prizes = product.options
+    const prizes = product?.options
       .reduce((prizes: any, option: any) => {
         if (!prizes.includes(option.amount)) {
           prizes.push(option.amount);

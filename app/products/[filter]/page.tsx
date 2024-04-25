@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -8,12 +6,13 @@ import { ProductFilter } from "@/components/products/filter";
 
 import { useProductsStore } from "@/state/products";
 
-export default function Page({ params }: { params: { filter: string } }) {
-  const { productList, getProductList } = useProductsStore();
+const getProductList = async () => {
+  const res = await axios.get(`${process.env.BASE_URL}/products/list`);
+  return await res.data;
+};
 
-  useEffect(() => {
-    getProductList();
-  }, []);
+export default async function Page({ params }: { params: { filter: string } }) {
+  const productList: ProductListingItem[] = await getProductList();
 
   return (
     <>
@@ -27,24 +26,10 @@ export default function Page({ params }: { params: { filter: string } }) {
               ...listingItem,
               _id: listingItem._id.toLowerCase().replaceAll(" ", "-"),
             };
-            return <ProductCard product={cardData} key={index} index={index} />;
+            return <ProductCard product={cardData} key={index} />;
           })}
         </div>
       </div>
     </>
   );
 }
-
-/* export async function getStaticProps() {
-  const res = await axios({
-    method: "get",
-    url: `${process.env.BASE_URL}/products`,
-  });
-  const productList = await res.data;
-
-  return {
-    props: {
-      productList,
-    },
-  };
-} */

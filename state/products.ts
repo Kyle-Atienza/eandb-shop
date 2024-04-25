@@ -9,6 +9,7 @@ interface ProductsState {
   items: ProductItem[];
   productList: ProductListingItem[];
   setIsLoading: (isLoading: boolean) => void;
+  setProducts: (products: Product[]) => void;
   getProducts: () => void;
   getProductList: () => void;
 }
@@ -20,6 +21,7 @@ export const useProductsStore = create<ProductsState>((set) => ({
   isLoading: false,
   isError: false,
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
+  setProducts: (products: Product[]) => set({ products }),
   getProducts: async () => {
     set({ isLoading: true, isError: false });
 

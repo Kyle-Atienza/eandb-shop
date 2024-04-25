@@ -17,7 +17,7 @@ export function ProductBentoCard({
   className,
 }: {
   product: Product;
-  index: number;
+  index?: number;
   rowSpanItems?: number[];
   colSpanItems?: number[];
   rowAutoItems?: number[];
@@ -31,18 +31,7 @@ export function ProductBentoCard({
     <div
       ref={container}
       className={`product-card transition-all rounded bg-dark flex flex-col relative group
-      ${rowSpanItems.includes(index) ? "row-span-2 aspect-auto" : ""}
-      ${
-        colSpanItems.includes(index)
-          ? "min-h-[45vw] lg:min-h-0 col-span-2 aspect-auto"
-          : ""
-      }
-      ${
-        rowSpanItems.includes(index) || colSpanItems.includes(index)
-          ? ""
-          : "aspect-[2/3] lg:aspect-square"
-      }
-      ${className || ""}
+      ${className ?? "aspect-square"}
       `}
       onClick={() => router.push(`/product/${product._id}`)}
     >
@@ -61,7 +50,7 @@ export function ProductBentoCard({
         <div className="absolute w-full h-full spaced-md font-gopher group">
           <div className="relative w-full h-full">
             <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
-              <p className="text-sm lg:text-xl">{product.name}</p>
+              <p className="text-sm lg:text-xl">{product?.name}</p>
             </div>
             {/* {product.attribute ? (
               <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-md transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
