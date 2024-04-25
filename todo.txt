@@ -1,7 +1,4 @@
-fix sort of products
-- sort alphabetically
-
-sort by tags (banana, mushroom ,taro)
-
-configure ssg/ssr
-use swr for data fetching
+product bento card
+- show variant
+- on click
+    - use the more expensive product link

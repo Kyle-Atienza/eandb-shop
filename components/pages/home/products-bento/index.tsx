@@ -92,7 +92,6 @@ export function BentoProducts() {
 
       {products ? (
         <>
-          {/* <BentoItem className="row-span-2" /> */}
           <ProductBentoCard className="row-span-2" product={products[0]} />
           <ProductBentoCard product={products[1]} />
           <ProductBentoCard product={products[2]} />
@@ -117,15 +116,8 @@ export function BentoProducts() {
         </div>
       </div>
 
-      {/* <BentoItem className="col-span-2" />
-      <BentoItem />
-      <BentoItem />
-      <BentoItem />
-      <BentoItem /> */}
-
       {products ? (
         <>
-          {/* <BentoItem className="row-span-2" /> */}
           <ProductBentoCard className="col-span-2" product={products[4]} />
           <ProductBentoCard product={products[5]} />
           <ProductBentoCard product={products[6]} />

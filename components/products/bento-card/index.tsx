@@ -47,17 +47,38 @@ export function ProductBentoCard({
             priority
           />
         </div>
-        <div className="absolute w-full h-full spaced-md font-gopher group">
-          <div className="relative w-full h-full">
-            <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
-              <p className="text-sm lg:text-xl">{product?.name}</p>
-            </div>
-            {/* {product.attribute ? (
-              <div className="absolute bottom-0 right-0 p-4 font-medium bg-primary text-light rounded-md transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
-                <p className="text-xs lg:text-xl">{product.attribute}</p>
-              </div>
-            ) : null} */}
+      </div>
+      <div className="absolute w-full h-full spaced-md font-gopher group overflow-hidden ">
+        <div className="relative w-full h-full">
+          <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
+            <p className="text-sm lg:text-xl">
+              {product?.name}
+              {/* {product?.options.length} */}
+            </p>
           </div>
+          {product?.items.length > 1 ? (
+            <div className="absolute bottom-0 right-0 font-medium flex flex-wrap gap-spaced-sm transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
+              {product.items.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="bg-primary text-light rounded-md spaced-sm"
+                  >
+                    <p className="text-xs lg:text-lg">{item.name}</p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          {/* {product.attribute ? (
+            ) : null} */}
+          {/* {product?.options.length
+              ? product.options.map((option, index) => {
+                  return (
+                    
+                  );
+                })
+              : null} */}
         </div>
       </div>
     </div>

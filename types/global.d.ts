@@ -4,6 +4,10 @@ declare global {
     name: string;
     description?: string;
     gallery: string[];
+    items: {
+      name: string;
+      options: ProductItem[];
+    };
   }
   interface ProductOption {
     type: string;
@@ -13,8 +17,8 @@ declare global {
     _id: string;
     name: string;
     amount: number;
-    details: Product;
-    attributes: ProductOption[];
+    details: Product | string;
+    attributes: ProductOption[] | string[];
   }
   interface ProductListingItem {
     _id: string;
