@@ -44,6 +44,8 @@ export default function Page({ params }: { params: { slug: string } }) {
   const { productList, getProductList } = useProductsStore();
   const { addToCart } = useOrdersStore();
 
+  const [quantity, setQuantity] = useState<number>(1);
+
   const product: ProductListingItem = productList.find(
     (listItem) => parseProductListItemId(listItem._id) === params.slug
   )!;
@@ -149,12 +151,18 @@ export default function Page({ params }: { params: { slug: string } }) {
               />
             );
           })}
-          <ProductQuantity />
+          <ProductQuantity
+            quantity={quantity}
+            onChange={(val) => setQuantity(val)}
+          />
         </div>
         <div className="sticky bottom-0 flex mt-auto spaced-b">
           <button
             className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
-            onClick={() => addToCart(productItem?._id ?? "")}
+            onClick={() => {
+              addToCart(productItem?._id ?? "", quantity);
+              setQuantity(1);
+            }}
           >
             Add to Cart
           </button>
