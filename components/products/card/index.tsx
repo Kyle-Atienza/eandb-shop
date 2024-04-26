@@ -8,23 +8,27 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
+interface ProductCardOption extends ProductItem {
+  amount: number;
+}
+
 interface ProductCard {
   _id: string;
   details: Product;
-  options: ProductItem[];
+  options: ProductCardOption[];
 }
 
 export function ProductCard({ product }: { product: ProductCard }) {
   const router = useRouter();
   const amount = () => {
     const prizes = product?.options
-      .reduce((prizes: any, option: any) => {
+      .reduce((prizes: number[], option: ProductCardOption) => {
         if (!prizes.includes(option.amount)) {
           prizes.push(option.amount);
         }
         return prizes;
       }, [])
-      .sort((a: any, b: any) => a - b);
+      .sort((a: number, b: number) => a - b);
 
     if (prizes.length > 1) {
       return <>{`${prizes[0]} - ${prizes[prizes.length - 1]}`}</>;
