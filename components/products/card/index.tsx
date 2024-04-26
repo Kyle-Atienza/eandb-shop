@@ -12,13 +12,14 @@ interface ProductCardOption extends ProductItem {
   amount: number;
 }
 
-interface ProductCard {
+/* interface ProductCard {
   _id: string;
+  name: string;
   details: Product;
   options: ProductCardOption[];
-}
+} */
 
-export function ProductCard({ product }: { product: ProductCard }) {
+export function ProductCard({ product }: { product: ProductListingItem }) {
   const router = useRouter();
   const amount = () => {
     const prizes = product?.options
@@ -37,8 +38,6 @@ export function ProductCard({ product }: { product: ProductCard }) {
     }
   };
 
-  console.log(amount);
-
   return (
     <div
       className={`product-card transition-all flex flex-col relative group mt-auto
@@ -50,7 +49,7 @@ export function ProductCard({ product }: { product: ProductCard }) {
       <div className="relative flex flex-col gap-spaced-sm ">
         <div className="flex justify-between items-end gap-spaced-sm text-light">
           <p className="text-md lg:text-xl font-gopher w-[30%]">
-            {product.details.name}
+            {product.name}
           </p>
           <p className="text-md lg:text-xl font-gopher">
             {amount()} <span className="text-xs lg:text-sm">PHP</span>

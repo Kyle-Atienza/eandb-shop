@@ -12,6 +12,8 @@ import Image from "next/image";
 import { Label } from "@/components/common/label";
 import { ProductQuantity } from "@/components/pages/product/quantity";
 import { ProductOptions } from "@/components/pages/product/options";
+import { ProductRelatedItems } from "@/components/pages/product/related";
+import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
 
 const setInitalProductOptions = (
   product: ProductListingItem
@@ -51,6 +53,18 @@ const getProduct = (productList: ProductListingItem[], slug: string) => {
   )!;
 };
 
+const getRelatedProducts = (
+  productList: ProductListingItem[],
+  product: ProductListingItem,
+  slug: string
+) => {
+  return productList.filter(
+    (listItem) =>
+      listItem.details._id === product.details._id &&
+      parseProductListItemId(listItem._id) !== slug
+  )!;
+};
+
 const getProductItem = (
   product: ProductListingItem,
   selectedOptions: string[]
@@ -80,9 +94,15 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [quantity, setQuantity] = useState<number>(1);
   const [productOptions, setProductOptions] =
     useState<ProductOptionSelectItem[]>();
+  // const [productItem, setProductItem] = useState<ProductItem>();
   const product: ProductListingItem = getProduct(productList, params.slug);
   const selectedOptions: string[] = getSelectedOptions(productOptions!);
   const productItem: ProductItem = getProductItem(product, selectedOptions)!;
+  const relatedProducts: ProductListingItem[] = getRelatedProducts(
+    productList,
+    product,
+    params.slug
+  );
 
   const getSelectedOption = (name: string) => {
     if (productOptions) {
@@ -108,14 +128,16 @@ export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
     if (productList.length) {
       setProductOptions(setInitalProductOptions(product));
+      // setProductItem(getProductItem(product, selectedOptions));
     } else {
       getProductList();
     }
-  }, [productList, product]);
+    console.log(product, productItem);
+  }, [productList, product, productItem]);
 
   return (
-    <div className="flex h-full gap-spaced">
-      <div className="flex flex-col flex-1 sticky top-[100px] h-[calc(100vh-100px)] spaced-b">
+    <div className="flex gap-spaced overflow-hidden h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)]">
+      <div className="flex flex-col flex-1  lg:spaced-b">
         <div className="relative w-full h-full overflow-hidden rounded bg-light">
           {/* {product?.details.gallery[0] ? (
             <Image
@@ -127,56 +149,55 @@ export default function Page({ params }: { params: { slug: string } }) {
             />
           ) : null} */}
         </div>
-        {/* <div>{product?.amount}</div>
-        <button
-          className="self-start p-2 bg-dark text-light"
-          onClick={() => addToCart(product?._id ?? "")}
-        >
-          Add to Cart
-        </button> */}
       </div>
-      <div className="flex flex-col flex-1 gap-spaced h-[200vh]">
-        <div className="flex flex-col gap-spaced-sm">
-          <h1 className="text-5xl text-light font-ranille">{product?._id}</h1>
-          <h2 className="text-3xl text-light font-ranille flex gap-2 items-baseline">
-            {productItem?.amount.toFixed(2)}
-            <span className="">
-              <Label>PHP</Label>
-            </span>
-          </h2>
-          <p className="text-md font-gopher text-light">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+      <div className="flex flex-col flex-1 gap-spaced h-full overflow-hidden lg:spaced-b">
+        <div className="flex flex-col gap-spaced overflow-auto rounded spaced-t">
+          <div className="flex flex-col gap-spaced-sm">
+            <h1 className="text-5xl text-light font-ranille">
+              {product?.name}
+            </h1>
+            <h2 className="text-3xl text-light font-ranille flex gap-2 items-baseline">
+              {productItem?.amount.toFixed(2)}
+              <span className="">
+                <Label>PHP</Label>
+              </span>
+            </h2>
+            <p className="text-md font-gopher text-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </div>
+          <div className="w-full h-[1px] divider bg-light" />
+          <div className="flex flex-col gap-spaced">
+            {productOptions?.map((productOption, index) => {
+              return (
+                <ProductOptions
+                  key={index}
+                  productOption={productOption}
+                  value={getSelectedOption(productOption.name)?.value || ""}
+                  onSelect={(e) =>
+                    onChageProductOption(e.target.value, productOption.name)
+                  }
+                />
+              );
+            })}
+            <ProductQuantity
+              quantity={quantity}
+              onChange={(val) => setQuantity(val)}
+            />
+            <ProductRelatedItems items={relatedProducts} />
+          </div>
         </div>
-        <div className="w-full h-[1px] divider bg-light" />
-        <div className="flex flex-col gap-spaced">
-          {productOptions?.map((productOption, index) => {
-            return (
-              <ProductOptions
-                key={index}
-                productOption={productOption}
-                value={getSelectedOption(productOption.name)?.value || ""}
-                onSelect={(e) =>
-                  onChageProductOption(e.target.value, productOption.name)
-                }
-              />
-            );
-          })}
-          <ProductQuantity
-            quantity={quantity}
-            onChange={(val) => setQuantity(val)}
-          />
-        </div>
-        <div className="sticky bottom-0 flex mt-auto spaced-b">
+        <div className="flex bg-base z-20">
           <button
             className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
             onClick={() => {
+              console.log(productItem?._id, productItem.name);
               addToCart(productItem?._id ?? "", quantity);
               setQuantity(1);
             }}

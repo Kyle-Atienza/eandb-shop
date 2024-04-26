@@ -23,6 +23,7 @@ declare global {
   }
   interface ProductListingItem {
     _id: string;
+    name: string;
     options: ProductItem[];
     details: Product;
   }
