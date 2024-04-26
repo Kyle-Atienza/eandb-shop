@@ -10,6 +10,7 @@ declare global {
     }[];
   }
   interface ProductOption {
+    _id: string;
     type: string;
     value: string;
   }
@@ -17,13 +18,22 @@ declare global {
     _id: string;
     name: string;
     amount: number;
-    details: Product | string;
-    attributes: ProductOption[] | string[];
+    details: Product;
+    attributes: ProductOption[];
   }
   interface ProductListingItem {
     _id: string;
     options: ProductItem[];
     details: Product;
+  }
+
+  interface ProductOptionSelect extends ProductOption {
+    selected: boolean;
+  }
+
+  interface ProductOptionSelectItem {
+    name: string;
+    options: ProductOptionSelect[];
   }
 
   interface User {

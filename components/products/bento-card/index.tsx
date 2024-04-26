@@ -46,7 +46,6 @@ export function ProductBentoCard({
             {product?.items.length > 1 ? (
               <div className="absolute bottom-0 right-0 font-medium flex flex-wrap gap-spaced-sm transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
                 {product.items.map((item, index) => {
-                  console.log(product, item);
                   return (
                     <Link
                       href={`/product/${parseProductListItemId(

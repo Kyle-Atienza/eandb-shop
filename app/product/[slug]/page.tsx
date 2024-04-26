@@ -10,24 +10,60 @@ import { parseProductListItemId } from "@/utils/products";
 import Image from "next/image";
 
 import { Label } from "@/components/common/label";
-import { selector } from "gsap";
+import { ProductQuantity } from "@/components/pages/product/quantity";
+import { ProductOptions } from "@/components/pages/product/options";
 
-interface ProductOptionSelect extends ProductOption {
-  selected: boolean;
-}
+const setInitalProductOptions = (
+  product: ProductListingItem
+): ProductOptionSelectItem[] => {
+  return product?.options.reduce((options: any, option, index) => {
+    option.attributes.forEach((optionListItem) => {
+      const { type } = optionListItem;
+      const optionValue = {
+        ...optionListItem,
+        _id: option._id,
+        selected: !index,
+      };
+      const existingOption = options.find((opt: any) => opt.name === type);
+
+      if (!existingOption) {
+        options.push({
+          name: type,
+          options: [optionValue],
+        });
+      } else {
+        existingOption.options.push(optionValue);
+      }
+    });
+
+    return options;
+  }, []);
+};
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { productList, getProductList } = useProductsStore();
   const { addToCart } = useOrdersStore();
 
-  const [product, setProduct] = useState<ProductListingItem>();
-  const [productItem, setProductItem] = useState<ProductItem>();
-  const [productOptions, setProductOptions] = useState<
-    {
-      name: string;
-      options: ProductOptionSelect[];
-    }[]
-  >();
+  const product: ProductListingItem = productList.find(
+    (listItem) => parseProductListItemId(listItem._id) === params.slug
+  )!;
+
+  const [productOptions, setProductOptions] =
+    useState<ProductOptionSelectItem[]>();
+  const selectedOptions = productOptions?.map(
+    (option) =>
+      option.options.find((selectedOption) => selectedOption.selected)?.value
+  );
+
+  const productItem = product?.options.find((productOption: ProductItem) => {
+    const productItemAttributes = productOption.attributes.map(
+      (attribute) => attribute.value
+    );
+
+    return productItemAttributes.every(
+      (value, index) => value === selectedOptions?.sort()[index]
+    );
+  });
 
   const getSelectedOption = (name: string) => {
     if (productOptions) {
@@ -52,60 +88,11 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     if (productList.length) {
-      setProduct(
-        productList.find(
-          (listItem) => parseProductListItemId(listItem._id) === params.slug
-        )
-      );
-
-      setProductOptions(
-        product?.options.reduce((options: any, option, index) => {
-          option.attributes.forEach((optionListItem) => {
-            const { type } = optionListItem;
-            const optionValue = {
-              ...optionListItem,
-              _id: option._id,
-              selected: !index,
-            };
-            const existingOption = options.find(
-              (opt: any) => opt.name === type
-            );
-
-            if (!existingOption) {
-              options.push({
-                name: type,
-                options: [optionValue],
-              });
-            } else {
-              existingOption.options.push(optionValue);
-            }
-          });
-
-          return options;
-        }, [])
-      );
+      setProductOptions(setInitalProductOptions(product));
     } else {
       getProductList();
     }
   }, [productList, product]);
-
-  useEffect(() => {
-    const selectedOptions = productOptions?.map(
-      (option) =>
-        option.options.find((selectedOption) => selectedOption.selected)?.value
-    );
-    setProductItem(
-      product?.options.find((productOption: ProductItem) => {
-        const productItemAttributes = productOption.attributes.map(
-          (attribute) => attribute.value
-        );
-
-        return productItemAttributes.every(
-          (value, index) => value === selectedOptions?.sort()[index]
-        );
-      })
-    );
-  }, [productOptions]);
 
   return (
     <div className="flex h-full gap-spaced">
@@ -150,55 +137,19 @@ export default function Page({ params }: { params: { slug: string } }) {
         </div>
         <div className="w-full h-[1px] divider bg-light" />
         <div className="flex flex-col gap-spaced">
-          {/* select component (no functionality) */}
           {productOptions?.map((productOption, index) => {
             return (
-              <div className="flex flex-col gap-spaced-sm" key={index}>
-                <label htmlFor={productOption.name} className="text-light">
-                  <Label>{productOption.name}: </Label>
-                </label>
-                <div className="flex rounded-md spaced-sm bg-light">
-                  <select
-                    className="w-full font-gopher focus:outline-0"
-                    name={productOption.name}
-                    id={productOption.name}
-                    value={getSelectedOption(productOption.name)?.value}
-                    onChange={(e) =>
-                      onChageProductOption(e.target.value, productOption.name)
-                    }
-                  >
-                    {productOption.options.map((option, index) => {
-                      return (
-                        <option value={option.value} key={index}>
-                          {option.value}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
+              <ProductOptions
+                key={index}
+                productOption={productOption}
+                value={getSelectedOption(productOption.name)?.value || ""}
+                onSelect={(e: any) =>
+                  onChageProductOption(e.target.value, productOption.name)
+                }
+              />
             );
           })}
-          {/* set quantity component (no functionality) */}
-          <div className="flex flex-col gap-spaced-sm w-min">
-            <label htmlFor="flavors" className="text-light">
-              <Label>Quantity:</Label>
-            </label>
-            <div className="flex border-2 rounded-md border-light spaced-sm">
-              <button className="transition-colors rounded-sm bg-light spaced-md text-dark hover:bg-primary font-gopher">
-                +
-              </button>
-              <input
-                className="w-24 text-center bg-base text-light spaced-md"
-                defaultValue={1}
-                type="text"
-                id="quantity"
-              />
-              <button className="transition-colors rounded-sm bg-light spaced-md text-dark hover:bg-primary font-gopher">
-                -
-              </button>
-            </div>
-          </div>
+          <ProductQuantity />
         </div>
         <div className="sticky bottom-0 flex mt-auto spaced-b">
           <button

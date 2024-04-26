@@ -1,4 +1,11 @@
-product bento card
-- show variant
-- on click
-    - use the more expensive product link
+product details page
+- quantity selector on add to cart
+
+
+db
+- add appropriate image
+
+payment
+- still waiting 
+
+cart
