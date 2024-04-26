@@ -45,22 +45,17 @@ const setInitalProductOptions = (
   );
 };
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const { productList, getProductList } = useProductsStore();
-  const { addToCart } = useOrdersStore();
-
-  const [quantity, setQuantity] = useState<number>(1);
-
-  const product: ProductListingItem = productList.find(
-    (listItem) => parseProductListItemId(listItem._id) === params.slug
+const getProduct = (productList: ProductListingItem[], slug: string) => {
+  return productList.find(
+    (listItem) => parseProductListItemId(listItem._id) === slug
   )!;
-  const [productOptions, setProductOptions] =
-    useState<ProductOptionSelectItem[]>();
-  const selectedOptions = productOptions?.map(
-    (option) =>
-      option.options.find((selectedOption) => selectedOption.selected)?.value
-  );
-  const productItem = product?.options.find((productOption: ProductItem) => {
+};
+
+const getProductItem = (
+  product: ProductListingItem,
+  selectedOptions: string[]
+) => {
+  return product?.options.find((productOption: ProductItem) => {
     const productItemAttributes = productOption.attributes.map(
       (attribute) => attribute.value
     );
@@ -69,6 +64,25 @@ export default function Page({ params }: { params: { slug: string } }) {
       (value, index) => value === selectedOptions?.sort()[index]
     );
   });
+};
+
+const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
+  return productOptions?.map(
+    (option) =>
+      option.options.find((selectedOption) => selectedOption.selected)?.value!
+  )!;
+};
+
+export default function Page({ params }: { params: { slug: string } }) {
+  const { productList, getProductList } = useProductsStore();
+  const { addToCart } = useOrdersStore();
+
+  const [quantity, setQuantity] = useState<number>(1);
+  const [productOptions, setProductOptions] =
+    useState<ProductOptionSelectItem[]>();
+  const product: ProductListingItem = getProduct(productList, params.slug);
+  const selectedOptions: string[] = getSelectedOptions(productOptions!);
+  const productItem: ProductItem = getProductItem(product, selectedOptions)!;
 
   const getSelectedOption = (name: string) => {
     if (productOptions) {
