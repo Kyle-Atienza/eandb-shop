@@ -49,14 +49,12 @@ export default function Page({ params }: { params: { slug: string } }) {
   const product: ProductListingItem = productList.find(
     (listItem) => parseProductListItemId(listItem._id) === params.slug
   )!;
-
   const [productOptions, setProductOptions] =
     useState<ProductOptionSelectItem[]>();
   const selectedOptions = productOptions?.map(
     (option) =>
       option.options.find((selectedOption) => selectedOption.selected)?.value
   );
-
   const productItem = product?.options.find((productOption: ProductItem) => {
     const productItemAttributes = productOption.attributes.map(
       (attribute) => attribute.value
@@ -145,7 +143,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 key={index}
                 productOption={productOption}
                 value={getSelectedOption(productOption.name)?.value || ""}
-                onSelect={(e: any) =>
+                onSelect={(e) =>
                   onChageProductOption(e.target.value, productOption.name)
                 }
               />

@@ -8,7 +8,7 @@ export function ProductOptions({
 }: {
   productOption: ProductOptionSelectItem;
   value: string;
-  onSelect: React.ChangeEventHandler;
+  onSelect: ChangeEventHandler<HTMLSelectElement>;
 }) {
   return (
     <>

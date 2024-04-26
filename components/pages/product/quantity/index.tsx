@@ -10,8 +10,6 @@ export function ProductQuantity({
   quantity: number;
   onChange: (val: number) => void;
 }) {
-  // const [quantity, setQuantity] = useState<number>(1);
-
   return (
     <div className="flex flex-col gap-spaced-sm w-min">
       {/* TODO: validation for stock */}
