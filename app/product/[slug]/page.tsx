@@ -16,28 +16,33 @@ import { ProductOptions } from "@/components/pages/product/options";
 const setInitalProductOptions = (
   product: ProductListingItem
 ): ProductOptionSelectItem[] => {
-  return product?.options.reduce((options: any, option, index) => {
-    option.attributes.forEach((optionListItem) => {
-      const { type } = optionListItem;
-      const optionValue = {
-        ...optionListItem,
-        _id: option._id,
-        selected: !index,
-      };
-      const existingOption = options.find((opt: any) => opt.name === type);
+  return product?.options.reduce(
+    (options: ProductOptionSelectItem[], option, index) => {
+      option.attributes.forEach((optionListItem) => {
+        const { type } = optionListItem;
+        const optionValue = {
+          ...optionListItem,
+          _id: option._id,
+          selected: !index,
+        };
+        const existingOption = options.find(
+          (opt: ProductOptionSelectItem) => opt.name === type
+        );
 
-      if (!existingOption) {
-        options.push({
-          name: type,
-          options: [optionValue],
-        });
-      } else {
-        existingOption.options.push(optionValue);
-      }
-    });
+        if (!existingOption) {
+          options.push({
+            name: type,
+            options: [optionValue],
+          });
+        } else {
+          existingOption.options.push(optionValue);
+        }
+      });
 
-    return options;
-  }, []);
+      return options;
+    },
+    []
+  );
 };
 
 export default function Page({ params }: { params: { slug: string } }) {
