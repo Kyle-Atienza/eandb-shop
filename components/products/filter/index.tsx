@@ -1,6 +1,6 @@
 "use client";
 
-import { LabelButton } from "@/components/common/button";
+import { Button } from "@/components/common/button";
 import { useRouter } from "next/navigation";
 
 export function ProductFilter() {
@@ -8,18 +8,12 @@ export function ProductFilter() {
 
   return (
     <div className=" flex flex-wrap gap-spaced-md">
-      <LabelButton onClick={() => router.push("/products/oyster-mushroom")}>
+      <Button onClick={() => router.push("/products/oyster-mushroom")}>
         Oyster Mushroom
-      </LabelButton>
-      <LabelButton onClick={() => router.push("/products/banana")}>
-        Banana
-      </LabelButton>
-      <LabelButton onClick={() => router.push("/products/taro")}>
-        Taro
-      </LabelButton>
-      <LabelButton onClick={() => router.push("/products/all")}>
-        All
-      </LabelButton>
+      </Button>
+      <Button onClick={() => router.push("/products/banana")}>Banana</Button>
+      <Button onClick={() => router.push("/products/taro")}>Taro</Button>
+      <Button onClick={() => router.push("/products/all")}>All</Button>
     </div>
   );
 }

@@ -7,7 +7,7 @@ interface OptionsState {
 }
 
 export const useOptionsStore = create<OptionsState>((set) => ({
-  drawer: false,
+  drawer: true,
   toggleDrawer: (val?: boolean) =>
     set((state) => ({ drawer: val ? val : !state.drawer })),
   closeDrawer: () => set({ drawer: false }),

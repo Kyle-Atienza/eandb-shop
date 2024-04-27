@@ -2,7 +2,11 @@
 
 import { useOrdersStore } from "@/state/orders";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { Button } from "../common/button";
+import { ProductQuantity } from "../pages/product/quantity";
+import { Divider } from "../decorations/divider";
 
 function CartItemQuantity({ item }: { item: CartItem }) {
   const [quantity, setQuantity] = useState<number>(item.count);
@@ -94,13 +98,15 @@ function CartItemQuantity({ item }: { item: CartItem }) {
 }
 
 function CartItem({ item }: { item: CartItem }) {
+  const [quantity, setQuantity] = useState<number>(item.count);
   const { deleteCartItem } = useOrdersStore();
 
+  useEffect(() => {
+    console.log("quantity updated", quantity);
+  }, [quantity]);
+
   return (
-    <a
-      href="#"
-      className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-    >
+    <div className="flex flex-col items≈-center bg-white lg:flex-row gap-space-md">
       {/* {item?.product?.gallery?.length ? (
         <Image
           className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
@@ -114,40 +120,54 @@ function CartItem({ item }: { item: CartItem }) {
           alt="Cart Item"
         />
       ) : null} */}
-      <div className="flex flex-col items-start justify-between p-4 leading-normal">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {/* {item.product.name}{" "} */}
-          {/* {item.product.attribute ? ` - ${item.product.attribute}` : ""} */}
+      <div className="w-[180px]">
+        <div className="w-full aspect-square bg-dark rounded-md"></div>
+      </div>
+      <div className="flex-1 items-start justify-between gap-spaced-xs leading-normal">
+        <h5 className="mb-2 text-2xl font-gopher tracking-tight text-gray-900 dark:text-white">
           {item.product.details.name}
           {item.product.name ? ` - ${item.product.name}` : ""}
         </h5>
-        {item.product.attributes.length
-          ? item.product.attributes.map((attribute, index) => {
-              return (
-                <p
-                  className="mb-3 font-normal text-gray-700 dark:text-gray-400"
-                  key={index}
-                >
-                  {attribute.type}: {attribute.value}
-                </p>
-              );
-            })
-          : null}
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {item.count}
-        </p>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {item.price * item.count}
-        </p>
-        <CartItemQuantity item={item} />
-        <button
-          onClick={() => deleteCartItem(item.product._id)}
-          className="self-start p-2 bg-dark text-light"
-        >
-          Delete
-        </button>
+        <div className="flex flex-col gap-spaced-xs items-start">
+          {item.product.attributes.length
+            ? item.product.attributes.map((attribute, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="bg-base text-light rounded-md spaced-sm"
+                  >
+                    <p className="text-xs lg:text-lg font-gopher">
+                      {attribute.value}
+                    </p>
+                  </div>
+                );
+              })
+            : null}
+          <div className="bg-base text-light rounded-md spaced-sm">
+            <p className="text-xs lg:text-lg font-gopher">
+              {item.price * item.count}
+            </p>
+          </div>
+          <div className="flex gap-spaced-sm">
+            {/* <CartItemQuantity item={item} /> */}
+            <ProductQuantity
+              color="base"
+              quantity={quantity}
+              onChange={(val) => setQuantity(val)}
+              size="sm"
+              deleteButton
+              label={false}
+            />
+            {/* <button
+            onClick={() => deleteCartItem(item.product._id)}
+            className="self-start p-2 bg-dark text-light"
+          >
+            Delete
+          </button> */}
+          </div>
+        </div>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -156,6 +176,8 @@ type CartProps = {
 };
 
 export default function Cart() {
+  const router = useRouter();
+
   const { cart } = useOrdersStore();
 
   const totalAmount = cart.items.reduce((total, cartItem) => {
@@ -164,11 +186,26 @@ export default function Cart() {
   }, 0);
 
   return (
-    <div className="overflow-scroll">
-      {cart.items.map((cartItem, index) => {
-        return <CartItem item={cartItem} key={index} />;
-      })}
-      <p>Total Amount: {totalAmount}</p>
+    <div className="flex flex-col gap-spaced-md">
+      <div className="flex justify-between items-end">
+        <h3 className="font-ranille text-dark text-2xl lg:text-4xl">
+          Your Cart
+        </h3>
+        <Button color="base" onClick={() => router.push("/checkout")}>
+          Checkout
+        </Button>
+      </div>
+      <div className="overflow-scroll flex flex-col gap-spaced">
+        {cart.items.map((cartItem, index) => {
+          return (
+            <>
+              <CartItem item={cartItem} key={index} />
+              {/* <Divider color="base" /> */}
+            </>
+          );
+        })}
+        <p>Total Amount: {totalAmount}</p>
+      </div>
     </div>
   );
 }

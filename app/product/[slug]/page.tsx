@@ -132,7 +132,6 @@ export default function Page({ params }: { params: { slug: string } }) {
     } else {
       getProductList();
     }
-    console.log(product, productItem);
   }, [productList, product, productItem]);
 
   return (
@@ -197,7 +196,6 @@ export default function Page({ params }: { params: { slug: string } }) {
           <button
             className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
             onClick={() => {
-              console.log(productItem?._id, productItem.name);
               addToCart(productItem?._id ?? "", quantity);
               setQuantity(1);
             }}
