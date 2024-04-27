@@ -26,7 +26,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (drawer) {
-      // closeDrawer();
+      closeDrawer();
     }
   }, [router]);
 

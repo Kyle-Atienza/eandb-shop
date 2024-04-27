@@ -35,7 +35,16 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   isError: false,
   addToCart: async (productId: string, count?: number) => {
     set({ isLoading: true });
-    toast.loading("Updating Cart Item");
+
+    const existingCartItem = useOrdersStore
+      .getState()
+      .cart.items.find((cartItem) => cartItem.product._id === productId);
+    if (existingCartItem) {
+      toast.loading("Updating Item Quantity");
+    } else {
+      toast.loading("Adding Item to Cart");
+    }
+
     const config = {
       headers: {
         Authorization: `Bearer ${useUserStore.getState().user?.token}`,
@@ -47,7 +56,11 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .then((res) => {
         set({ cart: res.data });
         toast.dismiss();
-        toast.success("Successfully Updated Cart Item");
+        if (existingCartItem) {
+          toast.success("Succesfully Updated Item Quantity");
+        } else {
+          toast.success("Succesfully Added Item to Cart");
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -65,8 +78,6 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .getState()
       .cart.items.find((item) => item.product._id === productId);
     const count = Number(data.get("quantity")) - (product?.count || 0);
-
-    console.log("debug", count);
 
     if (count !== 0) {
       set({ isLoading: true });

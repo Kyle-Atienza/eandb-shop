@@ -1,5 +1,4 @@
-cart bug on enter always triggering -1
-loading animation
+
 
 
 db
@@ -9,3 +8,5 @@ payment
 - still waiting 
 
 cart
+
+ssg/ssr

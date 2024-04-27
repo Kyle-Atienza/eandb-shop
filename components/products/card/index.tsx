@@ -45,7 +45,6 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
       `}
       onClick={() => router.push(`/product/${product._id}`)}
     >
-      <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[110%] h-[110%] flex items-center justify-center bg-light opacity-0"></div>
       <div className="relative flex flex-col gap-spaced-sm ">
         <div className="flex justify-between items-end gap-spaced-sm text-light">
           <p className="text-md lg:text-xl font-gopher w-[30%]">
@@ -58,6 +57,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
         <div className="w-full h-[2px] divider bg-light" />
 
         <div className="aspect-square rounded-md overflow-hidden relative transition-shadow group-hover:shadow-2xl">
+          <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] flex items-center justify-center bg-light opacity-0"></div>
           <Image
             className={`transition-all object-cover object-center `}
             src="https://res.cloudinary.com/dfdw1yzkk/image/upload/v1712994720/E%20and%20B%20Farm/products/images/square/af8k4pwotuc9p9nlb6aa.png"

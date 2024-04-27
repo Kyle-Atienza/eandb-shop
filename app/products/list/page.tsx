@@ -8,8 +8,8 @@ import { useProductsStore } from "@/state/products";
 import { list } from "postcss";
 
 const getProductList = async () => {
-  const res = await axios.get(`${process.env.BASE_URL}/products/list`);
-  return await res.data;
+  const res = await fetch(`${process.env.BASE_URL}/products/list`);
+  return await res.json();
 };
 
 export default async function Page({ params }: { params: { filter: string } }) {

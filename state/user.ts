@@ -13,10 +13,11 @@ interface UserState {
 }
 
 const checkSavedUser = (): User | null => {
-  const localUser = localStorage.getItem("user");
+  const localUser =
+    typeof window !== "undefined" ? localStorage.getItem("user") : null;
 
   if (localUser) {
-    const userData = JSON.parse(localUser) as unknown as User;
+    const userData = JSON.parse(localUser) as User;
 
     return {
       _id: userData._id,
