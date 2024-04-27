@@ -1,4 +1,3 @@
-import { Button } from "@/components/common/button";
 import { Label } from "@/components/common/label";
 import { useOrdersStore } from "@/state/orders";
 import { ChangeEvent, ReactNode, useEffect, useState } from "react";
@@ -63,16 +62,18 @@ export function ProductQuantity({
   //
   cartItemId?: string;
 }) {
-  const { addToCart, updateCartItemQuantity } = useOrdersStore();
+  const { addToCart, updateCartItemQuantity, deleteCartItem } =
+    useOrdersStore();
 
-  const [cartItemQuantity, setCartItemQuantity] = useState<number>(quantity);
-
-  useEffect(() => {
-    onChange ? onChange(cartItemQuantity) : null;
-  }, [cartItemQuantity]);
+  const [productItemQuantity, setProductItemQuantity] =
+    useState<number>(quantity);
 
   useEffect(() => {
-    setCartItemQuantity(quantity);
+    onChange ? onChange(productItemQuantity) : null;
+  }, [productItemQuantity]);
+
+  useEffect(() => {
+    setProductItemQuantity(quantity);
   }, [quantity]);
 
   return (
@@ -110,7 +111,7 @@ export function ProductQuantity({
             onClick={
               cartItemId
                 ? () => addToCart(cartItemId, -1)
-                : () => setCartItemQuantity!(cartItemQuantity - 1)
+                : () => setProductItemQuantity!(productItemQuantity - 1)
             }
           >
             -
@@ -120,9 +121,9 @@ export function ProductQuantity({
             className={`${inputSize(size)} text-center bg-[transparent] ${
               size ? `spaced-${size}` : "spaced-md"
             } ${textColorClassName(color)}`}
-            value={cartItemQuantity}
+            value={productItemQuantity}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setCartItemQuantity(Number(e.target.value))
+              setProductItemQuantity(Number(e.target.value))
             }
             type="text"
             id="quantity"
@@ -133,18 +134,18 @@ export function ProductQuantity({
             onClick={
               cartItemId
                 ? () => addToCart(cartItemId, 1)
-                : () => setCartItemQuantity!(cartItemQuantity + 1)
+                : () => setProductItemQuantity!(productItemQuantity + 1)
             }
           >
             +
           </QuantityButton>
         </div>
-        {deleteButton ? (
+        {deleteButton && cartItemId ? (
           <button
             className={`transition-colors rounded-sm w-16 ${
               size ? `spaced-${size}` : "spaced-md"
             } hover:bg-primary font-gopher ${buttonColorClassName(color)}`}
-            // onClick={() => onChange(quantity + 1)}
+            onClick={() => deleteCartItem(cartItemId)}
           >
             <i className={`bi bi-trash text-2xl`}></i>
           </button>
