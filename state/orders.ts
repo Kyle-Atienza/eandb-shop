@@ -57,6 +57,8 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .cart.items.find((item) => item.product._id === productId);
     const count = Number(data.get("quantity")) - (product?.count || 0);
 
+    console.log("debug", count);
+
     if (count !== 0) {
       set({ isLoading: true });
       const config = {

@@ -50,7 +50,6 @@ function CartItemQuantity({ item }: { item: CartItem }) {
           id="product-id"
           className="hidden"
           value={item.product._id}
-          onChange={() => {}}
         />
         <input
           name="quantity"
@@ -98,11 +97,13 @@ function CartItemQuantity({ item }: { item: CartItem }) {
 }
 
 function CartItem({ item }: { item: CartItem }) {
-  const [quantity, setQuantity] = useState<number>(item.count);
-  const { deleteCartItem } = useOrdersStore();
+  // const [quantity, setQuantity] = useState<number>(item.count);
+  const quantity: number = item.count;
+  const { deleteCartItem, addToCart, updateCartItemQuantity } =
+    useOrdersStore();
 
   useEffect(() => {
-    console.log("quantity updated", quantity);
+    console.log("quantity updated", quantity, item);
   }, [quantity]);
 
   return (
@@ -148,15 +149,16 @@ function CartItem({ item }: { item: CartItem }) {
               {item.price * item.count}
             </p>
           </div>
+          {/* <CartItemQuantity item={item} /> */}
           <div className="flex gap-spaced-sm">
-            {/* <CartItemQuantity item={item} /> */}
+            {/* idk if this is best practice */}
             <ProductQuantity
               color="base"
-              quantity={quantity}
-              onChange={(val) => setQuantity(val)}
               size="sm"
               deleteButton
               label={false}
+              quantity={quantity}
+              cartItemId={item.product._id}
             />
             {/* <button
             onClick={() => deleteCartItem(item.product._id)}
