@@ -27,6 +27,7 @@ function QuantityButton({
 }) {
   return (
     <button
+      type="button"
       disabled={disabled}
       className={`transition-colors rounded-sm ${
         size ? `spaced-${size}` : "spaced-md"
@@ -106,6 +107,7 @@ export function ProductQuantity({
           value={cartItemId}
         />
       ) : null}
+      <button type="submit" className="hidden"></button>
       {label ? (
         <label htmlFor="flavors" className="">
           <Label>Quantity:</Label>
@@ -155,6 +157,7 @@ export function ProductQuantity({
         </div>
         {deleteButton && cartItemId ? (
           <button
+            type="button"
             className={`transition-colors rounded-sm w-16 ${
               size ? `spaced-${size}` : "spaced-md"
             } hover:bg-primary font-gopher ${buttonColorClassName(color)}`}
