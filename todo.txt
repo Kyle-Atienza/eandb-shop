@@ -1,5 +1,5 @@
-product details page
-- quantity selector on add to cart
+cart ui
+loading animation
 
 
 db

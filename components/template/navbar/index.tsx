@@ -9,11 +9,11 @@ export function Navbar() {
   const router = useRouter();
 
   const { user, signOut } = useUserStore();
-  const { toggleDrawer } = useOptionsStore();
+  const { toggleDrawer, drawer } = useOptionsStore();
   const { resetOrdersStore } = useOrdersStore();
 
   return (
-    <div className="sticky top-0 z-50 spaced-x bg-base">
+    <div className=" spaced-x bg-base">
       <div className="relative flex spaced-y gap-spaced-md">
         <button
           className="text-3xl text-light"
@@ -25,7 +25,9 @@ export function Navbar() {
           <>
             {pathname !== "/checkout" ? (
               <button
-                className="text-3xl text-light"
+                className={`text-3xl transition-colors ${
+                  drawer ? "text-primary" : "text-light"
+                }`}
                 onClick={() => toggleDrawer()}
               >
                 <i className="bi bi-bag"></i>

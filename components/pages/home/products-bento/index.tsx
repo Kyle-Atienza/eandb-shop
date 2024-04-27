@@ -72,7 +72,7 @@ export function BentoProducts() {
     >
       <div
         ref={mainCard}
-        className="main-card relative z-30 flex flex-col justify-end col-span-1 gap-spaced lg:col-span-2 xl:col-span-3 font-ranille text-light"
+        className="main-card relative flex flex-col justify-end col-span-1 gap-spaced lg:col-span-2 xl:col-span-3 font-ranille text-light"
       >
         <Label>Welcome!</Label>
         <p className=" text-[10vw] lg:text-[7vw]">

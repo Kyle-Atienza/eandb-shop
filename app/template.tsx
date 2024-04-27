@@ -36,10 +36,24 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <AnimatedCursor />
-      <Navbar />
-      <Drawer />
-      <div className="grid flex-1 spaced-x">{children}</div>
+      <div className="z-20 sticky top-0">
+        <AnimatedCursor />
+        <Navbar />
+        <Drawer />
+        <div
+          className={`w-full h-full fixed top-0 left-0 ${
+            !drawer ? "pointer-events-none" : ""
+          }`}
+          onClick={closeDrawer}
+        ></div>
+      </div>
+      <div
+        className={`grid relative flex-1 spaced-x transition-opacity ${
+          drawer ? "pointer-events-none opacity-50" : ""
+        }`}
+      >
+        {children}
+      </div>
     </div>
   );
 }

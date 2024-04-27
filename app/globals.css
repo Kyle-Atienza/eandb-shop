@@ -118,3 +118,7 @@
 .glow:hover {
   box-shadow: 0px 0px 80px 30px var(--light-color);
 }
+
+.hide-scrollbar ::-webkit-scrollbar {
+  display: none;
+}

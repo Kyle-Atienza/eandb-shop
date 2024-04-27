@@ -151,7 +151,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <div className="flex flex-col flex-1 gap-spaced h-full overflow-hidden lg:spaced-b">
-        <div className="flex flex-col gap-spaced overflow-auto rounded spaced-t">
+        <div className="flex flex-col gap-spaced overflow-auto hide-scrollbar rounded spaced-y">
           <div className="flex flex-col gap-spaced-sm">
             <h1 className="text-5xl text-light font-ranille">
               {product?.name}
@@ -193,7 +193,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             <ProductRelatedItems items={relatedProducts} />
           </div>
         </div>
-        <div className="flex bg-base z-20">
+        <div className="flex bg-base">
           <button
             className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
             onClick={() => {
