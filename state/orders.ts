@@ -3,7 +3,10 @@ import { create } from "zustand";
 import { useUserStore } from "./user";
 const API_URL = `${process.env.BASE_URL}/orders`;
 
+import toast from "react-hot-toast";
+
 interface OrdersState {
+  message: string;
   isLoading: boolean;
   isError: boolean;
   orders: Order[];
@@ -16,6 +19,7 @@ interface OrdersState {
 }
 
 const initialState = {
+  message: "",
   orders: [],
   cart: {
     _id: "",
@@ -31,6 +35,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   isError: false,
   addToCart: async (productId: string, count?: number) => {
     set({ isLoading: true });
+    toast.loading("Updating Cart Item");
     const config = {
       headers: {
         Authorization: `Bearer ${useUserStore.getState().user?.token}`,
@@ -41,10 +46,14 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .post(`${API_URL}/cart/add`, { productId, count: count ?? 1 }, config)
       .then((res) => {
         set({ cart: res.data });
+        toast.dismiss();
+        toast.success("Successfully Updated Cart Item");
       })
       .catch((e) => {
         console.log(e);
         set({ isError: true });
+        toast.dismiss();
+        toast.error(e.message);
       })
       .finally(() => {
         set({ isLoading: false });

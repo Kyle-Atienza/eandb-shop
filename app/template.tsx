@@ -11,6 +11,8 @@ import { AnimatedCursor } from "@/components/template/animated-cursor";
 import { Navbar } from "@/components/template/navbar";
 import { Drawer } from "@/components/template/drawer";
 
+import toast, { Toaster } from "react-hot-toast";
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(useGSAP);
@@ -46,6 +48,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
           }`}
           onClick={closeDrawer}
         ></div>
+        <Toaster />
+        {/* <button onClick={() => toast("test")}>toast</button> */}
       </div>
       <div
         className={`grid relative flex-1 spaced-x transition-opacity ${

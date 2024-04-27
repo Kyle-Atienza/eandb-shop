@@ -8,6 +8,7 @@ import {
   inputSize,
   borderColorClassName,
 } from "@/utils/classnames";
+import toast from "react-hot-toast";
 
 const re = /^[0-9\b]+$/;
 
@@ -32,9 +33,7 @@ function QuantityButton({
       } hover:bg-primary font-gopher disabled:opacity-50 ${buttonColorClassName(
         color
       )}`}
-      onClick={(e) => {
-        onClick;
-      }}
+      onClick={onClick}
     >
       {children}
     </button>
@@ -62,8 +61,15 @@ export function ProductQuantity({
   //
   cartItemId?: string;
 }) {
-  const { addToCart, updateCartItemQuantity, deleteCartItem } =
-    useOrdersStore();
+  const {
+    addToCart,
+    updateCartItemQuantity,
+    deleteCartItem,
+    message,
+    isLoading,
+    isError,
+    cart,
+  } = useOrdersStore();
 
   const [productItemQuantity, setProductItemQuantity] =
     useState<number>(quantity);
@@ -75,6 +81,13 @@ export function ProductQuantity({
   useEffect(() => {
     setProductItemQuantity(quantity);
   }, [quantity]);
+
+  useEffect(() => {
+    if (!isLoading && !isError && cart.items.length) {
+      /* toast.dismiss();
+      toast.success(message); */
+    }
+  }, [isLoading, message]);
 
   return (
     <form
@@ -98,7 +111,7 @@ export function ProductQuantity({
           <Label>Quantity:</Label>
         </label>
       ) : null}
-      <div className="flex gap-spaced-md">
+      <div className="flex gap-spaced-xs">
         <div
           className={`flex ${
             border ? "border-2 rounded-md spaced-sm" : ""
