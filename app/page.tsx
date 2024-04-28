@@ -21,7 +21,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="mt-[25vh]">
+    <main className="mt-[50vh]">
       <ProductFilter />
       <div className="spaced-t">
         <BentoProducts />

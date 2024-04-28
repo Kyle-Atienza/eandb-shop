@@ -21,7 +21,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const { drawer, closeDrawer } = useOptionsStore();
-  const { user } = useUserStore();
+  const { user, checkSavedUser } = useUserStore();
   const { getCart } = useOrdersStore();
 
   useEffect(() => {
@@ -34,6 +34,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
     if (user) {
       getCart();
     }
+  }, [user]);
+
+  useEffect(() => {
+    checkSavedUser();
   }, []);
 
   return (

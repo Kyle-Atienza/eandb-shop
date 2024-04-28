@@ -1,5 +1,7 @@
 
-
+change axios with fetch?
+checkout page
+filter product page
 
 db
 - add appropriate image

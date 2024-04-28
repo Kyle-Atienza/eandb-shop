@@ -1,19 +1,28 @@
-import { useEffect } from "react";
-import axios from "axios";
-
 import { ProductCard } from "@/components/products/card";
 import { ProductFilter } from "@/components/products/filter";
+import { useParams } from "next/navigation";
 
-import { useProductsStore } from "@/state/products";
-import { list } from "postcss";
+const getProductList = async (searchParams: SearchParams) => {
+  // console.log(new URLSearchParams(searchParams));
+  const params = new URLSearchParams();
 
-const getProductList = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/products/list`);
+  Object.keys(searchParams).forEach(
+    (searchParam) => params.set(searchParam, `${searchParams[searchParam]}`)
+    // console.log(searchParam, searchParams[searchParam])
+  );
+
+  const res = await fetch(`${process.env.BASE_URL}/products/list?${params}`);
   return await res.json();
 };
 
-export default async function Page({ params }: { params: { filter: string } }) {
-  const productList: ProductListingItem[] = await getProductList();
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { filter: string };
+  searchParams: SearchParams;
+}) {
+  const productList: ProductListingItem[] = await getProductList(searchParams);
 
   return (
     <>

@@ -8,6 +8,7 @@ declare global {
       name: string;
       options: ProductItem[];
     }[];
+    group: string;
   }
   interface ProductOption {
     _id: string;
@@ -60,6 +61,10 @@ declare global {
   interface SignInData {
     email: string;
     password: string;
+  }
+
+  interface SearchParams {
+    [key: string]: string | string[] | undefined;
   }
 }
 

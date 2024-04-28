@@ -1,6 +1,11 @@
 const buttonColorClassName = (
-  color?: "dark" | "base" | "light" | "primary"
+  color?: "dark" | "base" | "light" | "primary",
+  active?: boolean
 ) => {
+  if (active) {
+    return "bg-primary text-dark";
+  }
+
   if (color) {
     return `bg-${color} text-light`;
   }

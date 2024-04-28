@@ -75,7 +75,7 @@ export function BentoProducts() {
         className="main-card relative flex flex-col justify-end col-span-1 gap-spaced lg:col-span-2 xl:col-span-3 font-ranille text-light"
       >
         <Label>Welcome!</Label>
-        <p className=" text-[10vw] lg:text-[7vw]">
+        <div className=" text-[10vw] lg:text-[7vw] leading-[1em]">
           {"Discover what's in store for you!"}
           <span ref={scrollDown} className="relative group">
             <span className="opacity-0">M</span>
@@ -87,7 +87,7 @@ export function BentoProducts() {
               </div>
             </div>
           </span>
-        </p>
+        </div>
       </div>
 
       {products ? (

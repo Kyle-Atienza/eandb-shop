@@ -10,9 +10,10 @@ interface UserState {
   user: User | null;
   signIn: (data: FormData) => void;
   signOut: () => void;
+  checkSavedUser: () => void;
 }
 
-const checkSavedUser = (): User | null => {
+/* const checkSavedUser = (): User | null => {
   const localUser =
     typeof window !== "undefined" ? localStorage.getItem("user") : null;
 
@@ -28,12 +29,31 @@ const checkSavedUser = (): User | null => {
   } else {
     return null;
   }
-};
+}; */
 
 export const useUserStore = create<UserState>((set) => ({
   isLoading: false,
   isError: false,
-  user: checkSavedUser() ?? null,
+  user: null,
+  checkSavedUser: () => {
+    const localUser =
+      typeof window !== "undefined" ? localStorage.getItem("user") : null;
+
+    if (localUser) {
+      const userData = JSON.parse(localUser) as User;
+
+      set({
+        user: {
+          _id: userData._id,
+          name: userData.name,
+          email: userData.email,
+          token: userData.token,
+        },
+      });
+    } else {
+      set({ user: null });
+    }
+  },
   signIn: async (data: FormData) => {
     set({ isLoading: true, isError: false });
 
