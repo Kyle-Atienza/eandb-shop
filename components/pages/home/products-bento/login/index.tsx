@@ -7,11 +7,12 @@ export function BentoLogin() {
   const { signIn } = useUserStore();
 
   return (
-    <>
-      <p className="font-ranille text-[2vw] lg:text-[4.5vw] text-light">
-        Login to your Account
+    <div className="flex flex-col justify-end">
+      <p className="font-ranille text-[2vw] lg:text-[4vw] text-light whitespace-pre-wrap">
+        Login to
+        {"\n"}your Account
       </p>
-      <div className="spaced-b-md">
+      <div className="spaced-y-md">
         <Divider />
       </div>
       <form className="" action={signIn}>
@@ -54,6 +55,6 @@ export function BentoLogin() {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 }

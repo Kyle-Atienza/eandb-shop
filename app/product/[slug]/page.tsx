@@ -14,6 +14,7 @@ import { ProductQuantity } from "@/components/pages/product/quantity";
 import { ProductOptions } from "@/components/pages/product/options";
 import { ProductRelatedItems } from "@/components/pages/product/related";
 import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
+import { Divider } from "@/components/decorations/divider";
 
 const setInitalProductOptions = (
   product: ProductListingItem
@@ -171,7 +172,9 @@ export default function Page({ params }: { params: { slug: string } }) {
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
-          <div className="w-full h-[1px] divider bg-light" />
+          <div>
+            <Divider />
+          </div>
           <div className="flex flex-col gap-spaced">
             {productOptions?.map((productOption, index) => {
               return (
@@ -188,6 +191,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             <ProductQuantity
               quantity={quantity}
               onChange={(val) => setQuantity(val)}
+              size="sm"
             />
             <ProductRelatedItems items={relatedProducts} />
           </div>

@@ -12,6 +12,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { useUserStore } from "@/state/user";
+import { Divider } from "@/components/decorations/divider";
+import { BentoUserInfo } from "./user-info";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
@@ -106,9 +108,9 @@ function User() {
   const { user } = useUserStore();
 
   return (
-    <div className="col-span-2 relative flex flex-col justify-end">
+    <div className="col-span-2 row-span-2 relative ">
       <div id="login" className="-top-[25vh] absolute" />
-      {!user ? <BentoLogin /> : null}
+      {!user ? <BentoLogin /> : <BentoUserInfo />}
     </div>
   );
 }
