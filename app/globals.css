@@ -68,6 +68,15 @@
   .spaced-md {
     @apply p-3 lg:p-5;
   }
+  .spaced-y-md {
+    @apply py-3 lg:py-5;
+  }
+  .spaced-b-md {
+    @apply pb-3 lg:pb-5;
+  }
+  .spaced-t-md {
+    @apply pt-3 lg:pt-5;
+  }
 
   .spaced-sm {
     @apply p-2 lg:p-3;
@@ -85,11 +94,17 @@
   .gap-y-spaced {
     @apply gap-y-5 lg:gap-y-8;
   }
+
   .gap-spaced-md {
     @apply gap-3 lg:gap-5;
   }
+
   .gap-spaced-sm {
     @apply gap-2 lg:gap-3;
+  }
+
+  .spaced-xs {
+    @apply p-1 lg:p-2;
   }
   .gap-spaced-xs {
     @apply gap-1 lg:gap-2;

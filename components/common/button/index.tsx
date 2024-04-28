@@ -7,12 +7,14 @@ export function Button({
   className,
   color,
   active = false,
+  type = undefined,
 }: {
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
   className?: string;
   color?: "dark" | "base" | "light" | "primary";
   active?: boolean;
+  type?: "submit" | "reset" | "button" | undefined;
 }) {
   return (
     <button
@@ -21,6 +23,7 @@ export function Button({
         active
       )} hover:bg-primary ${className}`}
       onClick={onClick}
+      type={type}
     >
       <Label>{children}</Label>
     </button>

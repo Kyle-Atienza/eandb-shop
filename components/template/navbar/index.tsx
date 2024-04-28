@@ -47,7 +47,7 @@ export function Navbar() {
         ) : (
           <div>
             <button
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/#login")}
               className="self-start p-2 bg-dark text-light"
             >
               Login

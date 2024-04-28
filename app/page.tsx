@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useProductsStore } from "@/state/products";
 
-import { BentoProducts } from "@/components/pages/home/products-bento";
+import { BentoHome } from "@/components/pages/home/products-bento";
 import { ProductFilter } from "@/components/products/filter";
 import axios from "axios";
 
@@ -24,7 +24,7 @@ export default function Home() {
     <main className="mt-[50vh]">
       <ProductFilter />
       <div className="spaced-t">
-        <BentoProducts />
+        <BentoHome />
       </div>
     </main>
   );
