@@ -1,12 +1,13 @@
 "use client";
 
 import { Button } from "@/components/common/button";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 const filterButtons = ["Oyster Mushroom", "Banana", "Taro"];
 
 export function ProductFilter() {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
 
   return (
@@ -24,7 +25,7 @@ export function ProductFilter() {
       })}
       <Button
         onClick={() => router.push("/products/list")}
-        active={!searchParams.has("group")}
+        active={!searchParams.has("group") && pathName === "/products/list"}
       >
         All
       </Button>
