@@ -1,3 +1,4 @@
+import { Button } from "@/components/common/button";
 import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
 import { useOptionsStore } from "@/state/options";
 import { useOrdersStore } from "@/state/orders";
@@ -33,7 +34,17 @@ export function Navbar() {
                 <i className="bi bi-bag"></i>
               </button>
             ) : null}
-            <button
+            <Button
+              size="sm"
+              onClick={() => {
+                signOut();
+                resetOrdersStore();
+                router.push("/");
+              }}
+            >
+              Log Out
+            </Button>
+            {/* <button
               onClick={() => {
                 signOut();
                 resetOrdersStore();
@@ -42,16 +53,19 @@ export function Navbar() {
               className="text-3xl text-light"
             >
               <i className="bi bi-box-arrow-right"></i>
-            </button>
+            </button> */}
           </>
         ) : (
           <div>
-            <button
+            {/* <button
               onClick={() => router.push("/#login")}
               className="self-start p-2 bg-dark text-light"
             >
               Login
-            </button>
+            </button> */}
+            <Button size="sm" onClick={() => router.push("/#login")}>
+              Log In
+            </Button>
           </div>
         )}
         <FakeBorderRadius position="topLeft" className="top-full" />

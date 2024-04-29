@@ -8,6 +8,7 @@ export function Button({
   color,
   active = false,
   type = undefined,
+  size,
 }: {
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
@@ -15,17 +16,27 @@ export function Button({
   color?: "dark" | "base" | "light" | "primary";
   active?: boolean;
   type?: "submit" | "reset" | "button" | undefined;
+  size?: "sm";
 }) {
+  const buttonSizeClassName = (size?: "sm") => {
+    if (size) {
+      return `spaced-${size}`;
+    }
+
+    return "spaced-md";
+  };
+
   return (
     <button
-      className={`transition-colors rounded-full spaced-md ${buttonColorClassName(
-        color,
-        active
-      )} hover:bg-primary ${className}`}
+      className={`transition-colors rounded-full ${buttonSizeClassName(
+        size
+      )} ${buttonColorClassName(color, active)} hover:bg-primary ${className}`}
       onClick={onClick}
       type={type}
     >
-      <Label>{children}</Label>
+      <div className="spaced-x-xs">
+        <Label>{children}</Label>
+      </div>
     </button>
   );
 }

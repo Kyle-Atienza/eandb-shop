@@ -1,6 +1,5 @@
 checkoutpage
 product item card
-ssr product page
 
 db
 - add appropriate image

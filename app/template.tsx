@@ -53,7 +53,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
           onClick={closeDrawer}
         ></div>
         <Toaster />
-        {/* <button onClick={() => toast("test")}>toast</button> */}
       </div>
       <div
         className={`grid relative flex-1 spaced-x transition-opacity ${

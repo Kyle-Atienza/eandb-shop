@@ -77,12 +77,18 @@
   .spaced-t-md {
     @apply pt-3 lg:pt-5;
   }
+  .spaced-x-md {
+    @apply px-3 lg:px-5;
+  }
 
   .spaced-sm {
     @apply p-2 lg:p-3;
   }
   .spaced-t-sm {
     @apply pt-2 lg:pt-3;
+  }
+  .spaced-x-sm {
+    @apply px-2 lg:px-3;
   }
 
   .gap-spaced {
@@ -108,6 +114,9 @@
   }
   .gap-spaced-xs {
     @apply gap-1 lg:gap-2;
+  }
+  .spaced-x-xs {
+    @apply px-1 lg:px-2;
   }
 
   .rounded-lg {
