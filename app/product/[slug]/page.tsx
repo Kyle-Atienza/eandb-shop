@@ -1,72 +1,17 @@
-// "use client";
-
-import { useProductsStore } from "@/state/products";
-import { useOrdersStore } from "@/state/orders";
-
-import { ChangeEvent, useEffect, useState } from "react";
-
-import { parseProductListItemId } from "@/utils/products";
+import {
+  parseProductListItemId,
+  setInitalProductOptions,
+} from "@/utils/products";
 
 import Image from "next/image";
 
 import { Label } from "@/components/common/label";
-import { ProductQuantity } from "@/components/pages/product/quantity";
-import {
-  ProductOption,
-  ProductOptions,
-} from "@/components/pages/product/options";
-import { ProductRelatedItems } from "@/components/pages/product/related";
-import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
 import { Divider } from "@/components/decorations/divider";
 import { ProductDetails } from "@/components/pages/product/details";
-
-const setInitalProductOptions = (
-  product: ProductListingItem
-): ProductOptionSelectItem[] => {
-  return product?.options.reduce(
-    (options: ProductOptionSelectItem[], option, index) => {
-      option.attributes.forEach((optionListItem) => {
-        const { type } = optionListItem;
-        const optionValue = {
-          ...optionListItem,
-          _id: option._id,
-          selected: !index,
-        };
-        const existingOption = options.find(
-          (opt: ProductOptionSelectItem) => opt.name === type
-        );
-
-        if (!existingOption) {
-          options.push({
-            name: type,
-            options: [optionValue],
-          });
-        } else {
-          existingOption.options.push(optionValue);
-        }
-      });
-
-      return options;
-    },
-    []
-  );
-};
 
 const getProduct = (productList: ProductListingItem[], slug: string) => {
   return productList.find(
     (listItem) => parseProductListItemId(listItem._id) === slug
-  )!;
-};
-
-const getRelatedProducts = (
-  productList: ProductListingItem[],
-  product: ProductListingItem,
-  slug: string
-) => {
-  return productList.filter(
-    (listItem) =>
-      listItem.details._id === product.details._id &&
-      parseProductListItemId(listItem._id) !== slug
   )!;
 };
 
@@ -98,53 +43,12 @@ const getProductList = async () => {
 };
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  // const { productList, getProductList } = useProductsStore();
   const productList: ProductListingItem[] = await getProductList();
-
-  // const { addToCart } = useOrdersStore();
-
-  // const [quantity, setQuantity] = useState<number>(1);
-  // const [productOptions, setProductOptions] =
-  //   useState<ProductOptionSelectItem[]>();
   const product: ProductListingItem = getProduct(productList, params.slug);
   const selectedOptions: string[] = getSelectedOptions(
     setInitalProductOptions(product)!
   );
   const productItem: ProductItem = getProductItem(product, selectedOptions)!;
-  /* const relatedProducts: ProductListingItem[] = getRelatedProducts(
-    productList,
-    product,
-    params.slug
-  ); */
-
-  /* const getSelectedOption = (name: string) => {
-    if (productOptions) {
-      return productOptions
-        .find((option) => option.name === name)
-        ?.options.find((option) => !!option.selected);
-    }
-  };
-
-  const onChageProductOption = (value: string, optionName?: string) => {
-    setProductOptions(
-      productOptions?.map((productOption) => {
-        if (productOption.name === optionName) {
-          productOption.options.forEach((optionItem) => {
-            optionItem.selected = optionItem.value === value;
-          });
-        }
-        return productOption;
-      })
-    );
-  };
-
-  useEffect(() => {
-    if (productList.length) {
-      setProductOptions(setInitalProductOptions(product));
-    } else {
-      getProductList();
-    }
-  }, [productList, product, productItem]); */
 
   return (
     <div className="flex gap-spaced overflow-hidden h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)]">
@@ -190,40 +94,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
             productList={productList}
             slug={params.slug}
             productItem={productItem}
+            product={product}
           />
-          {/* <ProductOptions product={product} /> */}
-          {/* <div className="flex flex-col gap-spaced">
-            {productOptions?.map((productOption, index) => {
-              return (
-                <ProductOption
-                  key={index}
-                  productOption={productOption}
-                  value={getSelectedOption(productOption.name)?.value || ""}
-                  onSelect={(e) =>
-                    onChageProductOption(e.target.value, productOption.name)
-                  }
-                />
-              );
-            })}
-            <ProductQuantity
-              quantity={quantity}
-              onChange={(val) => setQuantity(val)}
-              size="sm"
-            />
-            <ProductRelatedItems items={relatedProducts} />
-          </div> */}
         </div>
-        {/* <div className="flex bg-base">
-          <button
-            className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
-            onClick={() => {
-              addToCart(productItem?._id ?? "", quantity);
-              setQuantity(1);
-            }}
-          >
-            Add to Cart
-          </button>
-        </div> */}
       </div>
     </div>
   );

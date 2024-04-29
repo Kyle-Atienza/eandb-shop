@@ -6,40 +6,11 @@ import { useState } from "react";
 import { ProductOption, ProductOptions } from "../options";
 import { ProductQuantity } from "../quantity";
 import { ProductRelatedItems } from "../related";
-import { parseProductListItemId } from "@/utils/products";
+import {
+  parseProductListItemId,
+  setInitalProductOptions,
+} from "@/utils/products";
 import { useOrdersStore } from "@/state/orders";
-
-const setInitalProductOptions = (
-  product: ProductListingItem
-): ProductOptionSelectItem[] => {
-  return product?.options.reduce(
-    (options: ProductOptionSelectItem[], option, index) => {
-      option.attributes.forEach((optionListItem) => {
-        const { type } = optionListItem;
-        const optionValue = {
-          ...optionListItem,
-          _id: option._id,
-          selected: !index,
-        };
-        const existingOption = options.find(
-          (opt: ProductOptionSelectItem) => opt.name === type
-        );
-
-        if (!existingOption) {
-          options.push({
-            name: type,
-            options: [optionValue],
-          });
-        } else {
-          existingOption.options.push(optionValue);
-        }
-      });
-
-      return options;
-    },
-    []
-  );
-};
 
 const getRelatedProducts = (
   productList: ProductListingItem[],
@@ -53,26 +24,21 @@ const getRelatedProducts = (
   )!;
 };
 
-const getProduct = (productList: ProductListingItem[], slug: string) => {
-  return productList.find(
-    (listItem) => parseProductListItemId(listItem._id) === slug
-  )!;
-};
-
 export function ProductDetails({
   productList,
   slug,
   productItem,
+  product,
 }: {
   productList: ProductListingItem[];
   slug: string;
   productItem: ProductItem;
+  product: ProductListingItem;
 }) {
   const { addToCart } = useOrdersStore();
 
   const [quantity, setQuantity] = useState<number>(1);
 
-  const product: ProductListingItem = getProduct(productList, slug);
   const relatedProducts: ProductListingItem[] = getRelatedProducts(
     productList,
     product,
