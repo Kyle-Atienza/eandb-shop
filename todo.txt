@@ -1,7 +1,6 @@
-
-change axios with fetch?
-checkout page
-login page
+checkoutpage
+product item card
+ssr product page
 
 db
 - add appropriate image

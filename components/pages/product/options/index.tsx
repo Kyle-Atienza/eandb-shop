@@ -1,7 +1,9 @@
-import { Label } from "@/components/common/label";
-import { ChangeEvent, ChangeEventHandler } from "react";
+"use client";
 
-export function ProductOptions({
+import { Label } from "@/components/common/label";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
+
+export function ProductOption({
   productOption,
   value,
   onSelect,
@@ -35,6 +37,50 @@ export function ProductOptions({
           </select>
         </div>
       </div>
+    </>
+  );
+}
+
+export function ProductOptions({
+  productOptions,
+  onSelect,
+}: {
+  productOptions: ProductOptionSelectItem[];
+  onSelect: (val: ProductOptionSelectItem[]) => void;
+}) {
+  const getSelectedOption = (name: string) => {
+    if (productOptions) {
+      return productOptions
+        .find((option) => option.name === name)
+        ?.options.find((option) => !!option.selected);
+    }
+  };
+
+  const onChageProductOption = (value: string, optionName?: string) => {
+    return productOptions?.map((productOption) => {
+      if (productOption.name === optionName) {
+        productOption.options.forEach((optionItem) => {
+          optionItem.selected = optionItem.value === value;
+        });
+      }
+      return productOption;
+    });
+  };
+
+  return (
+    <>
+      {productOptions?.map((productOption, index) => {
+        return (
+          <ProductOption
+            key={index}
+            productOption={productOption}
+            value={getSelectedOption(productOption.name)?.value || ""}
+            onSelect={(e) =>
+              onSelect(onChageProductOption(e.target.value, productOption.name))
+            }
+          />
+        );
+      })}
     </>
   );
 }

@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { useProductsStore } from "@/state/products";
 import { useOrdersStore } from "@/state/orders";
@@ -11,10 +11,14 @@ import Image from "next/image";
 
 import { Label } from "@/components/common/label";
 import { ProductQuantity } from "@/components/pages/product/quantity";
-import { ProductOptions } from "@/components/pages/product/options";
+import {
+  ProductOption,
+  ProductOptions,
+} from "@/components/pages/product/options";
 import { ProductRelatedItems } from "@/components/pages/product/related";
 import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
 import { Divider } from "@/components/decorations/divider";
+import { ProductDetails } from "@/components/pages/product/details";
 
 const setInitalProductOptions = (
   product: ProductListingItem
@@ -88,24 +92,32 @@ const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
   )!;
 };
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const { productList, getProductList } = useProductsStore();
-  const { addToCart } = useOrdersStore();
+const getProductList = async () => {
+  const res = await fetch(`${process.env.BASE_URL}/products/list`);
+  return await res.json();
+};
 
-  const [quantity, setQuantity] = useState<number>(1);
-  const [productOptions, setProductOptions] =
-    useState<ProductOptionSelectItem[]>();
-  // const [productItem, setProductItem] = useState<ProductItem>();
+export default async function Page({ params }: { params: { slug: string } }) {
+  // const { productList, getProductList } = useProductsStore();
+  const productList: ProductListingItem[] = await getProductList();
+
+  // const { addToCart } = useOrdersStore();
+
+  // const [quantity, setQuantity] = useState<number>(1);
+  // const [productOptions, setProductOptions] =
+  //   useState<ProductOptionSelectItem[]>();
   const product: ProductListingItem = getProduct(productList, params.slug);
-  const selectedOptions: string[] = getSelectedOptions(productOptions!);
+  const selectedOptions: string[] = getSelectedOptions(
+    setInitalProductOptions(product)!
+  );
   const productItem: ProductItem = getProductItem(product, selectedOptions)!;
-  const relatedProducts: ProductListingItem[] = getRelatedProducts(
+  /* const relatedProducts: ProductListingItem[] = getRelatedProducts(
     productList,
     product,
     params.slug
-  );
+  ); */
 
-  const getSelectedOption = (name: string) => {
+  /* const getSelectedOption = (name: string) => {
     if (productOptions) {
       return productOptions
         .find((option) => option.name === name)
@@ -129,11 +141,10 @@ export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
     if (productList.length) {
       setProductOptions(setInitalProductOptions(product));
-      // setProductItem(getProductItem(product, selectedOptions));
     } else {
       getProductList();
     }
-  }, [productList, product, productItem]);
+  }, [productList, product, productItem]); */
 
   return (
     <div className="flex gap-spaced overflow-hidden h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)]">
@@ -150,7 +161,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           ) : null} */}
         </div>
       </div>
-      <div className="flex flex-col flex-1 gap-spaced h-full overflow-hidden lg:spaced-b">
+      <div className="flex flex-col flex-1 gap-spaced h-full overflow-hidden">
         <div className="flex flex-col gap-spaced overflow-auto hide-scrollbar rounded spaced-y">
           <div className="flex flex-col gap-spaced-sm">
             <h1 className="text-5xl text-light font-ranille">
@@ -175,10 +186,16 @@ export default function Page({ params }: { params: { slug: string } }) {
           <div>
             <Divider />
           </div>
-          <div className="flex flex-col gap-spaced">
+          <ProductDetails
+            productList={productList}
+            slug={params.slug}
+            productItem={productItem}
+          />
+          {/* <ProductOptions product={product} /> */}
+          {/* <div className="flex flex-col gap-spaced">
             {productOptions?.map((productOption, index) => {
               return (
-                <ProductOptions
+                <ProductOption
                   key={index}
                   productOption={productOption}
                   value={getSelectedOption(productOption.name)?.value || ""}
@@ -194,9 +211,9 @@ export default function Page({ params }: { params: { slug: string } }) {
               size="sm"
             />
             <ProductRelatedItems items={relatedProducts} />
-          </div>
+          </div> */}
         </div>
-        <div className="flex bg-base">
+        {/* <div className="flex bg-base">
           <button
             className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
             onClick={() => {
@@ -206,7 +223,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           >
             Add to Cart
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
