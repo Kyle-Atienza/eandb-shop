@@ -51,8 +51,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const productItem: ProductItem = getProductItem(product, selectedOptions)!;
 
   return (
-    <div className="flex gap-spaced overflow-hidden h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)]">
-      <div className="flex flex-col flex-1  lg:spaced-b">
+    <div className="flex gap-spaced ">
+      <div className="flex flex-col flex-1 h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)] sticky top-[76px] lg:top-[100px] lg:spaced-b">
         <div className="relative w-full h-full overflow-hidden rounded bg-light">
           {/* {product?.details.gallery[0] ? (
             <Image
@@ -65,8 +65,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           ) : null} */}
         </div>
       </div>
-      <div className="flex flex-col flex-1 gap-spaced h-full overflow-hidden">
-        <div className="flex flex-col gap-spaced overflow-auto hide-scrollbar rounded spaced-y">
+      <div className="flex flex-col flex-1 gap-spaced spaced-b">
+        <div className="flex flex-col gap-spaced">
           <div className="flex flex-col gap-spaced-sm">
             <h1 className="text-5xl text-light font-ranille">
               {product?.name}
