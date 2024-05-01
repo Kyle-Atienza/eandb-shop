@@ -6,6 +6,11 @@
   --light-color: #f9eacd;
 }
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

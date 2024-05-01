@@ -27,6 +27,7 @@ export function ProductBentoCard({
   className?: string;
 }) {
   const router = useRouter();
+  const rotation = Math.random() * 20 - 10;
 
   const container = useRef(null);
 
@@ -36,6 +37,7 @@ export function ProductBentoCard({
       className={`product-card transition-all rounded bg-dark flex flex-col relative group
       ${className ?? "aspect-square"}
       `}
+      style={{ rotate: `${rotation}deg` }}
     >
       <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] aspect-square flex items-center justify-center">
         <div className="w-[83.5%] h-[83.5%] spaced-md font-gopher group overflow-hidden">

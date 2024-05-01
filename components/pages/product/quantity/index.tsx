@@ -135,7 +135,7 @@ export function ProductQuantity({
             name="quantity"
             className={`text-center bg-[transparent] ${
               size ? `spaced-${size}` : "spaced-md"
-            } ${textColorClassName(color)} ${inputSize(size)}`}
+            } ${textColorClassName(color)} w-14`}
             value={productItemQuantity}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setProductItemQuantity(Number(e.target.value))

@@ -144,7 +144,7 @@ export function BentoHome() {
 
       <ProductBentoCard product={products[7]} />
 
-      <User />
+      {/* <User /> */}
 
       <ProductBentoCard product={products[8]} />
     </div>

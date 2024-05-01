@@ -15,7 +15,7 @@ export function Navbar() {
 
   return (
     <div className=" spaced-x bg-base">
-      <div className="relative flex spaced-y gap-spaced-md">
+      <div className="relative flex spaced-y gap-spaced-md h-[100px] items-center">
         <button
           className="text-3xl text-light"
           onClick={() => router.push("/")}
@@ -34,17 +34,7 @@ export function Navbar() {
                 <i className="bi bi-bag"></i>
               </button>
             ) : null}
-            <Button
-              size="sm"
-              onClick={() => {
-                signOut();
-                resetOrdersStore();
-                router.push("/");
-              }}
-            >
-              Log Out
-            </Button>
-            {/* <button
+            <button
               onClick={() => {
                 signOut();
                 resetOrdersStore();
@@ -53,16 +43,10 @@ export function Navbar() {
               className="text-3xl text-light"
             >
               <i className="bi bi-box-arrow-right"></i>
-            </button> */}
+            </button>
           </>
         ) : (
           <div>
-            {/* <button
-              onClick={() => router.push("/#login")}
-              className="self-start p-2 bg-dark text-light"
-            >
-              Login
-            </button> */}
             <Button size="sm" onClick={() => router.push("/#login")}>
               Log In
             </Button>
