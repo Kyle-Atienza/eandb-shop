@@ -112,12 +112,18 @@ body {
   .gap-spaced-md {
     @apply gap-3 lg:gap-5;
   }
+  .spaced-r-md {
+    @apply pr-3 lg:pr-5;
+  }
 
   .gap-spaced-sm {
     @apply gap-2 lg:gap-3;
   }
   .spaced-y-sm {
     @apply py-2 lg:py-3;
+  }
+  .spaced-r-sm {
+    @apply pr-2 lg:pr-3;
   }
 
   .spaced-xs {
@@ -128,6 +134,9 @@ body {
   }
   .spaced-x-xs {
     @apply px-1 lg:px-2;
+  }
+  .spaced-r-xs {
+    @apply pr-1 lg:pr-2;
   }
 
   .gap-spaced-2xs {

@@ -107,7 +107,7 @@ export function ProductsGrid({
               )
             : null}
         </div>
-        <div className="col-2  flex flex-col gap-spaced flex-1 translate-y-[20vh] h-min">
+        <div className="col-2 flex flex-col gap-spaced flex-1 translate-y-[20vh] h-min">
           {slice
             ? sliceArrayEveryN(productList, slice, 2)?.map(
                 (listingItem, index) => {
