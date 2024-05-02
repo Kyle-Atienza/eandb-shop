@@ -12,14 +12,82 @@ interface ProductCardOption extends ProductItem {
   amount: number;
 }
 
-/* interface ProductCard {
-  _id: string;
-  name: string;
-  details: Product;
-  options: ProductCardOption[];
-} */
-
 export function ProductCard({ product }: { product: ProductListingItem }) {
+  const options = product.options.reduce((optionList: string[], option) => {
+    option.attributes.forEach((optionItem) =>
+      optionList.push(optionItem.value)
+    );
+    return optionList;
+  }, []);
+  const router = useRouter();
+  const rotation = Math.random() * 10 - 5;
+  const amount = () => {
+    const prizes = product?.options
+      .reduce((prizes: number[], option: ProductCardOption) => {
+        if (!prizes.includes(option.amount)) {
+          prizes.push(option.amount);
+        }
+        return prizes;
+      }, [])
+      .sort((a: number, b: number) => a - b);
+
+    if (prizes.length > 1) {
+      return <>{`${prizes[0]} - ${prizes[prizes.length - 1]}`}</>;
+    } else {
+      return <>{`${prizes[0]}`}</>;
+    }
+  };
+
+  return (
+    <div
+      className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded
+      
+      `}
+      onClick={() => router.push(`/product/${product._id}`)}
+    >
+      <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] flex items-center justify-center bg-light opacity-0"></div>
+      <div className="rounded overflow-hidden">
+        <div className="aspect-[4/5] relative">
+          {product.details.gallery.length ? (
+            <Image
+              className={`transition-all object-cover object-center`}
+              src={product.details.gallery[0]}
+              alt=""
+              fill={true}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
+          ) : null}
+          <div className="absolute spaced-md h-full w-full top-0 left-0 flex items-end">
+            <div className="flex gap-spaced-xs flex-wrap justify-end">
+              {options.length > 1
+                ? options.map((option, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="bg-primary text-light transition-colors rounded-md spaced-sm self-start"
+                      >
+                        <p className="text-xs lg:text-lg font-gopher text-end ">
+                          {option}
+                        </p>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+          </div>
+        </div>
+        <div className="spaced-md flex gap-spaced">
+          <div className="w-1/3 spaced-b-sm">
+            <p className="text-sm lg:text-xl font-gopher">{product.name}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function ProductCardOld({ product }: { product: ProductListingItem }) {
   const router = useRouter();
   const amount = () => {
     const prizes = product?.options

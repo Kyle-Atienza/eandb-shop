@@ -27,7 +27,7 @@ export function ProductBentoCard({
   className?: string;
 }) {
   const router = useRouter();
-  const rotation = Math.random() * 20 - 10;
+  const rotation = Math.random() * 18 - 8;
 
   const container = useRef(null);
 
@@ -37,7 +37,6 @@ export function ProductBentoCard({
       className={`product-card transition-all rounded bg-dark flex flex-col relative group
       ${className ?? "aspect-square"}
       `}
-      style={{ rotate: `${rotation}deg` }}
     >
       <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] aspect-square flex items-center justify-center">
         <div className="w-[83.5%] h-[83.5%] spaced-md font-gopher group overflow-hidden">
@@ -75,14 +74,16 @@ export function ProductBentoCard({
       </div>
       <div className="relative flex w-full h-full overflow-hidden rounded ">
         <div className="relative flex-1 transition-opacity group-hover:opacity-80">
-          <Image
-            className={`transition-all object-cover object-center`}
-            src="https://res.cloudinary.com/dfdw1yzkk/image/upload/v1712994720/E%20and%20B%20Farm/products/images/square/af8k4pwotuc9p9nlb6aa.png"
-            alt=""
-            fill={true}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority
-          />
+          {product?.gallery.length ? (
+            <Image
+              className={`transition-all object-cover object-center`}
+              src={product?.gallery[0]}
+              alt=""
+              fill={true}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
+          ) : null}
         </div>
       </div>
       {/* <div className="absolute w-full h-full spaced-md font-gopher group overflow-hidden ">

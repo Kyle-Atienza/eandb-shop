@@ -79,6 +79,9 @@ body {
   .spaced-b-md {
     @apply pb-3 lg:pb-5;
   }
+  .spaced-b-sm {
+    @apply pb-2 lg:pb-3;
+  }
   .spaced-t-md {
     @apply pt-3 lg:pt-5;
   }
@@ -113,6 +116,9 @@ body {
   .gap-spaced-sm {
     @apply gap-2 lg:gap-3;
   }
+  .spaced-y-sm {
+    @apply py-2 lg:py-3;
+  }
 
   .spaced-xs {
     @apply p-1 lg:p-2;
@@ -122,6 +128,10 @@ body {
   }
   .spaced-x-xs {
     @apply px-1 lg:px-2;
+  }
+
+  .gap-spaced-2xs {
+    @apply gap-0.5 lg:gap-1;
   }
 
   .rounded-lg {
