@@ -21,11 +21,11 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="mt-[50vh]">
+    <div className="mt-[50vh]">
       <ProductFilter />
       <div className="spaced-t">
         <BentoHome />
       </div>
-    </main>
+    </div>
   );
 }

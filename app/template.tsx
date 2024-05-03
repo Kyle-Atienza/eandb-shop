@@ -15,6 +15,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { animatePageIn } from "@/utils/animations";
 gsap.registerPlugin(useGSAP);
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -38,7 +39,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     checkSavedUser();
+    animatePageIn();
   }, []);
+
+  useEffect(() => {}, []);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -54,12 +58,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
         ></div>
         <Toaster />
       </div>
-      <div
-        className={`grid relative flex-1 spaced-x transition-opacity ${
-          drawer ? "pointer-events-none opacity-50" : ""
-        }`}
-      >
-        {children}
+      <div id="main" className="opacity-0">
+        <main
+          className={`grid relative flex-1 spaced-x transition-opacity ${
+            drawer ? "pointer-events-none opacity-50" : ""
+          }`}
+        >
+          {children}
+        </main>
       </div>
     </div>
   );
