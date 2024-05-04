@@ -1,4 +1,5 @@
-import { Button } from "@/components/common/button";
+import { Button, TransitionButton } from "@/components/common/button";
+import { Label } from "@/components/common/label";
 import { TransitionLink } from "@/components/common/transition-link";
 import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
 import { useOptionsStore } from "@/state/options";
@@ -15,11 +16,13 @@ export function Navbar() {
   const { resetOrdersStore } = useOrdersStore();
 
   return (
-    <div className=" spaced-x bg-base">
-      <div className="relative flex spaced-y gap-spaced-md h-[100px] items-center">
-        <TransitionLink className="text-3xl text-light" href="/">
+    <div className="relative wave bg-secondary h-[100px] spaced-x">
+      {/* <div className="relative flex spaced-y gap-spaced-md h-[100px] items-center">
+        <TransitionLink className="text-3xl text-tertiary" href="/">
           <i
-            className={`bi bi-house ${pathname === "/" ? "text-primary" : ""}`}
+            className={`bi bi-house transition-all duration-1000 ${
+              pathname === "/" ? "text-primary" : "text-tertiary"
+            }`}
           ></i>
         </TransitionLink>
         {user ? (
@@ -27,7 +30,7 @@ export function Navbar() {
             {pathname !== "/checkout" ? (
               <button
                 className={`text-3xl transition-colors ${
-                  drawer ? "text-primary" : "text-light"
+                  drawer ? "text-primary" : "text-tertiary"
                 }`}
                 onClick={() => toggleDrawer()}
               >
@@ -40,7 +43,7 @@ export function Navbar() {
                 resetOrdersStore();
                 router.push("/");
               }}
-              className="text-3xl text-light"
+              className="text-3xl text-tertiary"
             >
               <i className="bi bi-box-arrow-right"></i>
             </button>
@@ -52,9 +55,24 @@ export function Navbar() {
             </Button>
           </div>
         )}
-        <FakeBorderRadius position="topLeft" className="top-full" />
-        <FakeBorderRadius position="topRight" className="right-0 top-full" />
+      </div> */}
+      <div className="flex items-center justify-between h-full gap-spaced translate-y-[3px] relative">
+        <TransitionLink href="/">
+          {/* <i className="bi bi-house" /> */}
+          <Label>Home</Label>
+        </TransitionLink>
+        <div className="flex gap-spaced">
+          <button onClick={() => toggleDrawer()}>
+            <Label>Cart(0)</Label>
+          </button>
+          <Label>Logout</Label>
+        </div>
       </div>
     </div>
   );
+}
+
+{
+  /* <FakeBorderRadius position="topLeft" className="top-full" />
+<FakeBorderRadius position="topRight" className="right-0 top-full" /> */
 }

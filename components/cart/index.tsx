@@ -4,7 +4,7 @@ import { useOrdersStore } from "@/state/orders";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { Button } from "../common/button";
+import { Button, TransitionButton } from "../common/button";
 import { ProductQuantity } from "../pages/product/quantity";
 import { Divider } from "../decorations/divider";
 import { Label } from "../common/label";
@@ -28,24 +28,38 @@ function CartItem({ item }: { item: CartItem }) {
         />
       ) : null} */}
       <div className="w-[180px]">
-        <div className="w-full aspect-square bg-dark rounded-md"></div>
+        <div className="w-full rounded-md aspect-square bg-dark"></div>
       </div>
-      <div className="flex-1 flex flex-col items-start leading-normal gap-spaced-xs">
+      <div className="flex flex-col items-start flex-1 leading-normal gap-spaced-xs">
         <div className="flex flex-col gap-spaced-xs">
-          <h5 className=" text-2xl font-gopher tracking-tight text-gray-900 dark:text-white">
+          <h5 className="text-2xl tracking-tight text-gray-900 font-gopher dark:text-white">
             {item.product.details.name}
             {item.product.name ? ` - ${item.product.name}` : ""}
           </h5>
-          {item.product.attributes.length
-            ? item.product.attributes.map((attribute, index) => {
-                return <Label key={index}> {attribute.value}</Label>;
-              })
-            : null}
+          <div className="flex items-start">
+            {item.product.attributes.length
+              ? item.product.attributes.map((attribute, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="rounded-md bg-tertiary text-light spaced-sm"
+                    >
+                      <p className="text-xs lg:text-lg font-gopher">
+                        {attribute.value}
+                      </p>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
         </div>
-        <div className="flex flex-col items-end gap-spaced-sm ms-auto mt-auto">
-          <div className="bg-base text-light rounded-md spaced-sm">
+        <div className="flex flex-col items-end mt-auto gap-spaced-sm ms-auto">
+          <div className="rounded-md bg-tertiary text-light spaced-sm">
             <p className="text-xs lg:text-lg font-gopher">
-              {(item.price * item.count).toFixed(2)} <Label>PHP</Label>
+              {(item.price * item.count).toFixed(2)}{" "}
+              <Label>
+                <span className="text-xs">PHP</span>
+              </Label>
             </p>
           </div>
           <ProductQuantity
@@ -73,16 +87,16 @@ export default function Cart() {
   }, 0);
 
   return (
-    <div className="flex flex-col flex-1 gap-spaced-md h-full overflow-hidden">
-      <div className="flex justify-between items-end">
-        <h3 className="font-ranille text-dark text-2xl lg:text-4xl">
+    <div className="flex flex-col flex-1 h-full overflow-hidden gap-spaced-md">
+      <div className="flex items-end justify-between">
+        <h3 className="text-2xl font-ranille text-dark lg:text-4xl">
           Your Cart
         </h3>
         {/* <Button color="base" onClick={() => router.push("/checkout")}>
           Checkout
         </Button> */}
         {/* <Label>Total: {totalAmount}</Label> */}
-        <h2 className="text-3xl text-dark font-ranille flex gap-2 items-baseline">
+        <h2 className="flex items-baseline gap-2 text-3xl text-dark font-ranille">
           {totalAmount.toFixed(2)}
           <span className="">
             <Label>PHP</Label>
@@ -101,13 +115,13 @@ export default function Cart() {
         </div>
       </div>
       <div>
-        <Button
-          className="w-full"
+        <TransitionButton
+          className="flex justify-center w-full"
           color="base"
-          onClick={() => router.push("/checkout")}
+          href="/checkout"
         >
           Checkout
-        </Button>
+        </TransitionButton>
       </div>
       {/* <p>Total Amount: {totalAmount}</p> */}
     </div>

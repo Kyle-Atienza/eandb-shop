@@ -8,10 +8,12 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      primary: "#00BC89",
+      primary: "var(--primary-color)",
+      secondary: "var(--secondary-color)",
       light: "var(--light-color)",
-      dark: "#003135",
-      base: "#3F6C4B",
+      dark: "var(--dark-color)",
+      base: "var(--base-color)",
+      tertiary: "var(--tertiary-color)",
     },
     extend: {
       backgroundImage: {

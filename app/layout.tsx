@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${ranille.variable} ${gopher.variable} bg-base`}
+        className={`${inter.className} ${ranille.variable} ${gopher.variable} bg-tertiary`}
       >
         {children}
       </body>

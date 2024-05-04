@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 :root {
+  --primary-color: #00bc89;
+  --secondary-color: #f3d69c;
+  --tertiary-color: #3f6c4b;
   --light-color: #f9eacd;
+  --dark-color: #003135;
+  --base-color: #3f6c4b;
 }
 
 html,
@@ -187,4 +192,42 @@ body {
 
 .hide-scrollbar ::-webkit-scrollbar {
   display: none;
+}
+
+/* .wave {
+  box-shadow: 0px 10px 30px -10px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0px 10px 30px -10px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 10px 30px -10px rgba(0,0,0,0.75);
+} */
+.wave::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: repeat;
+  height: 10px;
+  background-size: 20px 20px;
+  background-image: radial-gradient(
+    circle at 10px -5px,
+    transparent 12px,
+    var(--secondary-color) 13px
+  );
+  transform: rotate(180deg) translateY(-100%);
+}
+.wave::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: repeat;
+  height: 15px;
+  background-size: 40px 20px;
+  background-image: radial-gradient(
+    circle at 10px 15px,
+    var(--secondary-color) 12px,
+    transparent 13px
+  );
+  transform: rotate(180deg) translateY(-100%);
 }
