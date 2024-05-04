@@ -1,3 +1,6 @@
+figuring out animation page out
+- animating cursor on clicl
+
 checkoutpage
 add login to cart drawer
 

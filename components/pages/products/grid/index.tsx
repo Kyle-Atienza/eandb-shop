@@ -23,117 +23,65 @@ export function ProductsGrid({
 }: {
   productList: ProductListingItem[];
 }) {
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
 
   const getSlice = () => {
-    if (window.matchMedia("(min-width: 1280px)").matches) {
-      setSlice(4);
-    } else if (window.matchMedia("(min-width: 1024px)").matches) {
-      setSlice(3);
-    } else {
-      setSlice(2);
-    }
+    setSlice(document.querySelectorAll(".col").length);
   };
 
   useEffect(() => {
     getSlice();
-
     window.addEventListener("resize", getSlice);
-
     return () => {
       window.removeEventListener("resize", getSlice);
     };
   }, []);
 
+  const animateColumn = (column: string, yOffset: number) => {
+    gsap.to(column, {
+      yPercent: yOffset,
+      ease: "none",
+      scrollTrigger: {
+        trigger: column,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.8,
+      },
+    });
+  };
+
   useGSAP(
     () => {
-      gsap.to(".col-1", {
-        yPercent: -5,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".col-1",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(".col-2", {
-        yPercent: -40,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".col-2",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(".col-3", {
-        yPercent: -20,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".col-3",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(".col-4", {
-        yPercent: 5,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".col-4",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      animateColumn(".col-1", -10);
+      animateColumn(".col-2", -25);
+      animateColumn(".col-3", -5);
+      animateColumn(".col-4", 10);
     },
-    { scope: container }
+    { scope: container, dependencies: [slice] }
   );
 
+  const renderProducts = (startIndex: number) => {
+    return sliceArrayEveryN(productList, slice, startIndex)?.map(
+      (listingItem, index) => {
+        return <ProductCard product={listingItem} key={index} />;
+      }
+    );
+  };
+
   return (
-    <div ref={container}>
-      <div className="flex gap-spaced">
-        <div className="col-1 flex flex-col gap-spaced flex-1 h-min">
-          {slice
-            ? sliceArrayEveryN(productList, slice, 1)?.map(
-                (listingItem, index) => {
-                  return <ProductCard product={listingItem} key={index} />;
-                }
-              )
-            : null}
-        </div>
-        <div className="col-2 flex flex-col gap-spaced flex-1 translate-y-[20vh] h-min">
-          {slice
-            ? sliceArrayEveryN(productList, slice, 2)?.map(
-                (listingItem, index) => {
-                  return <ProductCard product={listingItem} key={index} />;
-                }
-              )
-            : null}
-        </div>
-        <div className="col-3 hidden md:flex flex-col gap-spaced flex-1 translate-y-[10vh] h-min">
-          {slice
-            ? sliceArrayEveryN(productList, slice, 3)?.map(
-                (listingItem, index) => {
-                  return <ProductCard product={listingItem} key={index} />;
-                }
-              )
-            : null}
-        </div>
-        <div className="col-4 hidden xl:flex flex-col gap-spaced flex-1 translate-y-[-5vh] h-min">
-          {slice
-            ? sliceArrayEveryN(productList, slice, 4)?.map(
-                (listingItem, index) => {
-                  return <ProductCard product={listingItem} key={index} />;
-                }
-              )
-            : null}
-        </div>
+    <div className="flex gap-spaced" ref={container}>
+      <div className="col col-1 flex flex-col gap-spaced flex-1 h-min">
+        {slice ? renderProducts(1) : null}
+      </div>
+      <div className="col col-2 flex flex-col gap-spaced flex-1 h-min">
+        {slice ? renderProducts(2) : null}
+      </div>
+      <div className="col col-3 hidden md:flex flex-col gap-spaced flex-1 h-min">
+        {slice ? renderProducts(3) : null}
+      </div>
+      <div className="col col-4 hidden xl:flex flex-col gap-spaced flex-1 h-min">
+        {slice ? renderProducts(4) : null}
       </div>
     </div>
   );

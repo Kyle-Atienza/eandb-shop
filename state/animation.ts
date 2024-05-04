@@ -5,6 +5,7 @@ interface ProductCardHoveredState {
   left: number;
   width: number;
   height: number;
+  hasClicked: boolean;
   setValues: (top: number, left: number, width: number, height: number) => void;
 }
 
@@ -14,6 +15,7 @@ export const useProductCardHoveredStore = create<ProductCardHoveredState>(
     left: 0,
     width: 0,
     height: 0,
+    hasClicked: false,
     setValues: (top: number, left: number, width: number, height: number) =>
       set({ top, left, width, height }),
   })
