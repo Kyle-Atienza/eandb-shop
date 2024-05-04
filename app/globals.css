@@ -138,6 +138,9 @@ body {
   .spaced-r-xs {
     @apply pr-1 lg:pr-2;
   }
+  .spaced-y-xs {
+    @apply py-1 lg:py-2;
+  }
 
   .gap-spaced-2xs {
     @apply gap-0.5 lg:gap-1;

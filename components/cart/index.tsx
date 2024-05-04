@@ -30,43 +30,32 @@ function CartItem({ item }: { item: CartItem }) {
       <div className="w-[180px]">
         <div className="w-full aspect-square bg-dark rounded-md"></div>
       </div>
-      <div className="flex-1 flex flex-col items-start xl:justify-between gap-spaced-xs leading-normal">
-        <h5 className="mb-2 text-2xl font-gopher tracking-tight text-gray-900 dark:text-white">
-          {item.product.details.name}
-          {item.product.name ? ` - ${item.product.name}` : ""}
-        </h5>
-        <div className="flex flex-col xl:flex-row w-full gap-spaced-xs xl:items-end">
-          <div className="flex flex-col flex-1 gap-spaced-xs items-start">
-            {item.product.attributes.length
-              ? item.product.attributes.map((attribute, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="bg-base text-light rounded-md spaced-sm"
-                    >
-                      <p className="text-xs lg:text-lg font-gopher">
-                        {attribute.value}
-                      </p>
-                    </div>
-                  );
-                })
-              : null}
-            <div className="bg-base text-light rounded-md spaced-sm">
-              <p className="text-xs lg:text-lg font-gopher">
-                {(item.price * item.count).toFixed(2)} <Label>PHP</Label>
-              </p>
-            </div>
+      <div className="flex-1 flex flex-col items-start leading-normal gap-spaced-xs">
+        <div className="flex flex-col gap-spaced-xs">
+          <h5 className=" text-2xl font-gopher tracking-tight text-gray-900 dark:text-white">
+            {item.product.details.name}
+            {item.product.name ? ` - ${item.product.name}` : ""}
+          </h5>
+          {item.product.attributes.length
+            ? item.product.attributes.map((attribute, index) => {
+                return <Label key={index}> {attribute.value}</Label>;
+              })
+            : null}
+        </div>
+        <div className="flex flex-col items-end gap-spaced-sm ms-auto mt-auto">
+          <div className="bg-base text-light rounded-md spaced-sm">
+            <p className="text-xs lg:text-lg font-gopher">
+              {(item.price * item.count).toFixed(2)} <Label>PHP</Label>
+            </p>
           </div>
-          <div className="flex gap-spaced-sm">
-            <ProductQuantity
-              color="base"
-              size="sm"
-              deleteButton
-              label={false}
-              quantity={quantity}
-              cartItemId={item.product._id}
-            />
-          </div>
+          <ProductQuantity
+            color="base"
+            size="sm"
+            deleteButton
+            label={false}
+            quantity={quantity}
+            cartItemId={item.product._id}
+          />
         </div>
       </div>
     </div>

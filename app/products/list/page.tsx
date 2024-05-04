@@ -27,31 +27,6 @@ export default async function Page({
     <>
       <div className="flex flex-col gap-spaced mt-[40vh]">
         <ProductsGrid productList={productList} />
-        {/* <div className="sticky top-[100px] flex justify-center z-20 spaced-t">
-          <ProductFilter />
-        </div> */}
-        {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-spaced">
-          {productList?.map((listingItem, index) => {
-            return <ProductCard product={listingItem} key={index} />;
-          })}
-        </div> */}
-        {/* <div className="flex gap-spaced">
-          <div className="flex flex-col gap-spaced flex-1">
-            {sliceArrayEveryN(productList, 3, 1)?.map((listingItem, index) => {
-              return <ProductCard product={listingItem} key={index} />;
-            })}
-          </div>
-          <div className="flex flex-col gap-spaced flex-1 translate-y-[40vh]">
-            {sliceArrayEveryN(productList, 3, 2)?.map((listingItem, index) => {
-              return <ProductCard product={listingItem} key={index} />;
-            })}
-          </div>
-          <div className="flex flex-col gap-spaced flex-1 translate-y-[10vh]">
-            {sliceArrayEveryN(productList, 3, 3)?.map((listingItem, index) => {
-              return <ProductCard product={listingItem} key={index} />;
-            })}
-          </div>
-        </div> */}
       </div>
     </>
   );

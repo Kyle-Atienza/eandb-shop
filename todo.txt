@@ -1,5 +1,5 @@
 figuring out animation page out
-- animating cursor on clicl
+- animating cursor on click
 
 checkoutpage
 add login to cart drawer
