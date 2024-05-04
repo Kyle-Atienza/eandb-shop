@@ -19,7 +19,6 @@ export const animatePageIn = () => {
 export const animatePageOut = (href: string, router: AppRouterInstance) => {
   const cursor = document.getElementById("cursor");
 
-  console.log(cursor);
   if (cursor) {
     const tl = gsap.timeline();
 

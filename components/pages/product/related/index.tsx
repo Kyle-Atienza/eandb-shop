@@ -6,12 +6,16 @@ export function ProductRelatedItems({
 }: {
   items: ProductListingItem[];
 }) {
+  console.log(items);
+
   return (
     <>
       {items.length ? (
         <>
-          <div className="text-light flex flex-col gap-space-md">
-            <Label>Related Products</Label>
+          <div className="flex flex-col gap-space-md">
+            <Label>
+              <span className="text-light">Related Products</span>
+            </Label>
             <div className="grid grid-cols-2 gap-spaced-md">
               {items.map((relatedProduct, index) => {
                 return <ProductCard key={index} product={relatedProduct} />;

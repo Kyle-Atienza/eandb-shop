@@ -4,12 +4,10 @@ import { ProductFilter } from "@/components/products/filter";
 import { useParams } from "next/navigation";
 
 const getProductList = async (searchParams: SearchParams) => {
-  // console.log(new URLSearchParams(searchParams));
   const params = new URLSearchParams();
 
-  Object.keys(searchParams).forEach(
-    (searchParam) => params.set(searchParam, `${searchParams[searchParam]}`)
-    // console.log(searchParam, searchParams[searchParam])
+  Object.keys(searchParams).forEach((searchParam) =>
+    params.set(searchParam, `${searchParams[searchParam]}`)
   );
 
   const res = await fetch(`${process.env.BASE_URL}/products/list?${params}`);

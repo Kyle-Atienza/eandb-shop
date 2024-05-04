@@ -88,7 +88,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
       onClick={() => router.push(`/product/${product._id}`)}
       ref={container}
     >
-      {/* <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] flex items-center justify-center bg-light opacity-0"></div> */}
+      <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] flex items-center justify-center bg-light opacity-0"></div>
       <div className="rounded overflow-hidden">
         <div className="aspect-[4/5] relative">
           {product.details.gallery.length ? (
@@ -101,7 +101,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
               priority
             />
           ) : null}
-          <div className="absolute spaced-md h-full w-full top-0 left-0 flex items-end">
+          <div className="absolute spaced-md h-full w-full top-0 left-0 flex items-end justify-center">
             <Options className="options" options={options} />
             <Options className="options" options={options} />
             <Options className="options" options={options} />
