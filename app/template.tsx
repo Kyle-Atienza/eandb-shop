@@ -29,24 +29,25 @@ export default function Template({ children }: { children: React.ReactNode }) {
     if (drawer) {
       closeDrawer();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   useEffect(() => {
     if (user) {
       getCart();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
     checkSavedUser();
     animatePageIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {}, []);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="z-20 sticky top-0">
+      <div className="sticky top-0 z-20">
         <AnimatedCursor />
         <Navbar />
         <Drawer />
@@ -58,15 +59,15 @@ export default function Template({ children }: { children: React.ReactNode }) {
         ></div>
         <Toaster />
       </div>
-      <div id="main" className="opacity-0">
-        <main
+      <main id="main" className="opacity-0">
+        <div
           className={`grid relative flex-1 spaced-x transition-opacity ${
             drawer ? "pointer-events-none opacity-50" : ""
           }`}
         >
           {children}
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

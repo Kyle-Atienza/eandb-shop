@@ -1,24 +1,29 @@
-import { animatePageOut } from "@/utils/animations";
+import { useAnimationStore } from "@/state/animation";
 import { usePathname, useRouter } from "next/navigation";
 
 export function TransitionLink({
   children,
+  className,
   href,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
   href?: string;
 }) {
   const pathname = usePathname();
   const router = useRouter();
 
+  const { animatePageOut } = useAnimationStore();
+
   const handleClick = () => {
-    /* if (href) {
-      if (pathname !== href) {
-        console.log("out");
-        animatePageOut(href, router);
-      }
-    } */
+    if (pathname !== href && href) {
+      animatePageOut(href, router);
+    }
   };
 
-  return <div onClick={handleClick}>{children}</div>;
+  return (
+    <div className={`cursor-pointer ${className}`} onClick={handleClick}>
+      {children}
+    </div>
+  );
 }

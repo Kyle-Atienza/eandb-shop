@@ -1,4 +1,5 @@
 import { Button } from "@/components/common/button";
+import { TransitionLink } from "@/components/common/transition-link";
 import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
 import { useOptionsStore } from "@/state/options";
 import { useOrdersStore } from "@/state/orders";
@@ -16,12 +17,11 @@ export function Navbar() {
   return (
     <div className=" spaced-x bg-base">
       <div className="relative flex spaced-y gap-spaced-md h-[100px] items-center">
-        <button
-          className="text-3xl text-light"
-          onClick={() => router.push("/")}
-        >
-          <i className="bi bi-house"></i>
-        </button>
+        <TransitionLink className="text-3xl text-light" href="/">
+          <i
+            className={`bi bi-house ${pathname === "/" ? "text-primary" : ""}`}
+          ></i>
+        </TransitionLink>
         {user ? (
           <>
             {pathname !== "/checkout" ? (

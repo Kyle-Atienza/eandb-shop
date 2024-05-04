@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/common/button";
+import { Button, TransitionButton } from "@/components/common/button";
 import { TransitionLink } from "@/components/common/transition-link";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
@@ -12,37 +12,24 @@ export function ProductFilter() {
   const searchParams = useSearchParams();
 
   return (
-    <div className=" flex flex-wrap gap-spaced-md">
+    <div className="flex flex-wrap gap-spaced-md">
       {filterButtons.map((filterButton, index) => {
         return (
-          <TransitionLink
+          <TransitionButton
             key={index}
             href={`/products/list?group=${filterButton}`}
+            active={searchParams.get("group") === filterButton}
           >
-            <Button active={searchParams.get("group") === filterButton}>
-              {filterButton}
-            </Button>
-          </TransitionLink>
+            {filterButton}
+          </TransitionButton>
         );
       })}
-      <Button
-        onClick={() => router.push("/products/list")}
+      <TransitionButton
+        href={"/products/list"}
         active={!searchParams.has("group") && pathName === "/products/list"}
       >
         All
-      </Button>
+      </TransitionButton>
     </div>
   );
 }
-
-/* {filterButtons.map((filterButton, index) => {
-  return (
-    <Button
-      key={index}
-      onClick={() => router.push(`/products/list?group=${filterButton}`)}
-      active={searchParams.get("group") === filterButton}
-    >
-      {filterButton}
-    </Button>
-  );
-})} */

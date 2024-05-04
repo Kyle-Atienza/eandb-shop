@@ -10,6 +10,7 @@ gsap.registerPlugin(useGSAP);
 
 import { useRef } from "react";
 import Link from "next/link";
+import { TransitionLink } from "@/components/common/transition-link";
 
 export function ProductBentoCard({
   product,
@@ -40,7 +41,7 @@ export function ProductBentoCard({
     >
       <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] aspect-square flex items-center justify-center">
         <div className="w-[83.5%] h-[83.5%] spaced-md font-gopher group overflow-hidden">
-          <div className="relative w-full h-full flex">
+          <div className="relative flex w-full h-full">
             <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
               <p className="text-sm lg:text-xl">{product?.name}</p>
             </div>
@@ -48,7 +49,7 @@ export function ProductBentoCard({
               <div className="absolute bottom-0 right-0 font-medium flex flex-wrap gap-spaced-sm transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
                 {product.items.map((item, index) => {
                   return (
-                    <Link
+                    <TransitionLink
                       href={`/product/${parseProductListItemId(
                         item.name
                           ? `${product.name} ${item.name}`
@@ -56,15 +57,15 @@ export function ProductBentoCard({
                       )}`}
                       key={index}
                     >
-                      <div className="bg-primary text-light hover:bg-light hover:text-primary transition-colors rounded-md spaced-sm">
+                      <div className="transition-colors rounded-md bg-primary text-light hover:bg-light hover:text-primary spaced-sm">
                         <p className="text-xs lg:text-lg">{item.name}</p>
                       </div>
-                    </Link>
+                    </TransitionLink>
                   );
                 })}
               </div>
             ) : (
-              <Link
+              <TransitionLink
                 className="w-full h-full"
                 href={`/product/${parseProductListItemId(product?.name || "")}`}
               />
@@ -86,7 +87,7 @@ export function ProductBentoCard({
           ) : null}
         </div>
       </div>
-      {/* <div className="absolute w-full h-full spaced-md font-gopher group overflow-hidden ">
+      {/* <div className="absolute w-full h-full overflow-hidden spaced-md font-gopher group ">
         <div className="relative w-full h-full">
           <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
             <p className="text-sm lg:text-xl">
@@ -99,7 +100,7 @@ export function ProductBentoCard({
                 return (
                   <div
                     key={index}
-                    className="bg-primary text-light rounded-md spaced-sm"
+                    className="rounded-md bg-primary text-light spaced-sm"
                   >
                     <p className="text-xs lg:text-lg">{item.name}</p>
                   </div>

@@ -1,50 +1,24 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useAnimationStore } from "@/state/animation";
+import { cursorPageOut, customCursorAnimation } from "./animations";
 
 gsap.registerPlugin(useGSAP);
 
 export function AnimatedCursor() {
+  const { pageOutHref, animatePageOut, redirect, isPageLoading } =
+    useAnimationStore();
+
   const container = useRef(null);
   const hoverCursor = useRef(null);
-  const hoverCursorSolid = useRef(null);
+  const hoverCursorInner = useRef(null);
   const hoverCursorContainer = useRef(null);
+  const hoverCursorBg = useRef(null);
 
   useGSAP(
     () => {
-      const mouseAnimation = (e: MouseEvent) => {
-        const { target, x, y } = e;
-        const onProductCard = (target as HTMLElement).closest(
-          ".product-card .hover-trigger"
-        );
-        const productCardRect = onProductCard?.getBoundingClientRect();
-
-        gsap.to(hoverCursorContainer.current, {
-          x: onProductCard
-            ? (productCardRect?.left || 0) + (productCardRect?.width || 0) / 2
-            : x,
-          y: onProductCard
-            ? (productCardRect?.top || 0) + (productCardRect?.height || 0) / 2
-            : y,
-          duration: onProductCard ? 1 : 0.7,
-          ease: "power4",
-        });
-
-        gsap.to(hoverCursor.current, {
-          width: onProductCard ? productCardRect?.width : 20,
-          height: onProductCard ? productCardRect?.height : 20,
-          xPercent: -50,
-          yPercent: -50,
-          scale: 1,
-          ease: "power4",
-        });
-
-        gsap.to(hoverCursorSolid.current, {
-          opacity: onProductCard ? 0 : 0.2,
-          ease: "power4",
-        });
-      };
       const hideHoverOnScroll = () => {
         gsap.to(hoverCursor.current, {
           scale: 0,
@@ -53,15 +27,35 @@ export function AnimatedCursor() {
         });
       };
 
-      window.addEventListener("mousemove", mouseAnimation);
       window.addEventListener("scroll", hideHoverOnScroll);
+      window.addEventListener("mousemove", (e: MouseEvent) =>
+        customCursorAnimation(e, hoverCursorContainer, hoverCursor)
+      );
 
       return () => {
-        window.removeEventListener("mousemove", mouseAnimation);
         window.removeEventListener("scroll", hideHoverOnScroll);
+        window.removeEventListener("mousemove", (e: MouseEvent) =>
+          customCursorAnimation(e, hoverCursorContainer, hoverCursor)
+        );
       };
     },
     { scope: container }
+  );
+
+  useGSAP(
+    () => {
+      cursorPageOut(
+        hoverCursorInner,
+        hoverCursorBg,
+        pageOutHref,
+        isPageLoading,
+        redirect
+      );
+    },
+    {
+      scope: container,
+      dependencies: [pageOutHref],
+    }
   );
 
   return (
@@ -72,12 +66,17 @@ export function AnimatedCursor() {
       <div ref={hoverCursorContainer} className="">
         <div
           ref={hoverCursor}
-          className="w-[2vw] aspect-square border-2 overflow-hidden border-light border-solid rounded-[100%] absolute z-10 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+          className="w-[2vw] h-[2vw] absolute z-10 flex items-center justify-center "
         >
           <div
-            ref={hoverCursorSolid}
-            className="w-full h-full opacity-20 bg-light"
-          ></div>
+            ref={hoverCursorInner}
+            className="absolute w-full h-full -translate-x-1/2 -translate-y-1/2 border-2 border-solid rounded-[100%] overflow-hidden border-light top-1/2 left-1/2"
+          >
+            <div
+              ref={hoverCursorBg}
+              className="w-full h-full opacity-20 bg-base "
+            />
+          </div>
         </div>
       </div>
     </div>
