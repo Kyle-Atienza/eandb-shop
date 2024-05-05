@@ -1,4 +1,3 @@
-thank you page
 orders page
 require auth on add to cart
 cart item font looking to large

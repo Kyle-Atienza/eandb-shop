@@ -26,8 +26,8 @@ const borderColorClassName = (
 const textColorClassName = (
   color?: "dark" | "base" | "light" | "primary" | "tertiary"
 ) => {
-  if (color === "dark" || color === "base") {
-    return "text-dark";
+  if (color) {
+    return `text-${color}`;
   }
 
   return "text-light";

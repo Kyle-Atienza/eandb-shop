@@ -29,9 +29,7 @@ function QuantityButton({
     <button
       type="button"
       disabled={disabled}
-      className={`transition-colors rounded-sm ${
-        size ? `spaced-${size}` : "spaced-md"
-      } hover:bg-primary font-gopher disabled:opacity-50 ${buttonColorClassName(
+      className={`transition-colors rounded-sm  hover:bg-primary font-gopher disabled:opacity-50 h-7 aspect-square ${buttonColorClassName(
         color
       )}`}
       onClick={onClick}
@@ -113,10 +111,10 @@ export function ProductQuantity({
           <Label>Quantity:</Label>
         </label>
       ) : null}
-      <div className="flex gap-spaced-xs">
+      <div className="flex items-center gap-spaced-xs">
         <div
           className={`flex ${
-            border ? "border-2 rounded-md spaced-sm" : ""
+            border ? "border-2 rounded-md spaced-xs" : ""
           }  ${borderColorClassName(color)}`}
         >
           <QuantityButton
@@ -131,11 +129,23 @@ export function ProductQuantity({
           >
             -
           </QuantityButton>
-          <input
+          {/* <input
             name="quantity"
             className={`text-center bg-[transparent] ${
               size ? `spaced-${size}` : "spaced-md"
             } ${textColorClassName(color)} w-14`}
+            value={productItemQuantity}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setProductItemQuantity(Number(e.target.value))
+            }
+            type="text"
+            id="quantity"
+          /> */}
+          <input
+            name="quantity"
+            className={`text-center bg-[transparent] ${textColorClassName(
+              color
+            )} w-10`}
             value={productItemQuantity}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setProductItemQuantity(Number(e.target.value))
@@ -158,12 +168,12 @@ export function ProductQuantity({
         {deleteButton && cartItemId ? (
           <button
             type="button"
-            className={`transition-colors rounded-sm w-16 ${
-              size ? `spaced-${size}` : "spaced-md"
-            } hover:bg-primary font-gopher ${buttonColorClassName(color)}`}
+            className={`transition-colors rounded-sm hover:bg-danger spaced-xs font-gopher ${buttonColorClassName(
+              color
+            )}`}
             onClick={() => deleteCartItem(cartItemId)}
           >
-            <i className={`bi bi-trash text-2xl`}></i>
+            <i className={`bi bi-trash text-lg`}></i>
           </button>
         ) : null}
       </div>

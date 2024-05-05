@@ -10,10 +10,11 @@ import { Divider } from "../decorations/divider";
 import { Label } from "../common/label";
 
 function CartItem({ item }: { item: CartItem }) {
+  const rotation = Math.random() * 18 - 8;
   const quantity: number = item.count;
 
   return (
-    <div className="flex flex-col items≈-center bg-white lg:flex-row gap-space-md">
+    <div className="flex flex-col bg-white lg:flex-row gap-space-md">
       {/* {item?.product?.gallery?.length ? (
         <Image
           className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
@@ -27,10 +28,13 @@ function CartItem({ item }: { item: CartItem }) {
           alt="Cart Item"
         />
       ) : null} */}
-      <div className="w-[180px]">
-        <div className="w-full rounded-md aspect-square bg-dark"></div>
+      <div className="w-[130px]">
+        <div
+          className="w-full rounded-sm aspect-square bg-dark"
+          style={{ rotate: `${rotation}deg` }}
+        ></div>
       </div>
-      <div className="flex flex-col items-start flex-1 leading-normal gap-spaced-xs">
+      <div className="flex items-start flex-1 leading-normal gap-spaced-md">
         <div className="flex flex-col gap-spaced-xs">
           <h5 className="text-2xl tracking-tight text-gray-900 font-gopher dark:text-white">
             {item.product.details.name}
@@ -42,9 +46,9 @@ function CartItem({ item }: { item: CartItem }) {
                   return (
                     <div
                       key={index}
-                      className="rounded-md bg-tertiary text-light spaced-sm"
+                      className="rounded-md bg-secondary text-tertiary spaced-sm tracking-[0.1em]"
                     >
-                      <p className="text-xs lg:text-lg font-gopher">
+                      <p className="text-xs lg:text-md font-gopher uppercase">
                         {attribute.value}
                       </p>
                     </div>
@@ -55,15 +59,15 @@ function CartItem({ item }: { item: CartItem }) {
         </div>
         <div className="flex flex-col items-end mt-auto gap-spaced-sm ms-auto">
           <div className="rounded-md bg-tertiary text-light spaced-sm">
-            <p className="text-xs lg:text-lg font-gopher">
+            <p className="text-xs lg:text-base font-gopher">
               {(item.price * item.count).toFixed(2)}{" "}
               <Label>
-                <span className="text-xs">PHP</span>
+                <span className="text-[0.8em]">PHP</span>
               </Label>
             </p>
           </div>
           <ProductQuantity
-            color="base"
+            color="tertiary"
             size="sm"
             deleteButton
             label={false}
@@ -87,7 +91,7 @@ export default function Cart() {
   }, 0);
 
   return (
-    <div className="flex flex-col flex-1 h-full overflow-hidden gap-spaced-md">
+    <div className="flex flex-col flex-1 h-full overflow-hidden spaced-y *:spaced-x">
       <div className="flex items-end justify-between">
         <h3 className="text-2xl font-ranille text-dark lg:text-4xl">
           Your Cart
@@ -99,7 +103,7 @@ export default function Cart() {
           </span>
         </h2>
       </div>
-      <div className="flex-1 overflow-auto rounded-md">
+      <div className="flex-1 spaced-t-md overflow-auto spaced-t-">
         <div className="flex flex-col gap-spaced">
           {cart.items.map((cartItem, index) => {
             return (
@@ -113,7 +117,7 @@ export default function Cart() {
       <div>
         <TransitionButton
           className="flex justify-center w-full"
-          color="base"
+          color="tertiary"
           href="/checkout"
         >
           Checkout

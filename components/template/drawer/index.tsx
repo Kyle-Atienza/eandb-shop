@@ -16,7 +16,7 @@ export function Drawer() {
 
   return (
     <div
-      className={`drawer fixed min-h-screen max-h-screen flex flex-col min-w-[630px] w-2/5 bg-light right-0 top-0 transition-all duration-500 spaced z-40 ${
+      className={`drawer fixed min-h-screen max-h-screen flex flex-col min-w-[550px] w-[30%] bg-light right-0 top-0 transition-all duration-500 z-40 ${
         drawer ? "" : "translate-x-full"
       }`}
     >
@@ -30,7 +30,7 @@ export function Drawer() {
         </div>
       ) : null}
       {!user ? (
-        <div className="absolute top-0 left-0 flex flex-col justify-center flex-1 w-full h-full">
+        <div className="absolute top-0 left-0 flex flex-col justify-center spaced flex-1 w-full h-full">
           <div className=" spaced-x">
             <Login />
           </div>

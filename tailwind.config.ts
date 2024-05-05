@@ -12,8 +12,8 @@ const config: Config = {
       secondary: "var(--secondary-color)",
       light: "var(--light-color)",
       dark: "var(--dark-color)",
-      base: "var(--base-color)",
       tertiary: "var(--tertiary-color)",
+      danger: "var(--danger-color)",
     },
     extend: {
       backgroundImage: {
