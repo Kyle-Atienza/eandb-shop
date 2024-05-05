@@ -20,7 +20,7 @@ function QuantityButton({
   disabled = false,
 }: {
   size?: "sm";
-  color?: "dark" | "base" | "light" | "primary";
+  color?: "dark" | "base" | "light" | "primary" | "tertiary";
   onClick?: React.MouseEventHandler;
   children: ReactNode;
   disabled?: boolean;
@@ -51,7 +51,7 @@ export function ProductQuantity({
   cartItemId,
   onChange,
 }: {
-  color?: "dark" | "base" | "light" | "primary";
+  color?: "dark" | "base" | "light" | "primary" | "tertiary";
   border?: boolean;
   size?: "sm";
   deleteButton?: boolean;

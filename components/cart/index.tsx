@@ -92,10 +92,6 @@ export default function Cart() {
         <h3 className="text-2xl font-ranille text-dark lg:text-4xl">
           Your Cart
         </h3>
-        {/* <Button color="base" onClick={() => router.push("/checkout")}>
-          Checkout
-        </Button> */}
-        {/* <Label>Total: {totalAmount}</Label> */}
         <h2 className="flex items-baseline gap-2 text-3xl text-dark font-ranille">
           {totalAmount.toFixed(2)}
           <span className="">

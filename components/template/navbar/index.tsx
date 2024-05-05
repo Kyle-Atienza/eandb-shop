@@ -79,7 +79,7 @@ export function Navbar() {
         ) : (
           <button
             onClick={() => {
-              router.push("/#login");
+              toggleDrawer();
             }}
           >
             <Label>Login</Label>

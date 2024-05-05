@@ -6,7 +6,7 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
   className?: string;
-  color?: "dark" | "base" | "light" | "primary";
+  color?: "dark" | "base" | "light" | "primary" | "tertiary";
   active?: boolean;
   type?: "submit" | "reset" | "button" | undefined;
   size?: "sm";

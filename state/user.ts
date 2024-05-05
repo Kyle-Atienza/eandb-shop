@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import { useOrdersStore } from "./orders";
+import { useOptionsStore } from "./options";
 
 const API_URL = `${process.env.BASE_URL}/users`;
 
@@ -69,6 +70,7 @@ export const useUserStore = create<UserState>((set) => ({
         set({ user: res.data });
         // useOrdersStore.setState({ cart: res.data.cart });
         localStorage.setItem("user", JSON.stringify(res.data));
+        useOptionsStore.getState().closeDrawer();
       })
       .catch((e) => {
         console.log(e);

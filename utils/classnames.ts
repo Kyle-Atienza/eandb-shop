@@ -1,5 +1,5 @@
 const buttonColorClassName = (
-  color?: "dark" | "base" | "light" | "primary",
+  color?: "dark" | "base" | "light" | "primary" | "tertiary",
   active?: boolean
 ) => {
   if (active) {
@@ -14,7 +14,7 @@ const buttonColorClassName = (
 };
 
 const borderColorClassName = (
-  color?: "dark" | "base" | "light" | "primary"
+  color?: "dark" | "base" | "light" | "primary" | "tertiary"
 ) => {
   if (color) {
     return `border-${color}`;
@@ -23,7 +23,9 @@ const borderColorClassName = (
   return "border-light";
 };
 
-const textColorClassName = (color?: "dark" | "base" | "light" | "primary") => {
+const textColorClassName = (
+  color?: "dark" | "base" | "light" | "primary" | "tertiary"
+) => {
   if (color === "dark" || color === "base") {
     return "text-dark";
   }

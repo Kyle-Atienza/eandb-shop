@@ -1,7 +1,7 @@
 export function Divider({
   color,
 }: {
-  color?: "dark" | "base" | "light" | "primary";
+  color?: "dark" | "base" | "light" | "primary" | "tertiary";
 }) {
   return (
     <div
