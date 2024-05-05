@@ -1,3 +1,5 @@
+"use client";
+
 import { buttonColorClassName } from "@/utils/classnames";
 import { Label } from "../label";
 import { TransitionLink } from "../transition-link";

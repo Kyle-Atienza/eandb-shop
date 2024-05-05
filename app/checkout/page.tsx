@@ -1,11 +1,10 @@
-"use client";
-
 import Cart from "@/components/cart";
+import Link from "next/link";
 
 export default function Page() {
   return (
     <div className="flex">
-      <div className="bg-light w-2/5">
+      <div className="w-2/5 bg-light">
         Your Cart
         <Cart />
       </div>
@@ -35,7 +34,9 @@ export default function Page() {
           </button>
         </form>
 
-        <button className="self-start p-2 bg-dark text-light">Pay</button>
+        <Link href={"checkout/success"}>
+          <button className="self-start p-2 bg-dark text-light">Pay</button>
+        </Link>
       </div>
     </div>
   );

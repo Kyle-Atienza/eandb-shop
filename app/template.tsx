@@ -59,7 +59,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         ></div>
         <Toaster />
       </div>
-      <main id="main" className="opacity-0">
+      <main id="main" className="flex flex-col flex-1 opacity-0">
         <div
           className={`grid relative flex-1 spaced-x transition-opacity duration-500 ${
             drawer ? "pointer-events-none opacity-30" : ""

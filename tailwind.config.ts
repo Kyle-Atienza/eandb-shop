@@ -27,6 +27,8 @@ const config: Config = {
       fontFamily: {
         ranille: ["var(--font-ranille)"],
         gopher: ["var(--font-gopher)"],
+        merchant: ["var(--font-merchant)"],
+        "merchant-wide": ["var(--font-merchant-wide)"],
       },
       spacing: {
         space: "2rem",
