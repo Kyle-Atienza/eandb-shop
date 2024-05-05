@@ -76,7 +76,7 @@ body {
   }
 
   .spaced-lg {
-    @apply p-5 lg:p-7;
+    @apply p-8 lg:p-10;
   }
 
   .spaced-md {

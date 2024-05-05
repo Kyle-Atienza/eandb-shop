@@ -16,7 +16,7 @@ export function Navbar() {
   const { resetOrdersStore } = useOrdersStore();
 
   return (
-    <div className="relative wave bg-secondary h-[100px] spaced-x">
+    <div className="relative wave bg-secondary h-[70px] spaced-x">
       {/* <div className="relative flex spaced-y gap-spaced-md h-[100px] items-center">
         <TransitionLink className="text-3xl text-tertiary" href="/">
           <i
@@ -61,12 +61,30 @@ export function Navbar() {
           {/* <i className="bi bi-house" /> */}
           <Label>Home</Label>
         </TransitionLink>
-        <div className="flex gap-spaced">
-          <button onClick={() => toggleDrawer()}>
-            <Label>Cart(0)</Label>
+        {user ? (
+          <div className="flex gap-spaced">
+            <button onClick={() => toggleDrawer()}>
+              <Label>Cart(0)</Label>
+            </button>
+            <button
+              onClick={() => {
+                signOut();
+                resetOrdersStore();
+                router.push("/");
+              }}
+            >
+              <Label>Logout</Label>
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => {
+              router.push("/#login");
+            }}
+          >
+            <Label>Login</Label>
           </button>
-          <Label>Logout</Label>
-        </div>
+        )}
       </div>
     </div>
   );

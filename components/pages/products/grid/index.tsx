@@ -44,7 +44,7 @@ export function ProductsGrid({
       ease: "none",
       scrollTrigger: {
         trigger: column,
-        start: "top top",
+        start: "top 70%",
         end: "bottom bottom",
         scrub: 0.8,
       },
@@ -71,16 +71,16 @@ export function ProductsGrid({
 
   return (
     <div className="flex gap-spaced" ref={container}>
-      <div className="col col-1 flex flex-col gap-spaced flex-1 h-min">
+      <div className="flex flex-col flex-1 col col-1 gap-spaced h-min">
         {slice ? renderProducts(1) : null}
       </div>
-      <div className="col col-2 flex flex-col gap-spaced flex-1 h-min">
+      <div className="flex flex-col flex-1 col col-2 gap-spaced h-min">
         {slice ? renderProducts(2) : null}
       </div>
-      <div className="col col-3 hidden md:flex flex-col gap-spaced flex-1 h-min">
+      <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min">
         {slice ? renderProducts(3) : null}
       </div>
-      <div className="col col-4 hidden xl:flex flex-col gap-spaced flex-1 h-min">
+      <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min">
         {slice ? renderProducts(4) : null}
       </div>
     </div>

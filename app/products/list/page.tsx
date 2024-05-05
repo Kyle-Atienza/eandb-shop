@@ -25,7 +25,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="flex flex-col gap-spaced mt-[40vh]">
+      <div className="flex flex-col gap-spaced mt-[65vh]">
         <ProductsGrid productList={productList} />
       </div>
     </>

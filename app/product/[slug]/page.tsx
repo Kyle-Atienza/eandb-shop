@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="flex gap-spaced ">
-      <div className="flex flex-col flex-1 h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)] sticky top-[76px] lg:top-[100px] lg:spaced-b">
+      <div className="flex flex-col flex-1 h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)] sticky top-[100px] lg:spaced-b">
         <div className="relative w-full h-full overflow-hidden rounded bg-light">
           {/* {product?.details.gallery[0] ? (
             <Image
@@ -71,7 +71,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <h1 className="text-5xl text-light font-ranille">
               {product?.name}
             </h1>
-            <h2 className="text-3xl text-light font-ranille flex gap-2 items-baseline">
+            <h2 className="flex items-baseline gap-2 text-3xl text-light font-ranille">
               {productItem?.amount.toFixed(2)}
               <span className="">
                 <Label>PHP</Label>

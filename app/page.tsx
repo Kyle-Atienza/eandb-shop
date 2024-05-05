@@ -21,7 +21,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="mt-[50vh]">
+    <div className="">
+      <div className="h-[30vh] relative">
+        {/* <div className="absolute rotate-12 bg-light rounded bottom-0 right-[10vw] aspect-[3/4] w-[20vw]" />
+        <div className="absolute -rotate-6 bg-light rounded top-0 left-0 aspect-[5/3] w-[35vw]" /> */}
+      </div>
       <ProductFilter />
       <div className="spaced-t">
         <BentoHome />

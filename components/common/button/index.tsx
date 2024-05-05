@@ -26,7 +26,7 @@ export function Button({
       return `spaced-${size}`;
     }
 
-    return "spaced-lg";
+    return "spaced-md";
   };
 
   return (

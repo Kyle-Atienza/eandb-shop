@@ -1,15 +1,4 @@
-figuring out animation page out
-- animating cursor on click
-
-checkoutpage
-add login to cart drawer
-
-db
-- add appropriate image
-
-payment
-- still waiting 
-
-cart
-
-ssg/ssr
+login page
+thank you page
+orders page
+require auth on add to cart
