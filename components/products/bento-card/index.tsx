@@ -40,14 +40,14 @@ export function ProductBentoCard({
     <div
       ref={container}
       className={`product-card transition-all rounded bg-dark flex flex-col relative group
-      ${className ?? "aspect-square"}
+      ${className ?? "aspect-[3/5] lg:aspect-square"}
       `}
       style={transform}
     >
       <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] aspect-square flex items-center justify-center">
         <div className="w-[83.5%] h-[83.5%] spaced-md font-gopher group overflow-hidden">
           <div className="relative flex w-full h-full">
-            <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
+            <div className="bg-light text-dark spaced-md rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
               <p className="text-sm lg:text-xl">{product?.name}</p>
             </div>
             {product?.items.length > 1 ? (

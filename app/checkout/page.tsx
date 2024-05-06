@@ -34,16 +34,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="spaced-y flex items-center justify-end">
-        {/* <div>
-          Cart {">"} Checkout {">"} Done
-        </div> */}
-        <Button onClick={() => router.push("/checkout/success")}>
-          Confirm
-        </Button>
-        {/* <TransitionButton href="/checkout/success">Confirm</TransitionButton> */}
-      </div>
-      <div className="grid grid-cols-[1fr_auto_30%] gap-spaced">
+      <div className="grid grid-cols-[1fr_auto_30%] gap-spaced mt-[10vh]">
         <div className="flex flex-col gap-spaced">
           <h1 className="text-5xl font-ranille text-light">Checkout</h1>
           <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
@@ -61,10 +52,10 @@ export default function Page() {
               />
             </form>
           </div>
-          <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
+          {/* <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
             <Label>Payment</Label>
             <Select options={paymentMethods} />
-          </div>
+          </div> */}
           <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
             <Label>Cancellation Policy</Label>
             <p className="font-gopher leading-2">
@@ -85,8 +76,16 @@ export default function Page() {
               return <CartItem item={item} key={index} />;
             })}
           </div> */}
-          <div className="flex mt-5 w-full h-min">
-            <Receipt />
+          <div className="flex flex-col mt-5 w-full h-min items-center justify-center">
+            <div className="flex items-center w-full">
+              <Receipt />
+            </div>
+            <Button
+              className="mt-16"
+              onClick={() => router.push("/checkout/success")}
+            >
+              Confirm
+            </Button>
           </div>
         </div>
       </div>

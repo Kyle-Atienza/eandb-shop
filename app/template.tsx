@@ -26,11 +26,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const { getCart } = useOrdersStore();
 
   useEffect(() => {
-    checkSavedUser();
-    animatePageIn();
     if (user) {
       getCart();
     }
+  }, [user]);
+
+  useEffect(() => {
+    checkSavedUser();
+    animatePageIn();
     if (drawer) {
       closeDrawer();
     }

@@ -6,7 +6,9 @@ export function Label({
   className?: string;
 }) {
   return (
-    <p className={`tracking-[0.2em] font-gopher text-sm uppercase inline`}>
+    <p
+      className={`tracking-[0.2em] font-gopher text-xs lg:text-sm uppercase inline`}
+    >
       {children}
     </p>
   );

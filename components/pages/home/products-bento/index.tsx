@@ -134,7 +134,10 @@ export function BentoHome() {
 
       <Marquee />
 
-      <ProductBentoCard className="col-span-2" product={products[4]} />
+      <ProductBentoCard
+        className="min-h-[40vw] col-span-2"
+        product={products[4]}
+      />
 
       <ProductBentoCard product={products[5]} />
 
