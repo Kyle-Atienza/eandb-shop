@@ -13,49 +13,10 @@ export function Navbar() {
 
   const { user, signOut } = useUserStore();
   const { toggleDrawer, drawer } = useOptionsStore();
-  const { resetOrdersStore } = useOrdersStore();
+  const { resetOrdersStore, cart } = useOrdersStore();
 
   return (
     <div className="relative wave bg-secondary h-[70px] spaced-x">
-      {/* <div className="relative flex spaced-y gap-spaced-md h-[100px] items-center">
-        <TransitionLink className="text-3xl text-tertiary" href="/">
-          <i
-            className={`bi bi-house transition-all duration-1000 ${
-              pathname === "/" ? "text-primary" : "text-tertiary"
-            }`}
-          ></i>
-        </TransitionLink>
-        {user ? (
-          <>
-            {pathname !== "/checkout" ? (
-              <button
-                className={`text-3xl transition-colors ${
-                  drawer ? "text-primary" : "text-tertiary"
-                }`}
-                onClick={() => toggleDrawer()}
-              >
-                <i className="bi bi-bag"></i>
-              </button>
-            ) : null}
-            <button
-              onClick={() => {
-                signOut();
-                resetOrdersStore();
-                router.push("/");
-              }}
-              className="text-3xl text-tertiary"
-            >
-              <i className="bi bi-box-arrow-right"></i>
-            </button>
-          </>
-        ) : (
-          <div>
-            <Button size="sm" onClick={() => router.push("/#login")}>
-              Log In
-            </Button>
-          </div>
-        )}
-      </div> */}
       <div className="flex items-center justify-between h-full gap-spaced translate-y-[3px] relative">
         <TransitionLink href="/">
           {/* <i className="bi bi-house" /> */}
@@ -64,7 +25,7 @@ export function Navbar() {
         {user ? (
           <div className="flex gap-spaced">
             <button onClick={() => toggleDrawer()}>
-              <Label>Cart(0)</Label>
+              <Label>Cart({cart.items.length})</Label>
             </button>
             <button
               onClick={() => {

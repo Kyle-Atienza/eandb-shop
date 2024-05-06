@@ -1,3 +1,9 @@
+ongoing: 
+currently adding functionality to update quantity on receipt on order summary on checkout page
+
+bugs:
+checkout > success not showing
+
 orders page
 require auth on add to cart
 cart item font looking to large

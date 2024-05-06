@@ -26,22 +26,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const { getCart } = useOrdersStore();
 
   useEffect(() => {
-    if (drawer) {
-      closeDrawer();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
-
-  useEffect(() => {
+    checkSavedUser();
+    animatePageIn();
     if (user) {
       getCart();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
-  useEffect(() => {
-    checkSavedUser();
-    animatePageIn();
+    if (drawer) {
+      closeDrawer();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

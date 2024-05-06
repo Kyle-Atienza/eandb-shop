@@ -9,12 +9,12 @@ import { ProductQuantity } from "../pages/product/quantity";
 import { Divider } from "../decorations/divider";
 import { Label } from "../common/label";
 
-function CartItem({ item }: { item: CartItem }) {
+export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
   const rotation = Math.random() * 18 - 8;
   const quantity: number = item.count;
 
   return (
-    <div className="flex flex-col bg-white lg:flex-row gap-space-md">
+    <div className="flex flex-col lg:flex-row gap-space-md">
       {/* {item?.product?.gallery?.length ? (
         <Image
           className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
@@ -36,7 +36,7 @@ function CartItem({ item }: { item: CartItem }) {
       </div>
       <div className="flex items-start flex-1 leading-normal gap-spaced-md">
         <div className="flex flex-col gap-spaced-xs">
-          <h5 className="text-2xl tracking-tight text-gray-900 font-gopher dark:text-white">
+          <h5 className="text-2xl tracking-tight text-gray-900 font-gopher text-dark ">
             {item.product.details.name}
             {item.product.name ? ` - ${item.product.name}` : ""}
           </h5>

@@ -66,6 +66,14 @@ declare global {
   interface SearchParams {
     [key: string]: string | string[] | undefined;
   }
+
+  interface Colors {
+    color: "dark" | "base" | "light" | "primary" | "tertiary";
+  }
+
+  interface Fees {
+    delivery: number;
+  }
 }
 
 export default global;
