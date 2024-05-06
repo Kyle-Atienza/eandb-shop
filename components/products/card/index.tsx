@@ -108,8 +108,8 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
           </div>
         </div>
         <div className="spaced-md flex flex-col gap-spaced">
-          <div className="w-1/3 spaced-b-sm">
-            <p className="text-sm lg:text-xl font-gopher">{product.name}</p>
+          <div className="w-1/2 lg:w-1/3 spaced-b-sm">
+            <p className="text-base lg:text-xl font-gopher">{product.name}</p>
           </div>
         </div>
       </div>

@@ -27,7 +27,12 @@ export function ProductsGrid({
   const [slice, setSlice] = useState<number>(0);
 
   const getSlice = () => {
-    setSlice(document.querySelectorAll(".col").length);
+    setSlice(
+      Array.from(document.querySelectorAll(".col")).filter((element) => {
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.display !== "none";
+      }).length
+    );
   };
 
   useEffect(() => {
