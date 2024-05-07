@@ -285,3 +285,9 @@ body {
   transform: translateY(100%);
   left: 0px;
 }
+
+@media (pointer: coarse) {
+  #animated-cursor {
+    display: none;
+  }
+}

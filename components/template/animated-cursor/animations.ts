@@ -59,9 +59,7 @@ export const customCursorAnimation = (
   hoverCursor: ReactRef
 ) => {
   const { target, x, y } = e;
-  const onProductCard = (target as HTMLElement).closest(
-    ".product-card .hover-trigger"
-  );
+  const onProductCard = (target as HTMLElement).closest(".product-card");
   const productCardRect = onProductCard?.getBoundingClientRect();
 
   if (hoverCursorContainer.current) {
@@ -80,8 +78,12 @@ export const customCursorAnimation = (
 
   if (hoverCursor?.current) {
     gsap.to(hoverCursor.current, {
-      width: onProductCard ? productCardRect?.width : 20,
-      height: onProductCard ? productCardRect?.height : 20,
+      width: onProductCard
+        ? productCardRect?.width! + productCardRect?.width! * 0.15
+        : 20,
+      height: onProductCard
+        ? productCardRect?.height! + productCardRect?.height! * 0.15
+        : 20,
       xPercent: -50,
       yPercent: -50,
       scale: 1,

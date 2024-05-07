@@ -34,9 +34,9 @@ function Main() {
   );
 
   return (
-    <div className="main-card relative flex flex-col justify-end col-span-1 gap-spaced lg:col-span-2 xl:col-span-3 font-ranille text-light">
+    <div className="main-card relative flex flex-col justify-end col-span-1 gap-spaced md:col-span-2 xl:col-span-3 font-ranille text-light">
       <Label>Welcome!</Label>
-      <div className=" text-[10vw] lg:text-[7vw] leading-[1em]">
+      <div className=" text-[10vw] md:text-[7vw] leading-[1em]">
         {"Discover what's in store for you!"}
         <span ref={scrollDown} className="relative group">
           <span className="opacity-0">M</span>
@@ -75,7 +75,7 @@ function Marquee() {
     >
       <div
         id="marquee"
-        className=" sticky top-[30vh] flex gap-[2vw] text-[10vw] lg:text-[7vw] overflow-hidden"
+        className=" sticky top-[30vh] flex gap-[2vw] text-[10vw] md:text-[7vw] overflow-hidden"
       >
         <p className="marquee__part  font-ranille text-light whitespace-nowrap translate-y-[0.05em]">
           Organic, Fresh, and Local Produce!
@@ -90,14 +90,14 @@ function Marquee() {
 
 function Reseller() {
   return (
-    <div className="relative z-10 flex flex-col min-h-[100vw] lg:min-h-0 row-span-2 lg:row-span-2 font-gopher">
+    <div className="relative z-10 flex flex-col min-h-[100vw] md:min-h-0 row-span-2 md:row-span-2 font-gopher">
       <div className="sticky bottom-0 mt-auto spaced-b">
-        <div className="spaced text-dark bg-light rounded lg:items-center items-start lg:justify-between flex flex-col lg:flex-row gap-4 hover:bg-primary transition-colors">
+        <div className="spaced text-dark bg-light rounded md:items-center items-start md:justify-between flex flex-col md:flex-row gap-4 hover:bg-primary transition-colors">
           <div className="flex flex-col gap-4 ">
-            <p className="text-2xl lg:text-3xl">Want to be our reseller?</p>
+            <p className="text-2xl md:text-3xl">Want to be our reseller?</p>
             <Label>Check our wholesale rates!</Label>
           </div>
-          <i className="text-4xl lg:text-3xl bi bi-shop-window"></i>
+          <i className="text-4xl md:text-3xl bi bi-shop-window"></i>
         </div>
       </div>
     </div>
@@ -121,7 +121,7 @@ export function BentoHome() {
   const { products } = useProductsStore();
 
   return (
-    <div className="grid grid-cols-2 gap-spaced lg:grid-cols-3 xl:grid-cols-4 spaced-b">
+    <div className="grid grid-cols-2 gap-spaced md:grid-cols-3 xl:grid-cols-4 spaced-b">
       <Main />
 
       <ProductBentoCard className="row-span-2" product={products[0]} />
@@ -135,7 +135,7 @@ export function BentoHome() {
       <Marquee />
 
       <ProductBentoCard
-        className="min-h-[40vw] col-span-2"
+        className="min-h-[40vw] md:min-h-0 col-span-2"
         product={products[4]}
       />
 

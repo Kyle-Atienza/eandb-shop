@@ -30,7 +30,7 @@ export function ProductBentoCard({
   const router = useRouter();
   const rotation = Math.random() * 18 - 8;
   const transform = {
-    rotate: `${Math.random() * 18 - 8}deg`,
+    rotate: `${Math.random() * 5 - 5}deg`,
     translate: `(${Math.random() * 18 - 8}%, ${Math.random() * 18 - 8}%)`,
   };
 
@@ -39,47 +39,51 @@ export function ProductBentoCard({
   return (
     <div
       ref={container}
-      className={`product-card transition-all rounded bg-dark flex flex-col relative group
+      className={`product-card transition-all rounded flex flex-col relative group
       ${className ?? "aspect-[3/5] lg:aspect-square"}
       `}
       style={transform}
     >
-      <div className="hover-trigger absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[120%] h-[120%] aspect-square flex items-center justify-center">
-        <div className="w-[83.5%] h-[83.5%] spaced-md font-gopher group overflow-hidden">
-          <div className="relative flex w-full h-full">
-            <div className="bg-light text-dark spaced-md rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
-              <p className="text-sm lg:text-xl">{product?.name}</p>
-            </div>
-            {product?.items.length > 1 ? (
-              <div className="absolute bottom-0 right-0 font-medium flex flex-wrap gap-spaced-sm transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
-                {product.items.map((item, index) => {
-                  return (
-                    <TransitionLink
-                      href={`/product/${parseProductListItemId(
-                        item.name
-                          ? `${product.name} ${item.name}`
-                          : `${item.name}`
-                      )}`}
-                      key={index}
-                    >
-                      <div className="transition-colors rounded-md bg-primary text-light hover:bg-light hover:text-primary spaced-sm">
-                        <p className="text-xs lg:text-lg">{item.name}</p>
-                      </div>
-                    </TransitionLink>
-                  );
-                })}
-              </div>
-            ) : (
-              <TransitionLink
-                className="w-full h-full"
-                href={`/product/${parseProductListItemId(product?.name || "")}`}
-              />
-            )}
-          </div>
-        </div>
-      </div>
       <div className="relative flex w-full h-full overflow-hidden rounded ">
-        <div className="relative flex-1 transition-opacity group-hover:opacity-80">
+        <div className="relative flex-1 transition-opacity group-hover:opacity-80 bg-dark">
+          <div className="absolute left-0 top-0 w-full h-full z-10 spaced-md">
+            <div className="relative w-full h-full">
+              <div className="bg-light text-dark spaced-md rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
+                <p className="text-sm lg:text-xl font-gopher">
+                  {product?.name}
+                </p>
+              </div>
+              {product?.items.length > 1 ? (
+                <div className="absolute bottom-0 right-0 font-medium flex flex-wrap gap-spaced-sm transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
+                  {product.items.map((item, index) => {
+                    return (
+                      <TransitionLink
+                        href={`/product/${parseProductListItemId(
+                          item.name
+                            ? `${product.name} ${item.name}`
+                            : `${item.name}`
+                        )}`}
+                        key={index}
+                      >
+                        <div className="transition-colors rounded-md bg-primary text-light hover:bg-light hover:text-primary spaced-sm">
+                          <p className="text-xs lg:text-lg font-gopher">
+                            {item.name}
+                          </p>
+                        </div>
+                      </TransitionLink>
+                    );
+                  })}
+                </div>
+              ) : (
+                <TransitionLink
+                  className="w-full h-full"
+                  href={`/product/${parseProductListItemId(
+                    product?.name || ""
+                  )}`}
+                />
+              )}
+            </div>
+          </div>
           {product?.gallery.length ? (
             <Image
               className={`transition-all object-cover object-center`}
@@ -92,29 +96,6 @@ export function ProductBentoCard({
           ) : null}
         </div>
       </div>
-      {/* <div className="absolute w-full h-full overflow-hidden spaced-md font-gopher group ">
-        <div className="relative w-full h-full">
-          <div className="bg-light text-dark p-4 rounded-md font-medium absolute top-0 transition-transform lg:-translate-y-[200%] group-hover:-translate-y-0">
-            <p className="text-sm lg:text-xl">
-              {product?.name}
-            </p>
-          </div>
-          {product?.items.length > 1 ? (
-            <div className="absolute bottom-0 right-0 font-medium flex flex-wrap gap-spaced-sm transition-transform lg:translate-y-[200%] group-hover:translate-y-0">
-              {product.items.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="rounded-md bg-primary text-light spaced-sm"
-                  >
-                    <p className="text-xs lg:text-lg">{item.name}</p>
-                  </div>
-                );
-              })}
-            </div>
-          ) : null}
-        </div>
-      </div> */}
     </div>
   );
 }
