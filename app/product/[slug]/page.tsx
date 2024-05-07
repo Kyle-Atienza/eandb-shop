@@ -51,10 +51,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const productItem: ProductItem = getProductItem(product, selectedOptions)!;
 
   return (
-    <div className="flex gap-spaced ">
-      <div className="flex flex-col flex-1 h-[calc(100vh-76px)] lg:h-[calc(100vh-100px)] sticky top-[100px] lg:spaced-b">
+    <div className="md:flex gap-spaced mt-4 *:spaced-b">
+      <div className="flex flex-col flex-1 h-[65vw] md:h-[calc(100vh-100px)] md:sticky md:top-[100px]">
         <div className="relative w-full h-full overflow-hidden rounded bg-light">
-          {/* {product?.details.gallery[0] ? (
+          {product?.details.gallery[0] ? (
             <Image
               src={product?.details.gallery[0]}
               fill
@@ -62,30 +62,35 @@ export default async function Page({ params }: { params: { slug: string } }) {
               objectFit="cover"
               priority
             />
-          ) : null} */}
+          ) : null}
         </div>
       </div>
-      <div className="flex flex-col flex-1 gap-spaced spaced-b">
+      <div className="flex flex-col flex-1 gap-spaced  spaced-t lg:spaced-t-none">
         <div className="flex flex-col gap-spaced">
-          <div className="flex flex-col gap-spaced-sm">
-            <h1 className="text-5xl text-light font-ranille">
-              {product?.name}
-            </h1>
-            <h2 className="flex items-baseline gap-2 text-3xl text-light font-ranille">
-              {productItem?.amount.toFixed(2)}
-              <span className="">
-                <Label>PHP</Label>
-              </span>
-            </h2>
-            <p className="text-md font-gopher text-light">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+          <div className="flex gaps-spaced-sm">
+            <div className="flex gap-spaced-sm">
+              <div className="flex flex-col gap-spaced-sm">
+                <h1 className="text-5xl text-light font-ranille">
+                  {product?.name}
+                </h1>
+                <h2 className="flex items-baseline gap-2 text-3xl text-light font-ranille">
+                  {productItem?.amount.toFixed(2)}
+                  <span className="">
+                    <Label>PHP</Label>
+                  </span>
+                </h2>
+                <p className="text-md font-gopher text-light">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+              </div>
+            </div>
           </div>
           <div>
             <Divider />

@@ -50,6 +50,31 @@ body {
     @apply h-5 lg:h-8;
   }
 
+  .spaced-none {
+    @apply p-0;
+  }
+  .spaced-x-none {
+    @apply px-0;
+  }
+  .spaced-y-none {
+    @apply py-0;
+  }
+  .spaced-t-none {
+    @apply pt-0;
+  }
+  .spaced-r-none {
+    @apply pr-0;
+  }
+  .spaced-b-none {
+    @apply pb-0;
+  }
+  .spaced-l-none {
+    @apply pl-0;
+  }
+  .spaced-no-r-none {
+    @apply pt-0;
+  }
+
   .spaced {
     @apply p-5 lg:p-8;
   }

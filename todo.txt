@@ -1,5 +1,6 @@
 ongoing: 
-currently adding functionality to update quantity on receipt on order summary on checkout page
+display cart on checkout
+page responsiveness - P
 
 bugs:
 checkout > success not showing

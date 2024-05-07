@@ -6,8 +6,6 @@ export function ProductRelatedItems({
 }: {
   items: ProductListingItem[];
 }) {
-  console.log(items);
-
   return (
     <>
       {items.length ? (
