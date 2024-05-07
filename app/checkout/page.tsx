@@ -1,6 +1,6 @@
 "use client";
 
-import Cart, { CartItem } from "@/components/cart";
+import Cart, { CartItem, CartItems } from "@/components/cart";
 import { Button, TransitionButton } from "@/components/common/button";
 import { Input, TextArea } from "@/components/common/forms/input";
 import { Select } from "@/components/common/forms/select";
@@ -34,48 +34,58 @@ export default function Page() {
 
   return (
     <>
-      <div className="grid grid-cols-[1fr_auto_30%] gap-spaced mt-[10vh]">
-        <div className="flex flex-col gap-spaced">
-          <h1 className="text-5xl font-ranille text-light">Checkout</h1>
-          <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
-            <Label>Shipping Information</Label>
-            <form action="" className="flex flex-col gap-spaced-md">
-              <Input
-                placeholder="Shipping address"
-                name="address"
-                id="address"
-              />
-              <TextArea
-                placeholder="Additional Notes"
-                name="notes"
-                id="notes"
-              />
-            </form>
-          </div>
-          {/* <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
+      <div className="spaced-t">
+        <h1 className="text-5xl font-ranille text-light">Checkout</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[3fr_2fr] gap-spaced spaced-y">
+          <div className="flex flex-col gap-spaced">
+            {/* <h1 className="text-5xl font-ranille text-light">Checkout</h1> */}
+            <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
+              <Label>Shipping Information</Label>
+              <form action="" className="flex flex-col gap-spaced-md">
+                <Input
+                  placeholder="Shipping address"
+                  name="address"
+                  id="address"
+                />
+                <TextArea
+                  placeholder="Additional Notes"
+                  name="notes"
+                  id="notes"
+                />
+              </form>
+            </div>
+            {/* <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
             <Label>Payment</Label>
             <Select options={paymentMethods} />
           </div> */}
-          <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
-            <Label>Cancellation Policy</Label>
-            <p className="font-gopher leading-2">
-              Our cancellation policy allows cancellations at any time, with no
-              fees if made [X] days in advance; cancellations within [Y] days
-              may incur a fee of [Z]%. Refunds are processed within [number of
-              days] business days to the original payment method. Exceptions may
-              apply in unforeseen circumstances, and cancellations can be made
-              by [method].
-            </p>
+            <div className="spaced bg-light rounded flex flex-col gap-spaced-md">
+              <Label>Cancellation Policy</Label>
+              <p className="font-gopher leading-2">
+                Our cancellation policy allows cancellations at any time, with
+                no fees if made [X] days in advance; cancellations within [Y]
+                days may incur a fee of [Z]%. Refunds are processed within
+                [number of days] business days to the original payment method.
+                Exceptions may apply in unforeseen circumstances, and
+                cancellations can be made by [method].
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="h-full w-[1px] bg-light"></div>
+          <div className="flex flex-col gap-spaced w-full">
+            {/* <h1 className="text-5xl font-ranille text-light">Order Items</h1> */}
+            <div className="bg-light w-full rounded spaced md:h-[55vh] overflow-scroll lg:flex">
+              <CartItems />
+            </div>
+            <div className=" w-full">
+              <Button
+                className="w-full flex justify-center"
+                onClick={() => router.push("/checkout/success")}
+              >
+                Confirm
+              </Button>
+            </div>
+          </div>
+          {/* <div className="h-full w-[1px] bg-light"></div>
         <div className=" flex justify-center">
-          {/* <h1 className="text-5xl font-ranille text-light">Order Summary </h1> */}
-          {/* <div>
-            {cart.items.map((item, index) => {
-              return <CartItem item={item} key={index} />;
-            })}
-          </div> */}
           <div className="flex flex-col mt-5 w-full h-min items-center justify-center">
             <div className="flex items-center w-full">
               <Receipt />
@@ -87,6 +97,7 @@ export default function Page() {
               Confirm
             </Button>
           </div>
+        </div> */}
         </div>
       </div>
     </>

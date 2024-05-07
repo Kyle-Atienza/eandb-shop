@@ -20,15 +20,15 @@ export function Drawer() {
         drawer ? "" : "translate-x-full"
       }`}
     >
-      {pathname !== "/checkout" ? (
+      {/* {pathname !== "/checkout" ? (
         <div
           className={`flex-1 flex flex-col ${
             !user ? "pointer-events-none opacity-20" : ""
           }`}
         >
-          <Cart />
         </div>
-      ) : null}
+      ) : null} */}
+      <Cart />
       {!user ? (
         <div className="absolute top-0 left-0 flex flex-col justify-center spaced flex-1 w-full h-full">
           <div className=" spaced-x">

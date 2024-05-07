@@ -30,7 +30,7 @@ export default function Page() {
             </Label>
           </h2> */}
           <div className="flex justify-center mx-auto my-12">
-            <div className="  bg-light w-[500px] zigzag-top zigzag-bottom font-merchant text-xl">
+            <div className="  bg-light w-[90vw] lg:w-[500px] zigzag-top zigzag-bottom font-merchant text-xl">
               <div className="flex flex-col items-center gap-spaced-md spaced-x">
                 <p className="text-3xl font-merchant-wide">Order Summary</p>
                 <p>05-05-2024 | 4:51 PM</p>

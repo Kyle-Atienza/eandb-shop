@@ -5,6 +5,7 @@ responsive drawer
 bugs:
 remove unwanted right scroll
 checkout > success not showing
+option select not working
 
 orders page
 require auth on add to cart

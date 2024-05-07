@@ -28,7 +28,7 @@ export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
           alt="Cart Item"
         />
       ) : null} */}
-      <div className="w-[100px] md:w-[130px]">
+      <div className="max-w-[100px] w-[100px] md:w-[130px] flex-shrink-0">
         <div
           className="w-full rounded-sm aspect-square bg-dark"
           style={{ rotate: `${rotation}deg` }}
@@ -80,6 +80,22 @@ export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
   );
 }
 
+export function CartItems() {
+  const { cart } = useOrdersStore();
+
+  return (
+    <div className="flex flex-col gap-spaced">
+      {cart.items.map((cartItem, index) => {
+        return (
+          <>
+            <CartItem item={cartItem} key={index} />
+          </>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Cart() {
   const router = useRouter();
 
@@ -91,7 +107,7 @@ export default function Cart() {
   }, 0);
 
   return (
-    <div className="flex flex-col flex-1 h-full overflow-hidden spaced-y *:spaced-x">
+    <div className="flex flex-col gap-spaced-md flex-1 h-full overflow-hidden spaced-y *:spaced-x">
       <div className="flex items-end justify-between">
         <h3 className="text-2xl font-ranille text-dark lg:text-4xl">
           Your Cart
@@ -101,15 +117,7 @@ export default function Cart() {
         </h2>
       </div>
       <div className="flex-1 spaced-t-md overflow-auto spaced-t-">
-        <div className="flex flex-col gap-spaced">
-          {cart.items.map((cartItem, index) => {
-            return (
-              <>
-                <CartItem item={cartItem} key={index} />
-              </>
-            );
-          })}
-        </div>
+        <CartItems />
       </div>
       <div>
         <TransitionButton
