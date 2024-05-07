@@ -14,7 +14,7 @@ export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
   const quantity: number = item.count;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-space-md">
+    <div className="flex gap-space-md">
       {/* {item?.product?.gallery?.length ? (
         <Image
           className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
@@ -28,15 +28,15 @@ export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
           alt="Cart Item"
         />
       ) : null} */}
-      <div className="w-[130px]">
+      <div className="w-[100px] md:w-[130px]">
         <div
           className="w-full rounded-sm aspect-square bg-dark"
           style={{ rotate: `${rotation}deg` }}
         ></div>
       </div>
-      <div className="flex items-start flex-1 leading-normal gap-spaced-md">
+      <div className="md:flex items-start flex-1 leading-normal gap-spaced-md">
         <div className="flex flex-col gap-spaced-xs">
-          <h5 className="text-2xl tracking-tight text-gray-900 font-gopher text-dark ">
+          <h5 className="text-base md:text-2xl tracking-tight text-gray-900 font-gopher text-dark ">
             {item.product.details.name}
             {item.product.name ? ` - ${item.product.name}` : ""}
           </h5>
@@ -48,7 +48,7 @@ export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
                       key={index}
                       className="rounded-md bg-secondary text-tertiary spaced-sm tracking-[0.1em]"
                     >
-                      <p className="text-xs lg:text-md font-gopher uppercase">
+                      <p className="text-xs md:text-md font-gopher uppercase">
                         {attribute.value}
                       </p>
                     </div>
@@ -57,7 +57,7 @@ export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
               : null}
           </div>
         </div>
-        <div className="flex flex-col items-end mt-auto gap-spaced-sm ms-auto">
+        <div className="flex flex-col items-end mt-auto gap-spaced-sm ms-auto spaced-t-md md:spaced-t-none">
           <div className="rounded-md bg-tertiary text-light spaced-sm">
             <p className="text-xs lg:text-base font-gopher">
               {(item.price * item.count).toFixed(2)}{" "}
@@ -96,11 +96,8 @@ export default function Cart() {
         <h3 className="text-2xl font-ranille text-dark lg:text-4xl">
           Your Cart
         </h3>
-        <h2 className="flex items-baseline gap-2 text-3xl text-dark font-ranille">
-          {totalAmount.toFixed(2)}
-          <span className="">
-            <Label>PHP</Label>
-          </span>
+        <h2 className="flex items-baseline text-xl  gap-spaced-xs lg:text-3xl text-dark font-ranille">
+          {totalAmount.toFixed(2)} <Label className="text-[0.4em]">PHP</Label>
         </h2>
       </div>
       <div className="flex-1 spaced-t-md overflow-auto spaced-t-">

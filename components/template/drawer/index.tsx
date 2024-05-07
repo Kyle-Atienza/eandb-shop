@@ -16,7 +16,7 @@ export function Drawer() {
 
   return (
     <div
-      className={`drawer fixed min-h-screen max-h-screen flex flex-col min-w-[550px] w-[30%] bg-light right-0 top-0 transition-all duration-500 z-40 ${
+      className={`drawer fixed min-h-screen max-h-screen flex flex-col md:min-w-[550px] w-[90%] md:w-[30%] bg-light right-0 top-0 transition-all duration-500 z-40 ${
         drawer ? "" : "translate-x-full"
       }`}
     >

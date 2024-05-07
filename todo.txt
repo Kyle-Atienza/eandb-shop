@@ -1,8 +1,9 @@
 ongoing: 
 display cart on checkout
-page responsiveness - P
+responsive drawer
 
 bugs:
+remove unwanted right scroll
 checkout > success not showing
 
 orders page
