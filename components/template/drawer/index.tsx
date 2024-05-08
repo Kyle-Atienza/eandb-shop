@@ -9,12 +9,17 @@ import { useUserStore } from "@/state/user";
 import { useOrdersStore } from "@/state/orders";
 
 function DrawerToggle({ className }: { className?: string }) {
+  const pathname = usePathname();
+
   const { toggleDrawer, drawer } = useOptionsStore();
   const { cart } = useOrdersStore();
+  const { user } = useUserStore();
 
   return (
     <div
-      className={` spaced-md bg-light rounded-tl-full rounded-bl-full ${className}`}
+      className={` spaced-md bg-light rounded-tl-full rounded-bl-full ${className} ${
+        pathname.includes("/checkout") ? "hidden" : ""
+      }`}
     >
       <button
         onClick={() => toggleDrawer()}
@@ -31,7 +36,7 @@ function DrawerToggle({ className }: { className?: string }) {
                 {cart.items.length}
               </div>
             ) : null}
-            <i className="bi bi-cart"></i>
+            <i className={`bi bi-cart ${!user ? "opacity-40" : ""}`}></i>
           </>
         )}
       </button>
@@ -56,7 +61,7 @@ export function Drawer() {
       />
 
       <div
-        className={`drawer fixed h-[80vh] md:h-screen flex flex-col items-start md:min-w-[550px] w-full md:w-[30%] bg-light right-0 md:top-0 bottom-0 transition-all duration-500 z-40 spaced-y gap-spaced ${
+        className={`drawer fixed h-[80vh] md:h-screen flex flex-col items-start md:min-w-[550px] w-screen md:w-[30%] bg-light left-0 md:left-[unset] md:right-0 md:top-0 bottom-0 transition-all duration-500 z-40 spaced-y gap-spaced ${
           drawer ? "" : "translate-y-full md:translate-y-0 md:translate-x-full"
         }`}
       >
@@ -66,14 +71,16 @@ export function Drawer() {
             drawer ? "-translate-y-full" : ""
           }`}
         />
-        <div className="flex flex-col items-start h-full gap-spaced">
+        <div
+          className={`flex flex-col items-start h-full *:w-full w-full gap-spaced ${
+            !user ? "opacity-40 pointer-events-none" : null
+          }`}
+        >
           <Cart />
         </div>
         {!user ? (
           <div className="absolute top-0 left-0 flex flex-col justify-center flex-1 w-full h-full spaced">
-            <div className=" spaced-x">
-              <Login />
-            </div>
+            <Login />
           </div>
         ) : null}
       </div>

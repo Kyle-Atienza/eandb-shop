@@ -1,8 +1,7 @@
 ongoing: 
-mobile navbar
 
 bugs:
-checkout > success not showing
 
 orders page
-cart item font looking to large
+
+deploy to vercel
