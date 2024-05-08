@@ -9,8 +9,11 @@ import { ProductRelatedItems } from "../related";
 import {
   parseProductListItemId,
   setInitalProductOptions,
+  getSelectedOptions,
 } from "@/utils/products";
 import { useOrdersStore } from "@/state/orders";
+import { useUserStore } from "@/state/user";
+import toast from "react-hot-toast";
 
 const getRelatedProducts = (
   productList: ProductListingItem[],
@@ -36,6 +39,7 @@ export function ProductDetails({
   product: ProductListingItem;
 }) {
   const { addToCart } = useOrdersStore();
+  const { user } = useUserStore();
 
   const [quantity, setQuantity] = useState<number>(1);
 
@@ -57,7 +61,7 @@ export function ProductDetails({
             productOptions={productOptions}
             onSelect={(val) => setProductOptions(val)}
           />
-          <div className="flex gap-space-md items-end">
+          <div className={`flex items-end gap-space-md`}>
             <ProductQuantity
               quantity={quantity}
               onChange={(val) => setQuantity(val)}
@@ -66,8 +70,18 @@ export function ProductDetails({
             <button
               className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
               onClick={() => {
-                addToCart(productItem?._id ?? "", quantity);
-                setQuantity(1);
+                if (user) {
+                  addToCart(
+                    productOptions[0].options.find((option) => option.selected)
+                      ?._id ?? "",
+                    quantity
+                  );
+                  setQuantity(1);
+                } else {
+                  toast.error(
+                    "Please login first to start adding items to your cart"
+                  );
+                }
               }}
             >
               Add to Cart

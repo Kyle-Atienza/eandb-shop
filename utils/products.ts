@@ -34,4 +34,11 @@ const setInitalProductOptions = (
   );
 };
 
-export { parseProductListItemId, setInitalProductOptions };
+const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
+  return productOptions?.map(
+    (option) =>
+      option.options.find((selectedOption) => selectedOption.selected)?.value!
+  )!;
+};
+
+export { parseProductListItemId, setInitalProductOptions, getSelectedOptions };

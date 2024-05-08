@@ -1,6 +1,7 @@
 import {
   parseProductListItemId,
   setInitalProductOptions,
+  getSelectedOptions,
 } from "@/utils/products";
 
 import Image from "next/image";
@@ -30,12 +31,12 @@ const getProductItem = (
   });
 };
 
-const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
+/* const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
   return productOptions?.map(
     (option) =>
       option.options.find((selectedOption) => selectedOption.selected)?.value!
   )!;
-};
+}; */
 
 const getProductList = async () => {
   const res = await fetch(`${process.env.BASE_URL}/products/list`);
@@ -65,7 +66,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           ) : null}
         </div>
       </div>
-      <div className="flex flex-col flex-1 gap-spaced  spaced-t lg:spaced-t-none">
+      <div className="flex flex-col flex-1 gap-spaced spaced-t lg:spaced-t-none">
         <div className="flex flex-col gap-spaced">
           <div className="flex gaps-spaced-sm">
             <div className="flex gap-spaced-sm">

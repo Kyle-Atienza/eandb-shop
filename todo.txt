@@ -1,12 +1,8 @@
 ongoing: 
-on mobile make drawer show from bottom
-add close button for drawer
+mobile navbar
 
 bugs:
-remove unwanted right scroll
 checkout > success not showing
-option select not working
 
 orders page
-require auth on add to cart
 cart item font looking to large

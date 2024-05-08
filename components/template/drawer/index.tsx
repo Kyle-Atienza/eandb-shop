@@ -69,14 +69,6 @@ export function Drawer() {
         <div className="flex flex-col items-start h-full gap-spaced">
           <Cart />
         </div>
-        {/* {pathname !== "/checkout" ? (
-        <div
-          className={`flex-1 flex flex-col ${
-            !user ? "pointer-events-none opacity-20" : ""
-          }`}
-        >
-        </div>
-      ) : null} */}
         {!user ? (
           <div className="absolute top-0 left-0 flex flex-col justify-center flex-1 w-full h-full spaced">
             <div className=" spaced-x">
