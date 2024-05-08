@@ -1,6 +1,6 @@
 ongoing: 
-display cart on checkout
-responsive drawer
+on mobile make drawer show from bottom
+add close button for drawer
 
 bugs:
 remove unwanted right scroll

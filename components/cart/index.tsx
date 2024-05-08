@@ -107,7 +107,7 @@ export default function Cart() {
   }, 0);
 
   return (
-    <div className="flex flex-col gap-spaced-md flex-1 h-full overflow-hidden spaced-y *:spaced-x">
+    <div className="flex flex-col gap-spaced-md flex-1 h-full overflow-hidden *:spaced-x">
       <div className="flex items-end justify-between">
         <h3 className="text-2xl font-ranille text-dark lg:text-4xl">
           Your Cart

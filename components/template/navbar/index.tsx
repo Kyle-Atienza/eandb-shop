@@ -24,9 +24,9 @@ export function Navbar() {
         </TransitionLink>
         {user ? (
           <div className="flex gap-spaced">
-            <button onClick={() => toggleDrawer()}>
+            {/* <button onClick={() => toggleDrawer()}>
               <Label>Cart({cart.items.length})</Label>
-            </button>
+            </button> */}
             <button
               onClick={() => {
                 signOut();
