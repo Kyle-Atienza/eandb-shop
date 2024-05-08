@@ -1,7 +1,6 @@
-ongoing: 
+orders page
 
 bugs:
 
-orders page
 
 deploy to vercel

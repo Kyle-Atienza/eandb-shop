@@ -39,17 +39,19 @@ export function Navbar() {
                 router.push("/");
               }}
             >
-              <Label>Logout</Label>
+              <Label className="hidden md:block">Logout</Label>
+              <i className="text-2xl md:hidden bi bi-box-arrow-right"></i>
             </button>
           </div>
         ) : (
           <button
-            className="hidden md:block"
+            className="ml-auto"
             onClick={() => {
               toggleDrawer();
             }}
           >
-            <Label>Login</Label>
+            <Label className="hidden md:block">Login</Label>
+            <i className="text-2xl md:hidden bi bi-box-arrow-in-right"></i>
           </button>
         )}
       </div>
