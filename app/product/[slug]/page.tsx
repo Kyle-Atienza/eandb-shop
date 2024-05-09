@@ -31,13 +31,6 @@ const getProductItem = (
   });
 };
 
-/* const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
-  return productOptions?.map(
-    (option) =>
-      option.options.find((selectedOption) => selectedOption.selected)?.value!
-  )!;
-}; */
-
 const getProductList = async () => {
   const res = await fetch(`${process.env.BASE_URL}/products/list`);
   return await res.json();
