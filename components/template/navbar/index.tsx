@@ -50,8 +50,8 @@ export function Navbar() {
               toggleDrawer();
             }}
           >
-            <Label className="hidden md:block">Login</Label>
-            <i className="text-2xl md:hidden bi bi-box-arrow-in-right"></i>
+            {/* <Label className="hidden md:block">Login</Label> */}
+            <i className="text-2xl bi bi-box-arrow-in-right"></i>
           </button>
         )}
       </div>

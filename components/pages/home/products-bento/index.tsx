@@ -5,7 +5,7 @@ import { ProductBentoCard } from "@/components/products/bento-card";
 import { BentoLogin } from "./login";
 
 import { useProductsStore } from "@/state/products";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter, redirect } from "next/navigation";
 
 import gsap from "gsap";
@@ -34,7 +34,7 @@ function Main() {
   );
 
   return (
-    <div className="main-card relative flex flex-col justify-end col-span-1 gap-spaced md:col-span-2 xl:col-span-3 font-ranille text-light">
+    <div className="relative flex flex-col justify-end col-span-1 main-card gap-spaced md:col-span-2 xl:col-span-3 font-ranille text-light">
       <Label>Welcome!</Label>
       <div className=" text-[10vw] md:text-[7vw] leading-[1em]">
         {"Discover what's in store for you!"}
@@ -92,7 +92,7 @@ function Reseller() {
   return (
     <div className="relative z-10 flex flex-col min-h-[100vw] md:min-h-0 row-span-2 md:row-span-2 font-gopher">
       <div className="sticky bottom-0 mt-auto spaced-b">
-        <div className="spaced text-dark bg-light rounded md:items-center items-start md:justify-between flex flex-col md:flex-row gap-4 hover:bg-primary transition-colors">
+        <div className="flex flex-col items-start gap-4 transition-colors rounded spaced text-dark bg-light md:items-center md:justify-between md:flex-row hover:bg-primary">
           <div className="flex flex-col gap-4 ">
             <p className="text-2xl md:text-3xl">Want to be our reseller?</p>
             <Label>Check our wholesale rates!</Label>
@@ -108,7 +108,7 @@ function User() {
   const { user } = useUserStore();
 
   return (
-    <div className="col-span-2 row-span-2 relative ">
+    <div className="relative col-span-2 row-span-2 ">
       <div id="login" className="-top-[25vh] absolute" />
       {!user ? <BentoLogin /> : <BentoUserInfo />}
     </div>
@@ -118,7 +118,14 @@ function User() {
 export function BentoHome() {
   const router = useRouter();
 
-  const { products } = useProductsStore();
+  const { products, getProducts } = useProductsStore();
+
+  useEffect(() => {
+    if (!products.length) {
+      getProducts();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="grid grid-cols-2 gap-spaced md:grid-cols-3 xl:grid-cols-4 spaced-b">

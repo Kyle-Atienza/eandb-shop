@@ -16,19 +16,20 @@ export default function Page() {
     if (user) {
       router.push("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!products.length) {
       getProducts();
     }
-  }, []);
+  }, []); */
 
   return (
     <div className="relative">
       <div className="absolute z-20 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded left-1/2 w-[500px] h-[700px] spaced bg-light"></div>
-      <div className="w-full h-full  overflow-hidden">
-        <ScrollingProducts />
+      <div className="w-full h-full overflow-hidden">
+        {/* <ScrollingProducts /> */}
       </div>
     </div>
   );

@@ -29,6 +29,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     if (user) {
       getCart();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {

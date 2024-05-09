@@ -75,6 +75,7 @@ export function ProductQuantity({
 
   useEffect(() => {
     onChange ? onChange(productItemQuantity) : null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productItemQuantity]);
 
   useEffect(() => {
@@ -86,6 +87,7 @@ export function ProductQuantity({
       /* toast.dismiss();
       toast.success(message); */
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, message]);
 
   return (
