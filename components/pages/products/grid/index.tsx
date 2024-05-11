@@ -35,9 +35,7 @@ export function ProductsGrid({ group }: { group: string }) {
   };
 
   useEffect(() => {
-    if (!productList.length) {
-      getProductList(group);
-    }
+    getProductList(group);
 
     getSlice();
     window.addEventListener("resize", getSlice);
