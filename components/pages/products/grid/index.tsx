@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/products/card";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useProductsStore } from "@/state/products";
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,13 +19,11 @@ const sliceArrayEveryN = (arr: any[], n: number, startIndex: number) => {
   return result;
 };
 
-export function ProductsGrid({
-  productList,
-}: {
-  productList: ProductListingItem[];
-}) {
+export function ProductsGrid({ group }: { group: string }) {
   const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
+
+  const { productList, getProductList } = useProductsStore();
 
   const getSlice = () => {
     setSlice(
@@ -36,6 +35,10 @@ export function ProductsGrid({
   };
 
   useEffect(() => {
+    if (!productList.length) {
+      getProductList(group);
+    }
+
     getSlice();
     window.addEventListener("resize", getSlice);
     return () => {

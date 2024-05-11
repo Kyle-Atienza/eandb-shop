@@ -1,6 +1,7 @@
 import { ProductsGrid } from "@/components/pages/products/grid";
 import { ProductCard } from "@/components/products/card";
 import { ProductFilter } from "@/components/products/filter";
+import { useProductsStore } from "@/state/products";
 import { useParams } from "next/navigation";
 
 const getProductList = async (group: string) => {
@@ -23,12 +24,12 @@ export default async function Page({
   params: { group: string };
   searchParams: SearchParams;
 }) {
-  const productList: ProductListingItem[] = await getProductList(params.group);
+  // const productList: ProductListingItem[] = await getProductList(params.group);
 
   return (
     <>
       <div className="flex flex-col gap-spaced mt-[65vh]">
-        <ProductsGrid productList={productList} />
+        <ProductsGrid group={params.group} />
       </div>
     </>
   );
