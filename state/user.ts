@@ -3,7 +3,7 @@ import axios from "axios";
 import { useOrdersStore } from "./orders";
 import { useOptionsStore } from "./options";
 
-const API_URL = `${process.env.BASE_URL}/users`;
+const API_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/users`;
 
 interface UserState {
   isLoading: boolean;
@@ -13,24 +13,6 @@ interface UserState {
   signOut: () => void;
   checkSavedUser: () => void;
 }
-
-/* const checkSavedUser = (): User | null => {
-  const localUser =
-    typeof window !== "undefined" ? localStorage.getItem("user") : null;
-
-  if (localUser) {
-    const userData = JSON.parse(localUser) as User;
-
-    return {
-      _id: userData._id,
-      name: userData.name,
-      email: userData.email,
-      token: userData.token,
-    };
-  } else {
-    return null;
-  }
-}; */
 
 export const useUserStore = create<UserState>((set) => ({
   isLoading: false,

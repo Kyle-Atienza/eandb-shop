@@ -1,7 +1,7 @@
 import axios from "axios";
 import { create } from "zustand";
 import { useUserStore } from "./user";
-const API_URL = `${process.env.BASE_URL}/orders`;
+const API_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/orders`;
 
 import toast from "react-hot-toast";
 

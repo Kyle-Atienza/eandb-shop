@@ -32,7 +32,7 @@ const getProductItem = (
 };
 
 const getProductList = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/products/list`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/products/list`);
   return await res.json();
 };
 
