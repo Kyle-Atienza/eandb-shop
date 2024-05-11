@@ -3,6 +3,8 @@ import { ProductFilter } from "@/components/products/filter";
 import { Suspense } from "react";
 
 export default function Home() {
+  console.log(`${process.env.NEXT_PUBLIC_BASE_URL}`);
+
   return (
     <>
       <div className="h-[30vh] relative"></div>
