@@ -115,17 +115,8 @@ function User() {
   );
 }
 
-export function BentoHome() {
+export function BentoHome({ products }: { products: Product[] }) {
   const router = useRouter();
-
-  const { products, getProducts } = useProductsStore();
-
-  useEffect(() => {
-    if (!products.length) {
-      getProducts();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="grid grid-cols-2 gap-spaced md:grid-cols-3 xl:grid-cols-4 spaced-b">
