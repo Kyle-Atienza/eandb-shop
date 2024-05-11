@@ -3,18 +3,21 @@ import { ProductCard } from "@/components/products/card";
 import { ProductFilter } from "@/components/products/filter";
 import { useParams } from "next/navigation";
 
-const getProductList = async (group: string) => {
-  /* const params = new URLSearchParams();
+export async function generateStaticParams() {
+  return [
+    { group: "all" },
+    { group: "Oyster Mushroom" },
+    { group: "Taro" },
+    { group: "Banana" },
+  ];
+}
 
-  Object.keys(searchParams).forEach((searchParam) =>
-    params.set(searchParam, `${searchParams[searchParam]}`)
-  ); */
-
+async function getProductList(group: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/products/list/${group}`
   );
   return await res.json();
-};
+}
 
 export default async function Page({
   params,
@@ -24,6 +27,7 @@ export default async function Page({
   searchParams: SearchParams;
 }) {
   const productList: ProductListingItem[] = await getProductList(params.group);
+  console.log(productList);
 
   return (
     <>
