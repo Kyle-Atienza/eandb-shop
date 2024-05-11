@@ -1,8 +1,8 @@
-orders page
-profiles page
-deploy to vercel
+[] orders page
+[] profiles page
+[] deploy to vercel
 
-
+[/] deploy to render
 
 db
-add images
+[] add images

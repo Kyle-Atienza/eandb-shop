@@ -3,14 +3,14 @@ import { ProductCard } from "@/components/products/card";
 import { ProductFilter } from "@/components/products/filter";
 import { useParams } from "next/navigation";
 
-const getProductList = async (searchParams: SearchParams) => {
-  const params = new URLSearchParams();
+const getProductList = async (group: string) => {
+  /* const params = new URLSearchParams();
 
   Object.keys(searchParams).forEach((searchParam) =>
     params.set(searchParam, `${searchParams[searchParam]}`)
-  );
+  ); */
 
-  const res = await fetch(`${process.env.BASE_URL}/products/list?${params}`);
+  const res = await fetch(`${process.env.BASE_URL}/products/list/${group}`);
   return await res.json();
 };
 
@@ -18,10 +18,10 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { filter: string };
+  params: { group: string };
   searchParams: SearchParams;
 }) {
-  const productList: ProductListingItem[] = await getProductList(searchParams);
+  const productList: ProductListingItem[] = await getProductList(params.group);
 
   return (
     <>

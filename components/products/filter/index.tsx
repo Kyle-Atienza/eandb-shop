@@ -17,7 +17,7 @@ export function ProductFilter() {
         return (
           <TransitionButton
             key={index}
-            href={`/products/list?group=${filterButton}`}
+            href={`/products/${filterButton}`}
             active={searchParams.get("group") === filterButton}
           >
             {filterButton}
@@ -25,8 +25,8 @@ export function ProductFilter() {
         );
       })}
       <TransitionButton
-        href={"/products/list"}
-        active={!searchParams.has("group") && pathName === "/products/list"}
+        href={"/products/all"}
+        active={!searchParams.has("group") && pathName === "/products/all"}
       >
         All
       </TransitionButton>
