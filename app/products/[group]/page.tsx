@@ -10,8 +10,6 @@ const getProductList = async (group: string) => {
     params.set(searchParam, `${searchParams[searchParam]}`)
   ); */
 
-  console.log(`${process.env.BASE_URL}/products/list/${group}`);
-
   const res = await fetch(`${process.env.BASE_URL}/products/list/${group}`);
   return await res.json();
 };
