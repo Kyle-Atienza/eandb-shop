@@ -1,7 +1,8 @@
 [] orders page
 [] profiles page
-[] deploy to vercel
 
+[/] add "Browse to your hearts desire" or whatevs in list page
+[/] deploy to vercel
 [/] deploy to render
 
 db

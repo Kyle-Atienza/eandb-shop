@@ -53,7 +53,7 @@ export function Drawer() {
   const { user } = useUserStore();
 
   return (
-    <>
+    <div className="fixed top-0 left-0 w-screen h-screen">
       <DrawerToggle
         className={`absolute right-0 top-[10vh] md:hidden rounded-tl-full rounded-bl-full translate-x-full transition-transform ${
           drawer ? "" : "translate-x-0"
@@ -84,6 +84,6 @@ export function Drawer() {
           </div>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }

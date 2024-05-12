@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <div className="flex flex-col">
       <div className=" h-[calc((100vh-300px)/2)]" />
-      <div className="flex flex-col justify-centers">
+      <div className="flex flex-col justify-centers spaced-x">
         <h1 className="text-6xl text-center whitespace-pre-line text-light font-ranille">
           Thank you for
           {"\n"}
