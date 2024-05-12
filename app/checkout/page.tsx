@@ -38,7 +38,6 @@ export default function Page() {
         <h1 className="text-5xl font-ranille text-light">Checkout</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[3fr_2fr] gap-spaced spaced-y">
           <div className="flex flex-col gap-spaced">
-            {/* <h1 className="text-5xl font-ranille text-light">Checkout</h1> */}
             <div className="flex flex-col rounded spaced bg-light gap-spaced-md">
               <Label>Shipping Information</Label>
               <form action="" className="flex flex-col gap-spaced-md">
@@ -54,10 +53,7 @@ export default function Page() {
                 />
               </form>
             </div>
-            {/* <div className="flex flex-col rounded spaced bg-light gap-spaced-md">
-            <Label>Payment</Label>
-            <Select options={paymentMethods} />
-          </div> */}
+
             <div className="flex flex-col rounded spaced bg-light gap-spaced-md">
               <Label>Cancellation Policy</Label>
               <p className="font-gopher leading-2">
@@ -71,7 +67,6 @@ export default function Page() {
             </div>
           </div>
           <div className="flex flex-col w-full gap-spaced">
-            {/* <h1 className="text-5xl font-ranille text-light">Order Items</h1> */}
             <div className="bg-light w-full rounded spaced md:h-[55vh] overflow-scroll lg:flex">
               <CartItems />
             </div>
@@ -84,20 +79,6 @@ export default function Page() {
               </Button>
             </div>
           </div>
-          {/* <div className="h-full w-[1px] bg-light"></div>
-        <div className="flex justify-center ">
-          <div className="flex flex-col items-center justify-center w-full mt-5 h-min">
-            <div className="flex items-center w-full">
-              <Receipt />
-            </div>
-            <Button
-              className="mt-16"
-              onClick={() => router.push("/checkout/success")}
-            >
-              Confirm
-            </Button>
-          </div>
-        </div> */}
         </div>
       </div>
     </>

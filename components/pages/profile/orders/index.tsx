@@ -1,7 +1,14 @@
 import { Select } from "@/components/common/forms/select";
 import { Label } from "@/components/common/label";
+import { useOrdersStore } from "@/state/orders";
+import { getCartItemsAmount } from "@/utils/orders";
+import { useEffect, useState } from "react";
 
 const status = [
+  {
+    label: "All",
+    value: "All",
+  },
   {
     label: "Delivered",
     value: "Delivered",
@@ -25,9 +32,23 @@ const status = [
 ];
 
 export function Orders() {
+  const { orders, getOrders } = useOrdersStore();
+  const [filter, setFilter] = useState<string>("All");
+  const filteredOrders = orders.filter((order) =>
+    filter === "All" ? true : order.status === filter
+  );
+
+  useEffect(() => {
+    getOrders();
+  }, []);
+
   return (
     <>
-      <Select className="w-72 !bg-dark text-light" options={status} />
+      <Select
+        className="w-72"
+        options={status}
+        onChange={(e) => setFilter(e.target.value)}
+      />
       <div className="spaced-t-sm">
         <div className="relative overflow-x-auto font-gopher bg-secondary spaced-md rounded-sm">
           <table className="w-full text-sm text-left">
@@ -60,28 +81,25 @@ export function Orders() {
               </tr>
             </thead>
             <tbody className="*:border-t-[1px]">
-              <tr className="">
-                <th
-                  scope="row"
-                  className="py-4 px-2 font-normal text-gray-900 whitespace-nowrap text-xl"
-                >
-                  Apple MacBook Pro 17
-                </th>
-                <td className="py-4 px-2">Silver</td>
-                <td className="py-4 px-2">Laptop</td>
-                <td className="py-4 px-2">$2999</td>
-              </tr>
-              <tr className="">
-                <th
-                  scope="row"
-                  className="py-4 px-2 font-normal text-gray-900 whitespace-nowrap text-xl"
-                >
-                  Microsoft Surface Pro
-                </th>
-                <td className="py-4 px-2">White</td>
-                <td className="py-4 px-2">Laptop PC</td>
-                <td className="py-4 px-2">$1999</td>
-              </tr>
+              {filteredOrders.map((order, index) => {
+                return (
+                  <tr className="" key={index}>
+                    <th
+                      scope="row"
+                      className="py-4 px-2 font-normal whitespace-nowrap text-xl"
+                    >
+                      {order._id}
+                    </th>
+                    <td className="py-4 px-2 text-xl">
+                      {new Date(order.createdAt).toDateString()}
+                    </td>
+                    <td className="py-4 px-2 text-xl">{order.items.length}</td>
+                    <td className="py-4 px-2 text-xl">
+                      P{getCartItemsAmount(order.items).toFixed(2)}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -20,16 +20,14 @@ export function Select({
   return (
     <>
       {/* select component (no functionality) */}
-      <div
-        className={`flex flex-col gap-spaced-sm bg-white rounded-md ${className}`}
-      >
+      <div className={`flex flex-col gap-spaced-sm rounded-md ${className}`}>
         {label ? (
           <label htmlFor={rest.name}>
             <Label>{label}</Label>
           </label>
         ) : null}
-        <div className="flex  spaced-sm ">
-          <select className="w-full font-gopher focus:outline-0" {...rest}>
+        <div className="flex  spaced-sm bg-secondary rounded">
+          <select className="w-full font-gopher  focus:outline-0" {...rest}>
             {options.map((option, index) => {
               return (
                 <option value={option.value} key={index}>

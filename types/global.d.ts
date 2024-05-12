@@ -68,7 +68,12 @@ declare global {
     _id: string;
     items: CartItem[];
     amount: number;
-    address: string;
+    status: string;
+    createdAt: string;
+    address: {
+      billing: OrderAddress | null;
+      shipping: OrderAddress | null;
+    };
   }
 
   interface SignInData {

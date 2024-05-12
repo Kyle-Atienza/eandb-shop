@@ -15,6 +15,7 @@ interface OrdersState {
   updateCartItemQuantity: (data: FormData) => void;
   deleteCartItem: (productId: string) => void;
   getCart: () => void;
+  getOrders: () => void;
   resetOrdersStore: () => void;
 }
 
@@ -23,9 +24,14 @@ const initialState = {
   orders: [],
   cart: {
     _id: "",
-    address: "",
     amount: 0,
     items: [],
+    status: "",
+    createdAt: "",
+    address: {
+      billing: null,
+      shipping: null,
+    },
   },
 };
 
@@ -133,6 +139,27 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .get(`${API_URL}/cart`, config)
       .then((res) => {
         set({ cart: res.data });
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  getOrders: async () => {
+    set({ isLoading: true });
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .get(`${API_URL}/`, config)
+      .then((res) => {
+        set({ orders: res.data });
       })
       .catch((e) => {
         console.log(e);
