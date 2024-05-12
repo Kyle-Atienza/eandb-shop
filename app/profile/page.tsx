@@ -3,6 +3,19 @@
 import { Label } from "@/components/common/label";
 import { Orders } from "@/components/pages/profile/orders";
 import { useUserStore } from "@/state/user";
+import { useState } from "react";
+
+function Address({ address }: { address: OrderAddress }) {
+  return (
+    <div className="flex flex-col gap-spaced-xs">
+      <p className="font-gopher text-lg md:text-2xl">{address.address}</p>
+      <p className="font-gopher text-sm md:text-lg font-light">{address.zip}</p>
+      <p className="font-gopher text-sm md:text-lg font-light">
+        {address.phone}
+      </p>
+    </div>
+  );
+}
 
 function Card({
   title,
@@ -44,6 +57,10 @@ function Card({
 export default function Page() {
   const { user } = useUserStore();
 
+  const [isSameAddress, setIsSameAddress] = useState(
+    user?.defaults.address.billing._id === user?.defaults.address.shipping._id
+  );
+
   return (
     <div className="spaced-t">
       <h1 className="text-6xl whitespace-pre-line text-light font-ranille">
@@ -61,35 +78,24 @@ export default function Page() {
           </div>
         </Card>
         <Card editable title={`Shipping\nAddress`}>
-          <div className="flex flex-col gap-spaced-xs">
-            <p className="font-gopher text-lg md:text-2xl">
-              Western Nautical Highway Oriental Mindoro - San Teodoro - Ilag
-            </p>
-            <p className="font-gopher text-sm md:text-lg font-light">5202</p>
-            <p className="font-gopher text-sm md:text-lg font-light">
-              +639291746419
-            </p>
-          </div>
+          {user ? <Address address={user?.defaults.address.shipping} /> : null}
         </Card>
-        <Card editable title={`Billing\nAddress`} disabled>
+        <Card editable title={`Billing\nAddress`} disabled={isSameAddress}>
           <div className="flex flex-col gap-spaced-sm">
+            {user ? <Address address={user?.defaults.address.billing} /> : null}
             <form className="bg-secondary spaced-sm rounded w-fit">
               <div className="flex gap-spaced-xs spaced-x-sm">
-                <input type="checkbox" name="same" id="" checked />
+                <input
+                  type="checkbox"
+                  name="same"
+                  id=""
+                  checked={isSameAddress}
+                />
                 <label htmlFor="same" className="">
                   <Label>Same as Shipping Address</Label>
                 </label>
               </div>
             </form>
-            <div className="flex flex-col gap-spaced-xs">
-              <p className="font-gopher text-lg md:text-2xl">
-                Western Nautical Highway Oriental Mindoro - San Teodoro - Ilag
-              </p>
-              <p className="font-gopher text-sm md:text-lg font-light">5202</p>
-              <p className="font-gopher text-sm md:text-lg font-light">
-                +639291746419
-              </p>
-            </div>
           </div>
         </Card>
         <Card

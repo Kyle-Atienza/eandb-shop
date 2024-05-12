@@ -5,6 +5,16 @@ import { useOptionsStore } from "./options";
 
 const API_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/users`;
 
+const localUserData = (user: User) => {
+  return {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    token: user.token,
+    defaults: user.defaults,
+  };
+};
+
 interface UserState {
   isLoading: boolean;
   isError: boolean;
@@ -26,12 +36,7 @@ export const useUserStore = create<UserState>((set) => ({
       const userData = JSON.parse(localUser) as User;
 
       set({
-        user: {
-          _id: userData._id,
-          name: userData.name,
-          email: userData.email,
-          token: userData.token,
-        },
+        user: localUserData(userData),
       });
     } else {
       set({ user: null });
@@ -49,9 +54,8 @@ export const useUserStore = create<UserState>((set) => ({
       },
     })
       .then((res) => {
-        set({ user: res.data });
-        // useOrdersStore.setState({ cart: res.data.cart });
-        localStorage.setItem("user", JSON.stringify(res.data));
+        set({ user: localUserData(res.data) });
+        localStorage.setItem("user", JSON.stringify(localUserData(res.data)));
         useOptionsStore.getState().closeDrawer();
       })
       .catch((e) => {

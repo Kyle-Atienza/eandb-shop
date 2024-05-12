@@ -43,12 +43,25 @@ declare global {
     name: string;
     email: string;
     token: string;
+    defaults: {
+      address: {
+        billing: OrderAddress;
+        shipping: OrderAddress;
+      };
+    };
   }
   interface CartItem {
     _id: string;
     product: ProductItem;
     price: number;
     count: number;
+  }
+
+  interface OrderAddress {
+    _id: string;
+    address: string;
+    zip: string;
+    phone: string;
   }
 
   interface Order {
