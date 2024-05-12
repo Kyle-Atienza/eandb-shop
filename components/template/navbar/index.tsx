@@ -30,9 +30,12 @@ export function Navbar() {
           </div>
         </TransitionLink>
         {user ? (
-          <div className="flex ml-auto gap-spaced">
-            {" "}
-            <button
+          <div
+            className={`flex ml-auto gap-spaced bg-light w-9 md:w-10 aspect-square items-center justify-center rounded-full transition-colors ${
+              pathname === "/profile" ? "bg-primary text-light" : ""
+            }`}
+          >
+            {/* <button
               onClick={() => {
                 signOut();
                 resetOrdersStore();
@@ -40,8 +43,12 @@ export function Navbar() {
               }}
             >
               <Label className="">Logout</Label>
-              {/* <i className="text-2xl md:hidden bi bi-box-arrow-right"></i> */}
-            </button>
+            </button> */}
+            <TransitionLink href="/profile">
+              <div>
+                <i className="text-xl md:text-2xl bi bi-person"></i>
+              </div>
+            </TransitionLink>
           </div>
         ) : (
           <button
@@ -51,7 +58,6 @@ export function Navbar() {
             }}
           >
             <Label className="">Login</Label>
-            {/* <i className="text-2xl bi bi-box-arrow-in-right"></i> */}
           </button>
         )}
       </div>
