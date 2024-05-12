@@ -21,19 +21,13 @@ export function ProductBentoCard({
   className,
 }: {
   product: Product;
-  index?: number;
+  index: number;
   rowSpanItems?: number[];
   colSpanItems?: number[];
   rowAutoItems?: number[];
   className?: string;
 }) {
   const router = useRouter();
-  const rotation = Math.random() * 18 - 8;
-  const transform = {
-    rotate: `${Math.random() * 5 - 5}deg`,
-    translate: `(${Math.random() * 18 - 8}%, ${Math.random() * 18 - 8}%)`,
-  };
-
   const container = useRef(null);
 
   return (
@@ -42,7 +36,6 @@ export function ProductBentoCard({
       className={`product-card transition-all rounded flex flex-col relative group
       ${className ?? "aspect-[3/5] lg:aspect-square"}
       `}
-      style={transform}
     >
       <div className="relative flex w-full h-full overflow-hidden rounded ">
         <div className="relative flex-1 transition-opacity group-hover:opacity-80 bg-dark">

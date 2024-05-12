@@ -122,32 +122,37 @@ export function BentoHome({ products }: { products: Product[] }) {
     <div className="grid grid-cols-2 gap-spaced md:grid-cols-3 xl:grid-cols-4 spaced-b">
       <Main />
 
-      <ProductBentoCard className="row-span-2" product={products[0]} />
+      <ProductBentoCard
+        index={1}
+        className="row-span-2"
+        product={products[0]}
+      />
 
-      <ProductBentoCard product={products[1]} />
+      <ProductBentoCard index={2} product={products[1]} />
 
-      <ProductBentoCard product={products[2]} />
+      <ProductBentoCard index={3} product={products[2]} />
 
-      <ProductBentoCard product={products[3]} />
+      <ProductBentoCard index={4} product={products[3]} />
 
       <Marquee />
 
       <ProductBentoCard
+        index={5}
         className="min-h-[40vw] md:min-h-0 col-span-2"
         product={products[4]}
       />
 
-      <ProductBentoCard product={products[5]} />
+      <ProductBentoCard index={6} product={products[5]} />
 
-      <ProductBentoCard product={products[6]} />
+      <ProductBentoCard index={7} product={products[6]} />
 
       <Reseller />
 
-      <ProductBentoCard product={products[7]} />
+      <ProductBentoCard index={8} product={products[7]} />
 
       {/* <User /> */}
 
-      <ProductBentoCard product={products[8]} />
+      <ProductBentoCard index={9} product={products[8]} />
     </div>
   );
 }
