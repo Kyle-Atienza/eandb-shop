@@ -23,25 +23,16 @@ export function Navbar() {
       <div className="flex items-center justify-between h-full gap-spaced translate-y-[3px] relative">
         <TransitionLink
           href="/"
-          className="absolute md:relative -translate-x-1/2 md:-translate-x-0 -translate-y-1/2 md:-translate-y-0 top-1/2 md:top-[unset] left-1/2 md:left-[unset]"
+          className="relative -translate-x-0 -translate-y-0"
         >
           <div className="w-10 aspect-square">
             <Image src={brand} alt="" />
           </div>
         </TransitionLink>
         {user ? (
-          <>
-            <button
-              onClick={() => {
-                signOut();
-                resetOrdersStore();
-                router.push("/");
-              }}
-            >
-              <Label className="">Logout</Label>
-            </button>
+          <div className="flex ml-auto gap-spaced-sm">
             <div
-              className={`flex ml-auto gap-spaced bg-light w-9 md:w-10 aspect-square items-center justify-center rounded-full transition-colors ${
+              className={` flex gap-spaced bg-light w-9 md:w-10 aspect-square items-center justify-center rounded-full transition-colors ${
                 pathname === "/profile" ? "bg-primary text-light" : ""
               }`}
             >
@@ -51,15 +42,25 @@ export function Navbar() {
                 </div>
               </TransitionLink>
             </div>
-          </>
+            <button
+              className="text-sm rounded-sm font-gopher spaced-x-sm spaced-y-xs bg-light"
+              onClick={() => {
+                signOut();
+                resetOrdersStore();
+                router.push("/");
+              }}
+            >
+              Log Out
+            </button>
+          </div>
         ) : (
           <button
-            className="ml-auto"
+            className="ml-auto text-sm rounded-sm font-gopher spaced-x-sm spaced-y-xs bg-light"
             onClick={() => {
               toggleDrawer();
             }}
           >
-            <Label className="">Login</Label>
+            Log In
           </button>
         )}
       </div>

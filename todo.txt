@@ -1,8 +1,4 @@
-fetch orders
-edit address
-edit phone number
-
-theres an error on fetching address
+when updating me, localStorage is not updated
 
 db
 [] add images

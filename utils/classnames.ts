@@ -1,5 +1,5 @@
 const buttonColorClassName = (
-  color?: "dark" | "base" | "light" | "primary" | "tertiary",
+  color?: "dark" | "base" | "light" | "primary" | "tertiary" | "secondary",
   active?: boolean
 ) => {
   if (active) {

@@ -1,16 +1,95 @@
 "use client";
 
+import { Button, SimpleButton } from "@/components/common/button";
 import { Label } from "@/components/common/label";
 import { Orders } from "@/components/pages/profile/orders";
+import { useOrdersStore } from "@/state/orders";
 import { useUserStore } from "@/state/user";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+/* function Address({ address }: { address: OrderAddress }) {
+  const initialData = {
+    _id: address._id,
+    address: address.address,
+    zip: address.zip,
+    phone: address.phone,
+  };
+
+  const [addRessData, setAddRessData] = useState<OrderAddress>(initialData);
+
+  const { updateMe } = useUserStore();
+  const { updateAddress } = useOrdersStore();
+
+  return (
+    <form className="flex flex-col" action={updateAddress}>
+      <input
+        type="text"
+        name="_id"
+        className="hidden"
+        value={addRessData._id}
+      />
+      <input
+        type="text"
+        name="address"
+        id="address"
+        value={addRessData.address}
+        onChange={(e) =>
+          setAddRessData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+          }))
+        }
+        className="font-gopher text-lg md:text-2xl font-light bg-[transparent]"
+      />
+      <input
+        type="text"
+        name="zip"
+        id="zip"
+        value={addRessData.zip}
+        onChange={(e) =>
+          setAddRessData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+          }))
+        }
+        className="font-gopher text-sm md:text-lg font-light bg-[transparent]"
+      />
+      <input
+        type="text"
+        name="phone"
+        id="phone"
+        value={addRessData.phone}
+        onChange={(e) =>
+          setAddRessData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+          }))
+        }
+        className="font-gopher text-sm md:text-lg font-light bg-[transparent]"
+      />
+      <div className="spaced-t-sm">
+        <button
+          type="submit"
+          className="rounded-sm spaced-x-sm spaced-y-xs bg-secondary w-min font-gopher"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  );
+} */
 
 function Address({ address }: { address: OrderAddress }) {
   return (
-    <div className="flex flex-col gap-spaced-xs">
-      <p className="font-gopher text-lg md:text-2xl">{address.address}</p>
-      <p className="font-gopher text-sm md:text-lg font-light">{address.zip}</p>
-      <p className="font-gopher text-sm md:text-lg font-light">
+    <div className="flex flex-col gap-spaced-sm">
+      <p className="font-gopher text-lg md:text-2xl font-light bg-[transparent]">
+        {address.address}
+      </p>
+      <p className="font-gopher text-sm md:text-lg font-light bg-[transparent]">
+        {address.zip}
+      </p>
+      <p className="font-gopher text-sm md:text-lg font-light bg-[transparent]">
         {address.phone}
       </p>
     </div>
@@ -20,32 +99,36 @@ function Address({ address }: { address: OrderAddress }) {
 function Card({
   title,
   children,
-  disabled,
+  edit,
   editable,
   className,
+  editPage,
 }: {
   title: string;
-  disabled?: boolean;
+  edit?: boolean;
   editable?: boolean;
   children: React.ReactNode;
   className?: string;
+  editPage?: string;
 }) {
+  const [editing, setEditing] = useState<boolean>(false);
+  const router = useRouter();
+
   return (
     <div
       className={`bg-light spaced-md rounded-md flex flex-col gap-spaced-sm ${className}`}
     >
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <Label className="whitespace-pre-line">
           <span className="leading-[1.2em]">{title}</span>
         </Label>
-        {editable ? (
-          <div
-            className={`flex bg-secondary w-10 aspect-square items-center justify-center rounded-full ${
-              disabled ? "opacity-40 pointer-events-none" : ""
-            }`}
+        {editPage ? (
+          <SimpleButton
+            onClick={() => router.push(editPage)}
+            className="bg-secondary"
           >
-            <i className=" bi bi-pencil-square"></i>
-          </div>
+            Edit
+          </SimpleButton>
         ) : null}
       </div>
       <div className="h-[1px] bg-dark" />
@@ -67,23 +150,23 @@ export default function Page() {
         Hi {user?.name} ✨
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-spaced-md spaced-t-md">
-        <Card editable title={`Personal\nInformation`}>
+        <Card editPage="profile/details" title={`Personal\nInformation`}>
           <div className="flex flex-col gap-spaced-xs">
-            <p className="font-gopher text-lg md:text-2xl font-light">
+            <p className="text-lg font-light font-gopher md:text-2xl">
               {user?.name}
             </p>
-            <p className="font-gopher text-lg md:text-2xl font-light">
+            <p className="text-lg font-light font-gopher md:text-2xl">
               {user?.email}
             </p>
           </div>
         </Card>
-        <Card editable title={`Shipping\nAddress`}>
+        <Card editPage="profile/address" title={`Address\nBook`}>
           {user ? <Address address={user?.defaults.address.shipping} /> : null}
         </Card>
-        <Card editable title={`Billing\nAddress`} disabled={isSameAddress}>
+        {/*  <Card editable title={`Billing\nAddress`} edit={isSameAddress}>
           <div className="flex flex-col gap-spaced-sm">
             {user ? <Address address={user?.defaults.address.billing} /> : null}
-            <form className="bg-secondary spaced-sm rounded w-fit">
+            <form className="rounded bg-secondary spaced-sm w-fit">
               <div className="flex gap-spaced-xs spaced-x-sm">
                 <input
                   type="checkbox"
@@ -97,7 +180,7 @@ export default function Page() {
               </div>
             </form>
           </div>
-        </Card>
+        </Card> */}
         <Card
           className="col-span-1 md:col-span-2 lg:col-span-3"
           title={`Your\nOrders`}

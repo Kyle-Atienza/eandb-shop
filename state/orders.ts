@@ -11,12 +11,16 @@ interface OrdersState {
   isError: boolean;
   orders: Order[];
   cart: Order;
+  addresses: OrderAddress[];
   addToCart: (productId: string, count?: number) => void;
   updateCartItemQuantity: (data: FormData) => void;
   deleteCartItem: (productId: string) => void;
   getCart: () => void;
   getOrders: () => void;
   resetOrdersStore: () => void;
+  getAddresses: () => void;
+  createAddress: (data: FormData) => void;
+  updateAddress: (data: FormData) => void;
 }
 
 const initialState = {
@@ -33,6 +37,7 @@ const initialState = {
       shipping: null,
     },
   },
+  addresses: [],
 };
 
 export const useOrdersStore = create<OrdersState>((set) => ({
@@ -170,4 +175,76 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       });
   },
   resetOrdersStore: () => set(initialState),
+  getAddresses: async () => {
+    set({ isLoading: true });
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .get(`${API_URL}/address`, config)
+      .then((res) => {
+        set({ addresses: res.data });
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  createAddress: async (data: FormData) => {
+    data.delete("_id");
+
+    let addressData: any = {};
+    data.forEach((value, key) => (addressData[key] = value));
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .post(`${API_URL}/address`, addressData, config)
+      .then((res) => {
+        console.log(res);
+        set({ addresses: [...useOrdersStore.getState().addresses, res.data] });
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  updateAddress: async (data: FormData) => {
+    let addressId = data.get("_id");
+
+    let addressData: any = {};
+    data.forEach((value, key) => (addressData[key] = value));
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .put(`${API_URL}/address/${addressId}`, addressData, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
 }));

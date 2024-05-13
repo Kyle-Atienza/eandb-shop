@@ -3,12 +3,13 @@
 import { buttonColorClassName } from "@/utils/classnames";
 import { Label } from "../label";
 import { TransitionLink } from "../transition-link";
+import { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
   className?: string;
-  color?: "dark" | "base" | "light" | "primary" | "tertiary";
+  color?: "dark" | "base" | "light" | "primary" | "tertiary" | "secondary";
   active?: boolean;
   type?: "submit" | "reset" | "button" | undefined;
   size?: "sm";
@@ -74,5 +75,26 @@ export function TransitionButton({
     <TransitionLink href={href}>
       <Button {...buttonProps}>{buttonProps.children}</Button>
     </TransitionLink>
+  );
+}
+
+interface SimpleButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function SimpleButton({
+  children,
+  className,
+  ...rest
+}: SimpleButtonProps) {
+  return (
+    <button
+      className={`text-sm rounded-sm font-gopher spaced-sm ${className}`}
+      {...rest}
+    >
+      {children}
+    </button>
   );
 }

@@ -20,6 +20,7 @@ interface UserState {
   isError: boolean;
   user: User | null;
   signIn: (data: FormData) => void;
+  updateMe: (data: FormData) => void;
   signOut: () => void;
   checkSavedUser: () => void;
 }
@@ -57,6 +58,29 @@ export const useUserStore = create<UserState>((set) => ({
         set({ user: localUserData(res.data) });
         localStorage.setItem("user", JSON.stringify(localUserData(res.data)));
         useOptionsStore.getState().closeDrawer();
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  updateMe: async (data: FormData | JSON) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .put(`${API_URL}/profile`, data, config)
+      .then((res) => {
+        console.log(res);
+        // handle this
+        /* set({ user: localUserData(res.data) });
+        localStorage.setItem("user", JSON.stringify(localUserData(res.data))); */
       })
       .catch((e) => {
         console.log(e);
