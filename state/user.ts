@@ -83,8 +83,6 @@ export const useUserStore = create<UserState>((set) => ({
         : pair[1];
     }
 
-    console.log(formData);
-
     await axios
       .put(`${API_URL}/profile`, formData, config)
       .then((res) => {

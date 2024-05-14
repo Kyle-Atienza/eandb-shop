@@ -28,7 +28,6 @@ export default async function Page({
   searchParams: SearchParams;
 }) {
   const productList: ProductListingItem[] = await getProductList(params.group);
-  console.log(productList);
 
   return (
     <>

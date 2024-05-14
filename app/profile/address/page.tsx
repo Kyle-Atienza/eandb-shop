@@ -21,17 +21,8 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  addresses.map((address) => {
-    console.log(
-      user,
-      address._id,
-      user?.defaults.address.shipping,
-      isDefaultShipping(address._id)
-    );
-  });
-
   return (
-    <div>
+    <div className="bg-light">
       <table>
         <thead>
           <tr>

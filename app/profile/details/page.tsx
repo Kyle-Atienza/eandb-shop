@@ -7,8 +7,6 @@ import { useUserStore } from "@/state/user";
 export default function Page() {
   const { user, updateMe } = useUserStore();
 
-  console.log(user);
-
   return (
     <div>
       <form action={updateMe}>
