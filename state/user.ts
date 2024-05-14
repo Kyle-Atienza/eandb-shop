@@ -21,6 +21,7 @@ interface UserState {
   user: User | null;
   signIn: (data: FormData) => void;
   updateMe: (data: FormData) => void;
+  getMe: () => void;
   signOut: () => void;
   checkSavedUser: () => void;
 }
@@ -77,10 +78,40 @@ export const useUserStore = create<UserState>((set) => ({
     await axios
       .put(`${API_URL}/profile`, data, config)
       .then((res) => {
-        console.log(res);
-        // handle this
-        /* set({ user: localUserData(res.data) });
-        localStorage.setItem("user", JSON.stringify(localUserData(res.data))); */
+        let updatedUser = JSON.parse(localStorage.getItem("user")!);
+        updatedUser = {
+          ...updatedUser,
+          ...res.data,
+        };
+        set({ user: localUserData(updatedUser) });
+        localStorage.setItem(
+          "user",
+          JSON.stringify(localUserData(updatedUser))
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  getMe: async () => {
+    set({ isLoading: true, isError: false });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .get(`${API_URL}/profile`, config)
+      .then((res) => {
+        set({ user: localUserData(res.data) });
+        localStorage.setItem("user", JSON.stringify(localUserData(res.data)));
+        useOptionsStore.getState().closeDrawer();
       })
       .catch((e) => {
         console.log(e);

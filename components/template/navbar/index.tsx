@@ -1,4 +1,8 @@
-import { Button, TransitionButton } from "@/components/common/button";
+import {
+  Button,
+  SimpleButton,
+  TransitionButton,
+} from "@/components/common/button";
 import { Label } from "@/components/common/label";
 import { TransitionLink } from "@/components/common/transition-link";
 import { FakeBorderRadius } from "@/components/decorations/fake-border-radius";
@@ -42,8 +46,8 @@ export function Navbar() {
                 </div>
               </TransitionLink>
             </div>
-            <button
-              className="text-sm rounded-sm font-gopher spaced-x-sm spaced-y-xs bg-light"
+            <SimpleButton
+              className="bg-light"
               onClick={() => {
                 signOut();
                 resetOrdersStore();
@@ -51,17 +55,17 @@ export function Navbar() {
               }}
             >
               Log Out
-            </button>
+            </SimpleButton>
           </div>
         ) : (
-          <button
-            className="ml-auto text-sm rounded-sm font-gopher spaced-x-sm spaced-y-xs bg-light"
+          <SimpleButton
+            className="bg-light"
             onClick={() => {
               toggleDrawer();
             }}
           >
             Log In
-          </button>
+          </SimpleButton>
         )}
       </div>
     </div>

@@ -45,8 +45,8 @@ declare global {
     token: string;
     defaults: {
       address: {
-        billing: OrderAddress;
-        shipping: OrderAddress;
+        billing: string;
+        shipping: string;
       };
     };
   }

@@ -18,17 +18,10 @@ export default function Page({ params }: { params: { id: string } }) {
   const { user, updateMe } = useUserStore();
 
   const address = addresses.find((address) => address._id === params.id);
-  const isDefaultShipping = user?.defaults.address.shipping._id === params.id;
-  const isDefaultBilling = user?.defaults.address.billing._id === params.id;
+  const isDefaultShipping = user?.defaults.address.shipping === params.id;
+  const isDefaultBilling = user?.defaults.address.billing === params.id;
 
   const setDefaultAddress = (address: "billing" | "shipping") => {
-    const data = new FormData();
-    const value = {
-      address: {
-        [address]: params.id,
-      },
-    };
-
     updateMe(
       JSON.parse(
         JSON.stringify({
@@ -88,7 +81,10 @@ export default function Page({ params }: { params: { id: string } }) {
               </SimpleButton>
             ) : null}
             {!isDefaultBilling ? (
-              <SimpleButton className="bg-light" onClick={() => router.back()}>
+              <SimpleButton
+                className="bg-light"
+                onClick={() => setDefaultAddress("billing")}
+              >
                 Set as Default Billing Address
               </SimpleButton>
             ) : null}
