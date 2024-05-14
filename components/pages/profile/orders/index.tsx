@@ -40,6 +40,7 @@ export function Orders() {
 
   useEffect(() => {
     getOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -50,31 +51,31 @@ export function Orders() {
         onChange={(e) => setFilter(e.target.value)}
       />
       <div className="spaced-t-sm">
-        <div className="relative overflow-x-auto font-gopher bg-secondary spaced-md rounded-sm">
+        <div className="relative overflow-x-auto rounded-sm font-gopher bg-secondary spaced-md">
           <table className="w-full text-sm text-left">
             <thead className="text-xs uppercase">
               <tr>
                 <th
                   scope="col"
-                  className="font-normal py-4 px-2 whitespace-nowrap"
+                  className="px-2 py-4 font-normal whitespace-nowrap"
                 >
                   <Label>Order #</Label>
                 </th>
                 <th
                   scope="col"
-                  className="font-normal py-4 px-2 whitespace-nowrap"
+                  className="px-2 py-4 font-normal whitespace-nowrap"
                 >
                   <Label>Placed On</Label>
                 </th>
                 <th
                   scope="col"
-                  className="font-normal py-4 px-2 whitespace-nowrap"
+                  className="px-2 py-4 font-normal whitespace-nowrap"
                 >
                   <Label>Items</Label>
                 </th>
                 <th
                   scope="col"
-                  className="font-normal py-4 px-2 whitespace-nowrap"
+                  className="px-2 py-4 font-normal whitespace-nowrap"
                 >
                   <Label>Total</Label>
                 </th>
@@ -86,15 +87,15 @@ export function Orders() {
                   <tr className="" key={index}>
                     <th
                       scope="row"
-                      className="py-4 px-2 font-normal whitespace-nowrap text-xl"
+                      className="px-2 py-4 text-xl font-normal whitespace-nowrap"
                     >
                       {order._id}
                     </th>
-                    <td className="py-4 px-2 text-xl">
+                    <td className="px-2 py-4 text-xl">
                       {new Date(order.createdAt).toDateString()}
                     </td>
-                    <td className="py-4 px-2 text-xl">{order.items.length}</td>
-                    <td className="py-4 px-2 text-xl">
+                    <td className="px-2 py-4 text-xl">{order.items.length}</td>
+                    <td className="px-2 py-4 text-xl">
                       P{getCartItemsAmount(order.items).toFixed(2)}
                     </td>
                   </tr>

@@ -18,6 +18,7 @@ export default function Page() {
 
   useEffect(() => {
     getAddresses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   addresses.map((address) => {
