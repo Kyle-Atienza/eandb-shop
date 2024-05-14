@@ -37,7 +37,7 @@ export function Navbar() {
           <div className="flex ml-auto gap-spaced-sm">
             <div
               className={` flex gap-spaced bg-light w-9 md:w-10 aspect-square items-center justify-center rounded-full transition-colors ${
-                pathname === "/profile" ? "bg-primary text-light" : ""
+                pathname.includes("/profile") ? "bg-primary text-light" : ""
               }`}
             >
               <TransitionLink href="/profile">

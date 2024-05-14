@@ -1,4 +1,5 @@
 import { Button, TransitionButton } from "@/components/common/button";
+import { HeaderOne } from "@/components/common/header";
 import { Label } from "@/components/common/label";
 
 function ReceiptItem() {
@@ -18,17 +19,17 @@ export default function Page() {
     <div className="flex flex-col">
       <div className=" h-[calc((100vh-300px)/2)]" />
       <div className="flex flex-col justify-centers spaced-x">
-        <h1 className="text-6xl text-center whitespace-pre-line text-light font-ranille">
+        {/* <h1 className="text-6xl text-center whitespace-pre-line text-light font-ranille">
           Thank you for
           {"\n"}
           your purchase 🎉
-        </h1>
+        </h1> */}
+        <HeaderOne>
+          Thank you for
+          {"\n"}
+          your purchase 🎉
+        </HeaderOne>
         <div className="my-8 text-center">
-          {/* <h2>
-            <Label>
-              <span className="text-light">Order Summary</span>
-            </Label>
-          </h2> */}
           <div className="flex justify-center mx-auto my-12">
             <div className="  bg-light w-[90vw] lg:w-[500px] zigzag-top zigzag-bottom font-merchant text-xl">
               <div className="flex flex-col items-center gap-spaced-md spaced-x">

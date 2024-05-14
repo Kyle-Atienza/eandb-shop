@@ -6,20 +6,16 @@ import { Orders } from "@/components/pages/profile/orders";
 import { useOrdersStore } from "@/state/orders";
 import { useUserStore } from "@/state/user";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Address({ address }: { address: OrderAddress }) {
   return (
-    <div className="flex flex-col gap-spaced-sm">
-      <p className="font-gopher text-lg md:text-2xl font-light bg-[transparent]">
+    <div className="flex flex-col gap-spaced-xs">
+      <p className="font-gopher text-lg md:text-xl font-light bg-[transparent]">
         {address.address}
       </p>
-      <p className="font-gopher text-sm md:text-lg font-light bg-[transparent]">
-        {address.zip}
-      </p>
-      <p className="font-gopher text-sm md:text-lg font-light bg-[transparent]">
-        {address.phone}
-      </p>
+      <Label>{address.zip}</Label>
+      <Label>{address.phone}</Label>
     </div>
   );
 }
@@ -67,17 +63,22 @@ function Card({
 
 export default function Page() {
   const { user } = useUserStore();
+  const { addresses, getAddresses } = useOrdersStore();
 
-  const [isSameAddress, setIsSameAddress] = useState(
-    user?.defaults.address.billing._id === user?.defaults.address.shipping._id
+  const shippingAddress = addresses.find(
+    (address) => address._id === user?.defaults.address.shipping
+  );
+  const billingAddress = addresses.find(
+    (address) => address._id === user?.defaults.address.billing
   );
 
+  useEffect(() => {
+    getAddresses();
+  }, []);
+
   return (
-    <div className="spaced-t">
-      <h1 className="text-6xl whitespace-pre-line text-light font-ranille">
-        Hi {user?.name} ✨
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-spaced-md spaced-t-md">
+    <div className="">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-spaced-md">
         <Card editPage="profile/details" title={`Personal\nInformation`}>
           <div className="flex flex-col gap-spaced-xs">
             <p className="text-lg font-light font-gopher md:text-2xl">
@@ -88,27 +89,32 @@ export default function Page() {
             </p>
           </div>
         </Card>
-        <Card editPage="profile/address" title={`Address\nBook`}>
-          {user ? <Address address={user?.defaults.address.shipping} /> : null}
-        </Card>
-        {/*  <Card editable title={`Billing\nAddress`} edit={isSameAddress}>
-          <div className="flex flex-col gap-spaced-sm">
-            {user ? <Address address={user?.defaults.address.billing} /> : null}
-            <form className="rounded bg-secondary spaced-sm w-fit">
-              <div className="flex gap-spaced-xs spaced-x-sm">
-                <input
-                  type="checkbox"
-                  name="same"
-                  id=""
-                  checked={isSameAddress}
-                />
-                <label htmlFor="same" className="">
-                  <Label>Same as Shipping Address</Label>
-                </label>
+        <Card
+          editPage="profile/address"
+          className="lg:col-span-2"
+          title={`Address\nBook`}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-spaced-md">
+            <div className="flex flex-col">
+              <div className="flex flex-col overflow-hidden border-2 rounded-sm text-md font-gopher border-secondary">
+                <div className="spaced-sm bg-secondary">Shipping Address</div>
+                <div className="spaced-sm">
+                  {shippingAddress ? (
+                    <Address address={shippingAddress} />
+                  ) : null}
+                </div>
               </div>
-            </form>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex flex-col overflow-hidden border-2 rounded-sm text-md font-gopher border-secondary">
+                <div className="spaced-sm bg-secondary">Billing Address</div>
+                <div className="spaced-sm">
+                  {billingAddress ? <Address address={billingAddress} /> : null}
+                </div>
+              </div>
+            </div>
           </div>
-        </Card> */}
+        </Card>
         <Card
           className="col-span-1 md:col-span-2 lg:col-span-3"
           title={`Your\nOrders`}

@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { useOrdersStore } from "./orders";
 import { useOptionsStore } from "./options";
+import { isJsonString } from "@/utils/formData";
 
 const API_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/users`;
 
@@ -68,15 +69,24 @@ export const useUserStore = create<UserState>((set) => ({
         set({ isLoading: false });
       });
   },
-  updateMe: async (data: FormData | JSON) => {
+  updateMe: async (data: FormData) => {
+    let formData: any = {};
     const config = {
       headers: {
         Authorization: `Bearer ${useUserStore.getState().user?.token}`,
       },
     };
 
+    for (const pair of data.entries()) {
+      formData[pair[0]] = isJsonString(pair[1] as string)
+        ? JSON.parse(pair[1] as string)
+        : pair[1];
+    }
+
+    console.log(formData);
+
     await axios
-      .put(`${API_URL}/profile`, data, config)
+      .put(`${API_URL}/profile`, formData, config)
       .then((res) => {
         let updatedUser = JSON.parse(localStorage.getItem("user")!);
         updatedUser = {

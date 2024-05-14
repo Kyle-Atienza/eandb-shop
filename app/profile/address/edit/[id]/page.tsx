@@ -5,6 +5,7 @@ import { Input } from "@/components/common/forms/input";
 import { Label } from "@/components/common/label";
 import { useOrdersStore } from "@/state/orders";
 import { useUserStore } from "@/state/user";
+import { getFormData } from "@/utils/formData";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -23,16 +24,14 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const setDefaultAddress = (address: "billing" | "shipping") => {
     updateMe(
-      JSON.parse(
-        JSON.stringify({
-          defaults: {
-            address: {
-              ...user?.defaults.address,
-              [address]: params.id,
-            },
+      getFormData({
+        defaults: {
+          address: {
+            ...user?.defaults.address,
+            [address]: params.id,
           },
-        })
-      )
+        },
+      })
     );
   };
 

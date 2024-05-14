@@ -1,27 +1,39 @@
+"use client";
+
 import { SimpleButton } from "@/components/common/button";
+import { Input } from "@/components/common/forms/input";
+import { useUserStore } from "@/state/user";
 
-const getAddresses = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/orders/address`);
-  return res.json();
-};
+export default function Page() {
+  const { user, updateMe } = useUserStore();
 
-export default async function Page() {
-  const addresses = await getAddresses();
+  console.log(user);
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Address</th>
-            <th>Zip</th>
-            <th>Phone</th>
-            <th></th>
-          </tr>
-        </thead>
-      </table>
-      <SimpleButton>Add Address</SimpleButton>
+      <form action={updateMe}>
+        <div className="flex *:flex-1 gap-space-md">
+          <Input
+            label="Full Name"
+            name="name"
+            className="bg-light text-dark"
+            labelClassName="text-light"
+            defaultValue={user?.name}
+          />
+          <Input
+            label="Email"
+            name="email"
+            className="bg-light text-dark"
+            labelClassName="text-light"
+            defaultValue={user?.email}
+          />
+        </div>
+        <div className="spaced-t">
+          <SimpleButton type="submit" className=" bg-light">
+            Save
+          </SimpleButton>
+        </div>
+      </form>
     </div>
   );
 }
