@@ -9,7 +9,6 @@ import { ProductRelatedItems } from "../related";
 import {
   parseProductListItemId,
   setInitalProductOptions,
-  getSelectedOptions,
 } from "@/utils/products";
 import { useOrdersStore } from "@/state/orders";
 import { useUserStore } from "@/state/user";
@@ -72,8 +71,11 @@ export function ProductDetails({
               onClick={() => {
                 if (user) {
                   addToCart(
-                    productOptions[0].options.find((option) => option.selected)
-                      ?._id ?? "",
+                    productOptions[0]
+                      ? productOptions[0].options.find(
+                          (option) => option.selected
+                        )?._id ?? ""
+                      : productItem._id,
                     quantity
                   );
                   setQuantity(1);

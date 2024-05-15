@@ -4,6 +4,7 @@ import Cart, { CartItem, CartItems } from "@/components/cart";
 import { Button, TransitionButton } from "@/components/common/button";
 import { Input, TextArea } from "@/components/common/forms/input";
 import { Select } from "@/components/common/forms/select";
+import { HeaderOne } from "@/components/common/header";
 import { Label } from "@/components/common/label";
 import { Receipt } from "@/components/pages/checkout/receipt";
 import { useOrdersStore } from "@/state/orders";
@@ -35,7 +36,7 @@ export default function Page() {
   return (
     <>
       <div className="spaced-t">
-        <h1 className="text-5xl font-ranille text-light">Checkout</h1>
+        <HeaderOne>Checkout</HeaderOne>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[3fr_2fr] gap-spaced spaced-y">
           <div className="flex flex-col gap-spaced">
             <div className="flex flex-col rounded spaced bg-light gap-spaced-md">
