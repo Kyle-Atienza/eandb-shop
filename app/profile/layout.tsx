@@ -7,16 +7,22 @@ import { usePathname, useRouter } from "next/navigation";
 
 interface SideNavButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
   children: React.ReactNode;
   active?: boolean;
 }
 
-function SideNavButton({ children, active, ...rest }: SideNavButtonProps) {
+function SideNavButton({
+  className,
+  children,
+  active,
+  ...rest
+}: SideNavButtonProps) {
   return (
     <SimpleButton
       className={`text-sm !rounded-none text-start text-light transition-colors ${
         active ? "bg-secondary !text-dark" : ""
-      }`}
+      } ${className}`}
       {...rest}
     >
       {children}
@@ -54,6 +60,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             Address Book
           </SideNavButton>
         </div>
+        {/* <div className="border-2 rounded border-secondary spaced-md">
+        </div> */}
         <div>{children}</div>
       </div>
     </div>

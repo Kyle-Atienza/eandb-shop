@@ -1,4 +1,9 @@
-when updating me, localStorage is not updated
+make mobile responsive
+- address
+- profile
+
+on checkout use billing address
+- select
 
 db
 [] add images

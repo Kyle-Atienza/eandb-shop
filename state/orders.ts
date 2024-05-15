@@ -21,6 +21,7 @@ interface OrdersState {
   getAddresses: () => void;
   createAddress: (data: FormData) => void;
   updateAddress: (data: FormData) => void;
+  deleteAddress: (id: string) => void;
 }
 
 const initialState = {
@@ -212,7 +213,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .post(`${API_URL}/address`, addressData, config)
       .then((res) => {
         console.log(res);
-        set({ addresses: [...useOrdersStore.getState().addresses, res.data] });
+        set({ addresses: [...useOrdersStore().addresses, res.data] });
       })
       .catch((e) => {
         console.log(e);
@@ -238,6 +239,31 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .put(`${API_URL}/address/${addressId}`, addressData, config)
       .then((res) => {
         console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  deleteAddress: async (id: string) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
+      },
+    };
+
+    await axios
+      .delete(`${API_URL}/address/${id}`, config)
+      .then((res) => {
+        console.log(res);
+        set({
+          addresses: useOrdersStore().addresses.filter(
+            (address) => address._id !== id
+          ),
+        });
       })
       .catch((e) => {
         console.log(e);

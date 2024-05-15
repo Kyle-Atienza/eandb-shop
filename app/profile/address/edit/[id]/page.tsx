@@ -1,21 +1,26 @@
 "use client";
 
 import { SimpleButton } from "@/components/common/button";
-import { Input } from "@/components/common/forms/input";
+import { Input, Switch } from "@/components/common/forms/input";
 import { Label } from "@/components/common/label";
 import { useOrdersStore } from "@/state/orders";
 import { useUserStore } from "@/state/user";
 import { getFormData } from "@/utils/formData";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { ChangeEvent, ReactEventHandler, useEffect } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
 
   const createNew = params.id === "new";
 
-  const { addresses, getAddresses, updateAddress, createAddress } =
-    useOrdersStore();
+  const {
+    addresses,
+    getAddresses,
+    updateAddress,
+    createAddress,
+    deleteAddress,
+  } = useOrdersStore();
   const { user, updateMe } = useUserStore();
 
   const address = addresses.find((address) => address._id === params.id);
@@ -49,73 +54,81 @@ export default function Page({ params }: { params: { id: string } }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <div>
-      {!createNew ? (
-        <div className="flex gap-spaced-md">
-          {isDefaultShipping ? (
-            <div className="rounded spaced-y-sm spaced-x-md bg-light w-fit">
-              <Label>Default Shipping Address</Label>
-            </div>
-          ) : null}
-          {isDefaultBilling ? (
-            <div className="rounded spaced-y-sm spaced-x-md bg-light w-fit">
-              <Label>Default Billing Address</Label>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
+  useEffect(() => {
+    if (addresses.length > 0) {
+      console.log("back");
+    }
+  }, [addresses.length]);
 
-      <div className="flex gap-spaced-md spaced-y">
-        <SimpleButton className="bg-danger" onClick={() => router.back()}>
-          Cancel
-        </SimpleButton>
-        {!createNew ? (
-          <>
-            {!isDefaultShipping ? (
-              <SimpleButton
-                className="bg-light"
-                onClick={() => setDefaultAddress("shipping")}
-              >
-                Set as Default Shipping Address
-              </SimpleButton>
-            ) : null}
-            {!isDefaultBilling ? (
-              <SimpleButton
-                className="bg-light"
-                onClick={() => setDefaultAddress("billing")}
-              >
-                Set as Default Billing Address
-              </SimpleButton>
-            ) : null}
-          </>
-        ) : null}
+  const remove = () => {
+    deleteAddress(params.id);
+    router.back();
+  };
+
+  return (
+    <div className="flex flex-col gap-spaced-md">
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-spaced-md">
+          <Switch
+            label="Shipping Addresss"
+            className="bg-secondary"
+            labelClassName="text-light"
+            checked={isDefaultShipping}
+            onClick={() => setDefaultAddress("shipping")}
+          />
+          <Switch
+            label="Billing Addresss"
+            className="bg-secondary"
+            labelClassName="text-light"
+            checked={isDefaultBilling}
+            onClick={() => setDefaultAddress("billing")}
+          />
+        </div>
+        <div className="flex items-start gap-spaced-sm">
+          <SimpleButton onClick={remove} className="bg-danger w-fit">
+            Delete Address
+          </SimpleButton>
+        </div>
       </div>
-      <form action={action} className="flex flex-col gap-spaced-sm">
+      <form
+        action={(data) => {
+          action(data);
+          router.back();
+        }}
+        className="flex flex-col gap-spaced-sm"
+      >
         <input name="_id" value={address?._id} className="hidden" />
-        <input
-          type="text"
-          placeholder="Address"
-          name="address"
-          defaultValue={address?.address}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Zip Code"
-          name="zip"
-          defaultValue={address?.zip}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Phone Number"
-          name="phone"
-          defaultValue={address?.phone}
-          required
-        />
-        <SimpleButton className="bg-light" type="submit">
-          Save
+        <div className="grid grid-cols-3 gap-spaced-md">
+          <Input
+            type="text"
+            className="bg-light !text-dark"
+            labelClassName="text-light"
+            label="Address"
+            name="address"
+            defaultValue={address?.address}
+            required
+          />
+          <Input
+            type="text"
+            className="bg-light !text-dark"
+            labelClassName="text-light"
+            label="Zip Code"
+            name="zip"
+            defaultValue={address?.zip}
+            required
+          />
+          <Input
+            type="text"
+            className="bg-light !text-dark"
+            labelClassName="text-light"
+            label="Phone Number"
+            name="phone"
+            defaultValue={address?.phone}
+            required
+          />
+        </div>
+        <SimpleButton className="bg-light w-fit" type="submit">
+          {createNew ? "Create Address" : "Save Address"}
         </SimpleButton>
       </form>
     </div>

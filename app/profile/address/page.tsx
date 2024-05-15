@@ -1,6 +1,7 @@
 "use client";
 
 import { SimpleButton } from "@/components/common/button";
+import { Label } from "@/components/common/label";
 import { useOrdersStore } from "@/state/orders";
 import { useUserStore } from "@/state/user";
 import { useRouter } from "next/navigation";
@@ -22,64 +23,82 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="bg-light">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Address</th>
-            <th>Zip</th>
-            <th>Phone</th>
-            <th></th>
-          </tr>
-        </thead>
-        {addresses.length ? (
-          <tbody>
-            {addresses.map((address, index) => {
-              const selected: boolean =
-                address._id === user?.defaults.address.shipping;
+    <div>
+      <div className="rounded-md bg-light max-h-[500px] overflow-auto relative">
+        <table className="w-full font-gopher ">
+          <thead className="sticky top-0 bg-light">
+            <tr>
+              <th className="spaced-x-sm spaced-y-xs "></th>
+              <th className="spaced-x-sm spaced-y-xs text-start">
+                <Label className="font-normal">Address</Label>
+              </th>
+              <th className="spaced-x-sm spaced-y-sm text-start">
+                <Label className="font-normal">Zip</Label>
+              </th>
+              <th className="spaced-x-sm spaced-y-sm text-start">
+                <Label className="font-normal">Phone</Label>
+              </th>
+              <th className="spaced-x-sm spaced-y-sm "></th>
+            </tr>
+          </thead>
+          {addresses.length ? (
+            <tbody>
+              {addresses.map((address, index) => {
+                const selected: boolean =
+                  address._id === user?.defaults.address.shipping;
 
-              return (
-                <tr key={index}>
-                  <td>
-                    <div className="flex flex-col gap-spaced-xs">
-                      {isDefaultShipping(address._id) ? (
-                        <div className="text-xs rounded-sm spaced-y-xs spaced-x-sm font-gopher bg-light w-fit">
-                          Shipping
-                        </div>
-                      ) : null}
-                      {isDefaultBilling(address._id) ? (
-                        <div className="text-xs rounded-sm spaced-y-xs spaced-x-sm font-gopher bg-light w-fit">
-                          Billing
-                        </div>
-                      ) : null}
-                    </div>
-                  </td>
-                  <td>{address.address}</td>
-                  <td>{address.zip}</td>
-                  <td>{address.phone}</td>
-                  <td>
-                    <SimpleButton
-                      onClick={() =>
-                        router.push(`/profile/address/edit/${address._id}`)
-                      }
-                      className="bg-light"
-                    >
-                      Edit
-                    </SimpleButton>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        ) : null}
-      </table>
-      <SimpleButton
-        onClick={() => router.push(`/profile/address/edit/new`)}
-        className="bg-light"
-      >
-        Add Address
-      </SimpleButton>
+                return (
+                  <tr
+                    className={`transition-colors hover:bg-secondary ${
+                      isDefaultShipping(address._id) ||
+                      isDefaultBilling(address._id)
+                        ? "bg-secondary"
+                        : null
+                    }`}
+                    key={index}
+                  >
+                    <td className="spaced-sm">
+                      <div className="flex flex-col gap-spaced-xs">
+                        {isDefaultShipping(address._id) ? (
+                          <div className="text-xs border-2 rounded-sm spaced-y-xs spaced-x-sm font-gopher bg-secondary w-fit border-light">
+                            Shipping
+                          </div>
+                        ) : null}
+                        {isDefaultBilling(address._id) ? (
+                          <div className="text-xs border-2 rounded-sm spaced-y-xs spaced-x-sm font-gopher bg-secondary w-fit border-light">
+                            Billing
+                          </div>
+                        ) : null}
+                      </div>
+                    </td>
+                    <td className="spaced-sm">{address.address}</td>
+                    <td className="spaced-sm">{address.zip}</td>
+                    <td className="spaced-sm">{address.phone}</td>
+                    <td className="spaced-sm">
+                      <SimpleButton
+                        onClick={() =>
+                          router.push(`/profile/address/edit/${address._id}`)
+                        }
+                        className="border-2 bg-secondary border-light"
+                      >
+                        Edit
+                      </SimpleButton>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          ) : null}
+        </table>
+      </div>
+      <div className="spaced-t">
+        <SimpleButton
+          onClick={() => router.push(`/profile/address/edit/new`)}
+          className="bg-light"
+        >
+          Add Address
+        </SimpleButton>
+      </div>
     </div>
   );
 }
