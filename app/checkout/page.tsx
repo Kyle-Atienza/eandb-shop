@@ -1,6 +1,6 @@
 "use client";
 
-import Cart, { CartItem, CartItems } from "@/components/cart";
+import Cart, { CartItems } from "@/components/cart";
 import { Button, TransitionButton } from "@/components/common/button";
 import { Input, TextArea } from "@/components/common/forms/input";
 import { Select } from "@/components/common/forms/select";
