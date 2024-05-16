@@ -36,7 +36,7 @@ function Main() {
 
   return (
     <div className="relative flex flex-col justify-end col-span-1 main-card gap-spaced md:col-span-2 xl:col-span-3 font-ranille text-light">
-      <Label>{user ? `Hi ${user.name}!` : "Welcome!"}</Label>
+      {/* <Label>{user ? `Hi ${user.name}!` : "Welcome!"}</Label> */}
       <div className=" text-[10vw] md:text-[7vw] leading-[1em]">
         {"Discover what's in store for you!"}
         <span ref={scrollDown} className="relative group">
