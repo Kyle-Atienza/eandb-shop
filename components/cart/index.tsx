@@ -2,9 +2,10 @@
 
 import { useOrdersStore } from "@/state/orders";
 import { useRouter } from "next/navigation";
-import { TransitionButton } from "../common/button";
+import { SimpleButton, TransitionButton } from "../common/button";
 import { Label } from "../common/label";
 import { CartItem } from "./item";
+import Link from "next/link";
 
 export function CartItems() {
   const { cart } = useOrdersStore();
@@ -31,7 +32,7 @@ export default function Cart() {
   return (
     <>
       <div className="relative flex flex-col w-full h-full">
-        <div className="cart flex-1 bg-tertiary overflow-auto border-collapse">
+        <div className="cart flex-1 bg-tertiary overflow-auto">
           <table className="">
             <tbody>
               {cart.items.map((cartItem, index) => {
@@ -44,7 +45,18 @@ export default function Cart() {
             </tbody>
           </table>
         </div>
-        <div className="relative z-10 w-full bg-light spaced">Hello</div>
+        <div className="border-t-2 border-light flex text-3xl font-merchant">
+          <div className="w-full  spaced-x spaced-y-md bg-light  flex justify-between text-dark">
+            <div>Total: </div>
+            <div>P{totalAmount.toFixed(2)}</div>
+          </div>
+          <Link
+            href={"/checkout"}
+            className="bg-tertiary spaced-x text-light hover:bg-primary transition-colors flex items-center"
+          >
+            Checkout
+          </Link>
+        </div>
       </div>
     </>
   );
