@@ -91,7 +91,10 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       .cart.items.find((item) => item.product._id === productId);
     const count = Number(data.get("quantity")) - (product?.count || 0);
 
-    if (count !== 0) {
+    if (
+      Number(data.get("quantity")) !== 0 &&
+      Number(data.get("quantity")) !== (product?.count || 0)
+    ) {
       set({ isLoading: true });
       const config = {
         headers: {
@@ -103,10 +106,12 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         .post(`${API_URL}/cart/add`, { productId, count }, config)
         .then((res) => {
           set({ cart: res.data });
+          toast.success("Succesfully Updated Item Quantity");
         })
         .catch((e) => {
           console.log(e);
           set({ isError: true });
+          toast.success("Succesfully Added Item to Cart");
         })
         .finally(() => {
           set({ isLoading: false });

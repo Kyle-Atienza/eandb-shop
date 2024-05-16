@@ -1,9 +1,7 @@
-make mobile responsive
-- address
-- profile
-
 on checkout use billing address
 - select
+
+finish cart ui
 
 db
 [] add images
