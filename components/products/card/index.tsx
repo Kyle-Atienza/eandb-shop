@@ -27,9 +27,9 @@ function Options({
             return (
               <div
                 key={index}
-                className="self-start transition-colors rounded-md bg-primary text-light spaced-sm"
+                className="self-start transition-colors rounded-md text-light spaced-y-sm spaced-x-md bg-primary"
               >
-                <p className="text-xs lg:text-lg font-gopher text-end whitespace-nowrap">
+                <p className="text-xs lg:text-xl uppercase tracking-widest font-merchant text-end whitespace-nowrap">
                   {option}
                 </p>
               </div>
