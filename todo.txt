@@ -1,5 +1,5 @@
-sign up
-buy without account
+1. add to cart without login
+2. make cart mobile responsive
 
 db
 [] add images

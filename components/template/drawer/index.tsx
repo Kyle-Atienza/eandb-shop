@@ -70,16 +70,15 @@ export function Drawer() {
         <DrawerToggle
           className={`spaced-x absolute top-0 md:top-[120px] left-[20px] md:left-0 md:-translate-y-0 md:-translate-x-full rounded-tl-full rounded-tr-full md:rounded-tr-none rounded-bl-none md:rounded-bl-full transition-transform 
           ${drawer ? "-translate-y-full" : ""}
-          ${!user ? "block md:hidden" : ""}
         `}
         />
-        {!user ? (
+        {/* {!user ? (
           <div className="absolute top-0 left-0 flex flex-col flex-1 w-full h-full md:justify-center spaced">
             <Login />
           </div>
         ) : (
-          <Cart />
-        )}
+        )} */}
+        <Cart />
       </div>
     </>
   );
