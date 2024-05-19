@@ -12,24 +12,55 @@ export function ProductFilter() {
   const searchParams = useSearchParams();
 
   return (
-    <div className="flex flex-wrap gap-spaced-md">
+    <div className="flex flex-wrap rounded overflow-hidden w-fit border-2 border-light *:border-r-2 *:border-light">
       {filterButtons.map((filterButton, index) => {
         return (
-          <TransitionButton
+          <TransitionLink
             key={index}
+            className="self-start transition-colors text-light spaced-md hover:bg-primary"
             href={`/products/${filterButton}`}
-            active={searchParams.get("group") === filterButton}
           >
-            {filterButton}
-          </TransitionButton>
+            <p className="text-xs lg:text-sm uppercase tracking-[0.25em] font-gopher text-end whitespace-nowrap">
+              {filterButton}
+            </p>
+          </TransitionLink>
         );
       })}
-      <TransitionButton
-        href={"/products/all"}
-        active={!searchParams.has("group") && pathName === "/products/all"}
+      <TransitionLink
+        href={`/products/all`}
+        className="self-start transition-colors text-light spaced-md border-none hover:bg-primary"
       >
-        All
-      </TransitionButton>
+        <p className="text-xs lg:text-sm uppercase tracking-[0.25em] font-gopher text-end whitespace-nowrap">
+          All
+        </p>
+      </TransitionLink>
     </div>
   );
 }
+
+/* export function ProductFilter() {
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+
+  return (
+    <div className="flex flex-wrap gap-spaced-md">
+      {filterButtons.map((filterButton, index) => {
+        return (
+          <>
+            <div className="self-start transition-colors rounded-md text-light spaced-y-sm spaced-x-md bg-primary">
+              <p className="text-xs lg:text-xl uppercase tracking-widest font-merchant text-end whitespace-nowrap">
+                {filterButton}
+              </p>
+            </div>
+          </>
+        );
+      })}
+      <div className="self-start transition-colors rounded-md text-light spaced-y-sm spaced-x-md bg-primary">
+        <p className="text-xs lg:text-xl uppercase tracking-widest font-merchant text-end whitespace-nowrap">
+          All
+        </p>
+      </div>
+    </div>
+  );
+} */

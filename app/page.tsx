@@ -13,9 +13,9 @@ export default async function Home() {
   return (
     <>
       <div className="h-[30vh] relative"></div>
-      <Suspense>
+      {/* <Suspense>
         <ProductFilter />
-      </Suspense>
+      </Suspense> */}
       <div className="spaced-t">
         <BentoHome products={products} />
       </div>

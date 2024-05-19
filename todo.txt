@@ -1,7 +1,5 @@
-on checkout use billing address
-- select
-
-finish cart ui
+sign up
+buy without account
 
 db
 [] add images
