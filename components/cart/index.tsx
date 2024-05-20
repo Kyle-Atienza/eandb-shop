@@ -1,25 +1,13 @@
 "use client";
 
-import { useOrdersStore } from "@/state/orders";
-import { useRouter } from "next/navigation";
-import { SimpleButton, TransitionButton } from "../common/button";
-import { Label } from "../common/label";
 import { CartItem } from "./item";
 import Link from "next/link";
 import { useProductsStore } from "@/state/products";
 import { useEffect } from "react";
-import { useUserStore } from "@/state/user";
+import { useCart } from "@/hooks/useCart";
 
 export function CartItems() {
-  const { items } = useProductsStore();
-  const { cart, localCart } = useOrdersStore();
-  const { user } = useUserStore();
-
-  const cartItems = (user ? cart : localCart)?.items;
-
-  const getCartItemData = (cartItemId: string) => {
-    return items.find((item) => item._id === cartItemId);
-  };
+  const { getCartItemData, cartItems } = useCart();
 
   return (
     <>
@@ -37,9 +25,9 @@ export function CartItems() {
 }
 
 export default function Cart() {
-  const { cart, localCart } = useOrdersStore();
-  const { items, getProductItems, isLoading, isError } = useProductsStore();
-  const { user } = useUserStore();
+  const { getCartItemData, cartItems, isCartLoading } = useCart();
+
+  const { items, getProductItems } = useProductsStore();
 
   useEffect(() => {
     if (!items.length) {
@@ -47,10 +35,6 @@ export default function Cart() {
     }
   }, []);
 
-  const getCartItemData = (cartItemId: string) => {
-    return items.find((item) => item._id === cartItemId);
-  };
-  const cartItems = (user ? cart : localCart)?.items;
   const totalAmount = cartItems?.reduce((total, cartItem) => {
     total += cartItem.count * (getCartItemData(cartItem._id)?.amount || 0);
     return total;
@@ -58,7 +42,7 @@ export default function Cart() {
 
   return (
     <>
-      {!items.length && isLoading && !isError ? (
+      {isCartLoading ? (
         <p>Loading</p>
       ) : (
         <div className="relative flex flex-col w-full h-full">
