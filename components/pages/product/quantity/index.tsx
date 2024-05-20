@@ -92,7 +92,6 @@ export function ProductQuantity({
 
   return (
     <form
-      method="POST"
       action={cartItemId ? updateCartItemQuantity : () => {}}
       className={`flex flex-col gap-spaced-sm w-min ${textColorClassName(
         color

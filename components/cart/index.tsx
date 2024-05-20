@@ -6,58 +6,83 @@ import { SimpleButton, TransitionButton } from "../common/button";
 import { Label } from "../common/label";
 import { CartItem } from "./item";
 import Link from "next/link";
+import { useProductsStore } from "@/state/products";
+import { useEffect } from "react";
+import { useUserStore } from "@/state/user";
 
 export function CartItems() {
-  const { cart } = useOrdersStore();
+  const { items } = useProductsStore();
+  const { cart, localCart } = useOrdersStore();
+  const { user } = useUserStore();
+
+  const cartItems = (user ? cart : localCart)?.items;
+
+  const getCartItemData = (cartItemId: string) => {
+    return items.find((item) => item._id === cartItemId);
+  };
 
   return (
-    <div className="flex flex-col">
-      {cart.items.map((cartItem, index) => {
-        return <>{/* <CartItem item={cartItem} key={index} /> */}</>;
+    <>
+      {cartItems?.map((cartItem, index) => {
+        const itemData = getCartItemData(cartItem._id);
+
+        if (itemData) {
+          return (
+            <CartItem key={index} item={itemData} quantity={cartItem.count} />
+          );
+        }
       })}
-    </div>
+    </>
   );
 }
 
 export default function Cart() {
-  const router = useRouter();
+  const { cart, localCart } = useOrdersStore();
+  const { items, getProductItems, isLoading, isError } = useProductsStore();
+  const { user } = useUserStore();
 
-  const { cart } = useOrdersStore();
+  useEffect(() => {
+    if (!items.length) {
+      getProductItems();
+    }
+  }, []);
 
-  const totalAmount = cart.items?.reduce((total, cartItem) => {
-    total += cartItem.count * cartItem.price;
+  const getCartItemData = (cartItemId: string) => {
+    return items.find((item) => item._id === cartItemId);
+  };
+  const cartItems = (user ? cart : localCart)?.items;
+  const totalAmount = cartItems?.reduce((total, cartItem) => {
+    total += cartItem.count * (getCartItemData(cartItem._id)?.amount || 0);
     return total;
   }, 0);
 
   return (
     <>
-      <div className="relative flex flex-col w-full h-full">
-        <div className="cart flex-1 bg-tertiary overflow-auto">
-          <table className="">
-            <tbody>
-              {cart.items.map((cartItem, index) => {
-                return (
-                  <>
-                    <CartItem item={cartItem} key={index} />
-                  </>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div className="border-t-2 border-light flex text-3xl font-merchant">
-          <div className="w-full  spaced-x spaced-y-md bg-light  flex justify-between text-dark">
-            <div>Total: </div>
-            <div>P{totalAmount.toFixed(2)}</div>
+      {!items.length && isLoading && !isError ? (
+        <p>Loading</p>
+      ) : (
+        <div className="relative flex flex-col w-full h-full">
+          <div className="cart flex-1 bg-tertiary overflow-auto">
+            <table className="">
+              <tbody>
+                <CartItems />
+              </tbody>
+            </table>
           </div>
-          <Link
-            href={"/checkout"}
-            className="bg-tertiary spaced-x text-light hover:bg-primary transition-colors flex items-center"
-          >
-            Checkout
-          </Link>
+          <div className="border-t-2 border-light flex text-3xl font-merchant">
+            <div className="w-full  spaced-x spaced-y-md bg-light  flex justify-between text-dark">
+              <div>Total: </div>
+              <div>P{totalAmount?.toFixed(2)}</div>
+            </div>
+            <Link
+              href={"/checkout"}
+              className="bg-tertiary spaced-x text-light hover:bg-primary transition-colors flex items-center"
+            >
+              Checkout
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

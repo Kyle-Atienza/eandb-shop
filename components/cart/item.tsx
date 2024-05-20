@@ -2,23 +2,29 @@ import { useOrdersStore } from "@/state/orders";
 import { Label } from "../common/label";
 import { ProductQuantity } from "../pages/product/quantity";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useProductsStore } from "@/state/products";
 
-function Quantity({ item }: { item: CartItem }) {
-  const { updateCartItemQuantity, addToCart, deleteCartItem, isLoading } =
-    useOrdersStore();
+function Quantity({ item, quantity }: { item: ProductItem; quantity: number }) {
+  const {
+    updateCartItemQuantity,
+    addToCart,
+    addToLocalCart,
+    deleteCartItem,
+    isLoading,
+  } = useOrdersStore();
 
-  const [count, setCount] = useState<number>(item.count);
+  const [count, setCount] = useState<number>(quantity);
 
   useEffect(() => {
-    setCount(item.count);
-  }, [item.count]);
+    setCount(quantity);
+  }, [quantity]);
 
   return (
     <div className="flex flex-col">
       <button
         disabled={isLoading}
         className="h-[40px] disabled:opacity-50 disabled:pointer-events-none"
-        onClick={() => addToCart(item.product._id, 1)}
+        onClick={() => addToLocalCart(item._id, 1)}
       >
         <i className="bi bi-caret-up-fill text-light"></i>
       </button>
@@ -27,7 +33,7 @@ function Quantity({ item }: { item: CartItem }) {
           type="text"
           name="product-id"
           id=""
-          value={item.product._id}
+          value={item._id}
           className="hidden"
         />
         <input
@@ -49,15 +55,16 @@ function Quantity({ item }: { item: CartItem }) {
       <button
         disabled={isLoading}
         className="h-[40px] disabled:opacity-50 disabled:pointer-events-none"
-        onClick={() =>
+        onClick={() => addToLocalCart(item._id, -1)}
+        /* onClick={() =>
           item.count === 1
             ? deleteCartItem(item.product._id)
             : addToCart(item.product._id, -1)
-        }
+        } */
       >
         <i
           className={`bi bi-caret-down-fill text-light ${
-            item.count === 1 ? "text-danger" : ""
+            quantity === 1 ? "text-danger" : ""
           }`}
         ></i>
       </button>
@@ -65,14 +72,47 @@ function Quantity({ item }: { item: CartItem }) {
   );
 }
 
-export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
+export function CartItem({
+  item,
+  quantity,
+  color,
+}: {
+  item: ProductItem;
+  quantity: number;
+  color?: Colors;
+}) {
+  // const cartItemData =
   const rotation = Math.random() * 18 - 8;
-  const quantity: number = item.count;
-  const attributes = item.product.attributes;
+  const totalAmount = quantity * item.amount;
+  // const quantity: number = item.count;
+  // const attributes = item.product.attributes;
 
   return (
     <>
       <tr className="font-merchant text-light *:border-2 border-light ">
+        <td>
+          <div className="w-[100px] h-[140px] flex-shrink-0"></div>
+        </td>
+        <td className="w-[100%] spaced-sm  text-3xl !leading-[0.8em]">
+          <div>
+            {item.details.name}
+            {item.attributes.map((attribute, index) => {
+              return (
+                <p key={index}>
+                  {attribute.type}: {attribute.value}
+                </p>
+              );
+            })}
+          </div>
+        </td>
+        <td>
+          <Quantity item={item} quantity={quantity} />
+        </td>
+        <td className=" uppercase text-3xl spaced-sm">
+          P{totalAmount.toFixed(2)}
+        </td>
+      </tr>
+      {/* <tr className="font-merchant text-light *:border-2 border-light ">
         <td rowSpan={attributes.length ? 2 : 1}>
           <div className="w-[100px] h-[140px] flex-shrink-0"></div>
         </td>
@@ -113,7 +153,7 @@ export function CartItem({ item, color }: { item: CartItem; color?: Colors }) {
             ) : null}
           </td>
         </tr>
-      ) : null}
+      ) : null} */}
     </>
   );
 }

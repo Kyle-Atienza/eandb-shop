@@ -11,8 +11,10 @@ interface OrdersState {
   isError: boolean;
   orders: Order[];
   cart: Order;
+  localCart: Order | null;
   addresses: OrderAddress[];
   addToCart: (productId: string, count?: number) => void;
+  addToLocalCart: (cartItemId: string, count?: number) => void;
   updateCartItemQuantity: (data: FormData) => void;
   deleteCartItem: (productId: string) => void;
   getCart: () => void;
@@ -22,6 +24,7 @@ interface OrdersState {
   createAddress: (data: FormData) => void;
   updateAddress: (data: FormData) => void;
   deleteAddress: (id: string) => void;
+  checkLocalCart: () => void;
 }
 
 const initialState = {
@@ -38,6 +41,7 @@ const initialState = {
       shipping: null,
     },
   },
+  localCart: null,
   addresses: [],
 };
 
@@ -45,8 +49,58 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   ...initialState,
   isLoading: false,
   isError: false,
+  checkLocalCart: () => {
+    if (localStorage.getItem("cart")) {
+      set({ localCart: JSON.parse(localStorage.getItem("cart")!) });
+      console.log("retrieved local cart", useOrdersStore.getState().localCart);
+    } else {
+      localStorage.setItem("cart", JSON.stringify(initialState.cart));
+      set({ localCart: JSON.parse(localStorage.getItem("cart")!) });
+      console.log("created local cart", useOrdersStore.getState().localCart);
+    }
+  },
+  addToLocalCart: (cartItemId: string, count?: number) => {
+    const localCart = useOrdersStore.getState().localCart;
+
+    if (localCart) {
+      const existingCartItemIndex = localCart.items.findIndex(
+        (item) => item._id === cartItemId
+      );
+
+      let updatedCart;
+
+      if (existingCartItemIndex === -1) {
+        const newCartItem = { _id: cartItemId, count: count || 1 };
+        updatedCart = {
+          ...localCart,
+          items: [...localCart.items, newCartItem],
+        };
+        toast.success("Item added to cart!");
+      } else {
+        const existingCartItem = localCart.items[existingCartItemIndex];
+        if (existingCartItem.count === 1 && count === -1) {
+          updatedCart = {
+            ...localCart,
+            items: localCart.items.filter((item) => item._id !== cartItemId),
+          };
+          toast.success("Item deleted 🗑");
+        } else {
+          const updatedItems = [...localCart.items];
+          updatedItems[existingCartItemIndex] = {
+            ...existingCartItem,
+            count: existingCartItem.count + (count || 1),
+          };
+          updatedCart = { ...localCart, items: updatedItems };
+          toast.success("Item quantity updated");
+        }
+      }
+
+      set({ localCart: updatedCart });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+  },
   addToCart: async (productId: string, count?: number) => {
-    set({ isLoading: true });
+    /* set({ isLoading: true });
 
     const existingCartItem = useOrdersStore
       .getState()
@@ -82,10 +136,10 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       })
       .finally(() => {
         set({ isLoading: false });
-      });
+      }); */
   },
   updateCartItemQuantity: async (data: FormData) => {
-    const productId = data.get("product-id");
+    /* const productId = data.get("product-id");
     const product = useOrdersStore
       .getState()
       .cart.items.find((item) => item.product._id === productId);
@@ -116,7 +170,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         .finally(() => {
           set({ isLoading: false });
         });
-    }
+    } */
   },
   deleteCartItem: async (productId: string) => {
     const config = {

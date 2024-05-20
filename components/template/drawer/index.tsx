@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Login } from "./login";
 import { useUserStore } from "@/state/user";
 import { useOrdersStore } from "@/state/orders";
+import { CartDrawerToggle } from "@/components/cart/toggle";
 
 function DrawerToggle({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -27,18 +28,7 @@ function DrawerToggle({ className }: { className?: string }) {
           drawer ? "bg-danger" : "bg-tertiary"
         }`}
       >
-        {drawer ? (
-          <i className="bi bi-x"></i>
-        ) : (
-          <>
-            {cart.items.length ? (
-              <div className="absolute top-0 right-0 w-4 text-xs rounded-full aspect-square bg-dark font-gopher">
-                {cart.items.length}
-              </div>
-            ) : null}
-            <i className={`bi bi-cart ${!user ? "opacity-40" : ""}`}></i>
-          </>
-        )}
+        {drawer ? <i className="bi bi-x"></i> : <CartDrawerToggle />}
       </button>
     </div>
   );
@@ -77,6 +67,7 @@ export function Drawer() {
             <Login />
           </div>
         ) : (
+          <Cart />
         )} */}
         <Cart />
       </div>
