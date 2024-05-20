@@ -63,12 +63,10 @@ export function Drawer() {
         `}
         />
         {/* {!user ? (
-          <div className="absolute top-0 left-0 flex flex-col flex-1 w-full h-full md:justify-center spaced">
+          <div className="absolute top-0 left-0 flex flex-col flex-1 w-full h-full md:justify-center spaced z-10">
             <Login />
           </div>
-        ) : (
-          <Cart />
-        )} */}
+        ) : null} */}
         <Cart />
       </div>
     </>

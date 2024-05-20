@@ -64,13 +64,13 @@ export const useOrdersStore = create<OrdersState>((set) => ({
 
     if (localCart) {
       const existingCartItemIndex = localCart.items.findIndex(
-        (item) => item._id === cartItemId
+        (item) => item.productItemId === cartItemId
       );
 
       let updatedCart;
 
       if (existingCartItemIndex === -1) {
-        const newCartItem = { _id: cartItemId, count: count || 1 };
+        const newCartItem = { productItemId: cartItemId, count: count || 1 };
         updatedCart = {
           ...localCart,
           items: [...localCart.items, newCartItem],
@@ -81,7 +81,9 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         if (existingCartItem.count === 1 && count === -1) {
           updatedCart = {
             ...localCart,
-            items: localCart.items.filter((item) => item._id !== cartItemId),
+            items: localCart.items.filter(
+              (item) => item.productItemId !== cartItemId
+            ),
           };
           toast.success("Item deleted 🗑");
         } else {
@@ -146,7 +148,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
 
     const cartItemId = data.get("product-id");
     const cartItem = (user ? cart : localCart)?.items.find(
-      (item) => item._id === cartItemId
+      (item) => item.productItemId === cartItemId
     );
     const count = Number(data.get("quantity")) - (cartItem?.count || 0);
 
@@ -156,7 +158,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       }
 
       const cartItemIndex = localCart.items.findIndex(
-        (item) => item._id === cartItemId
+        (item) => item.productItemId === cartItemId
       );
 
       if (cartItem) {
@@ -217,7 +219,9 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     if (!user && localCart) {
       const updatedCart = {
         ...localCart,
-        items: localCart.items.filter((item) => item._id !== cartItemId),
+        items: localCart.items.filter(
+          (item) => item.productItemId !== cartItemId
+        ),
       };
       toast.success("Item deleted 🗑");
 

@@ -7,10 +7,12 @@ import { useCart } from "@/hooks/useCart";
 export function CartItems() {
   const { getCartItemData, cartItems } = useCart();
 
+  console.log(cartItems);
+
   return (
     <>
       {cartItems?.map((cartItem, index) => {
-        const itemData = getCartItemData(cartItem._id);
+        const itemData = getCartItemData(cartItem.productItemId);
 
         if (itemData) {
           return (
@@ -26,7 +28,8 @@ export default function Cart() {
   const { getCartItemData, cartItems, isCartLoading } = useCart();
 
   const totalAmount = cartItems?.reduce((total, cartItem) => {
-    total += cartItem.count * (getCartItemData(cartItem._id)?.amount || 0);
+    total +=
+      cartItem.count * (getCartItemData(cartItem.productItemId)?.amount || 0);
     return total;
   }, 0);
 
