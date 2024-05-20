@@ -139,6 +139,46 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       }); */
   },
   updateCartItemQuantity: async (data: FormData) => {
+    set({ isLoading: true });
+
+    const user = useUserStore.getState().user;
+    const { cart, localCart } = useOrdersStore.getState();
+
+    const cartItemId = data.get("product-id");
+    const cartItem = (user ? cart : localCart)?.items.find(
+      (item) => item._id === cartItemId
+    );
+    const count = Number(data.get("quantity")) - (cartItem?.count || 0);
+
+    console.log(Math.abs(count), cartItem?.count || 0);
+
+    if (!user && localCart) {
+      if (Math.abs(count) === (cartItem?.count || 0)) {
+        toast.error("Invalid item quantity");
+      }
+
+      const cartItemIndex = localCart.items.findIndex(
+        (item) => item._id === cartItemId
+      );
+
+      if (cartItem) {
+        const updatedItems = [...localCart.items];
+        updatedItems[cartItemIndex] = {
+          ...cartItem,
+          count: cartItem.count + (count || 1),
+        };
+        const updatedCart = { ...localCart, items: updatedItems };
+        toast.success("Item quantity updated");
+
+        set({ localCart: updatedCart });
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+      }
+
+      set({ isLoading: false });
+      // const updatedItems = [...localCart.items];
+    } else {
+      // do something
+    }
     /* const productId = data.get("product-id");
     const product = useOrdersStore
       .getState()
@@ -172,8 +212,21 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         });
     } */
   },
-  deleteCartItem: async (productId: string) => {
-    const config = {
+  deleteCartItem: async (cartItemId: string) => {
+    const user = useUserStore.getState().user;
+    const { cart, localCart } = useOrdersStore.getState();
+
+    if (!user && localCart) {
+      const updatedCart = {
+        ...localCart,
+        items: localCart.items.filter((item) => item._id !== cartItemId),
+      };
+      toast.success("Item deleted 🗑");
+
+      set({ localCart: updatedCart });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+    /* const config = {
       headers: {
         Authorization: `Bearer ${useUserStore.getState().user?.token}`,
       },
@@ -190,7 +243,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       })
       .finally(() => {
         set({ isLoading: false });
-      });
+      }); */
   },
   getCart: async () => {
     set({ isLoading: true });

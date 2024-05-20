@@ -17,6 +17,7 @@ function Quantity({ item, quantity }: { item: ProductItem; quantity: number }) {
 
   useEffect(() => {
     setCount(quantity);
+    console.log(quantity);
   }, [quantity]);
 
   return (
@@ -28,7 +29,15 @@ function Quantity({ item, quantity }: { item: ProductItem; quantity: number }) {
       >
         <i className="bi bi-caret-up-fill text-light"></i>
       </button>
-      <form action={updateCartItemQuantity}>
+      <form
+        action={updateCartItemQuantity}
+        onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
+          if (count === 0) {
+            e.preventDefault();
+            deleteCartItem(item._id);
+          }
+        }}
+      >
         <input
           type="text"
           name="product-id"
