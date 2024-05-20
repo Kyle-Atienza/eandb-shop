@@ -2,8 +2,6 @@
 
 import { CartItem } from "./item";
 import Link from "next/link";
-import { useProductsStore } from "@/state/products";
-import { useEffect } from "react";
 import { useCart } from "@/hooks/useCart";
 
 export function CartItems() {
@@ -26,14 +24,6 @@ export function CartItems() {
 
 export default function Cart() {
   const { getCartItemData, cartItems, isCartLoading } = useCart();
-
-  const { items, getProductItems } = useProductsStore();
-
-  useEffect(() => {
-    if (!items.length) {
-      getProductItems();
-    }
-  }, []);
 
   const totalAmount = cartItems?.reduce((total, cartItem) => {
     total += cartItem.count * (getCartItemData(cartItem._id)?.amount || 0);
