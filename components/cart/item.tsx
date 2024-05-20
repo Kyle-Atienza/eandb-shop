@@ -17,7 +17,6 @@ function Quantity({ item, quantity }: { item: ProductItem; quantity: number }) {
 
   useEffect(() => {
     setCount(quantity);
-    console.log(quantity);
   }, [quantity]);
 
   return (

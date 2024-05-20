@@ -74,7 +74,6 @@ export function ProductDetails({
                   ? productOptions[0].options.find((option) => option.selected)
                   : productItem;
 
-                // console.log(item?._id);
                 if (item) {
                   addToLocalCart(item._id, quantity);
                   setQuantity(1);

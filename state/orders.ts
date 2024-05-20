@@ -150,8 +150,6 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     );
     const count = Number(data.get("quantity")) - (cartItem?.count || 0);
 
-    console.log(Math.abs(count), cartItem?.count || 0);
-
     if (!user && localCart) {
       if (Math.abs(count) === (cartItem?.count || 0)) {
         toast.error("Invalid item quantity");
