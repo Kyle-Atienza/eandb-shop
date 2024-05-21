@@ -1,4 +1,5 @@
 import { HeaderOne } from "@/components/common/header";
+import { ScrollDown } from "@/components/decorations/scroll-down";
 import { ProductsGrid } from "@/components/pages/products/grid";
 import { ProductCard } from "@/components/products/card";
 import { ProductFilter } from "@/components/products/filter";

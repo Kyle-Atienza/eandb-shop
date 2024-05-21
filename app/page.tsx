@@ -1,4 +1,7 @@
+import { HeaderOne } from "@/components/common/header";
+import { ScrollDown } from "@/components/decorations/scroll-down";
 import { BentoHome } from "@/components/pages/home/products-bento";
+import { ProductsGrid } from "@/components/pages/products/grid";
 import { ProductFilter } from "@/components/products/filter";
 import { Suspense } from "react";
 
@@ -7,17 +10,42 @@ async function getProducts() {
   return await res.json();
 }
 
+async function getProductList(group: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/products/list/${group}`
+  );
+  return await res.json();
+}
+
 export default async function Home() {
   const products = await getProducts();
+  const productList: ProductListingItem[] = await getProductList("all");
 
   return (
     <>
-      <div className="h-[30vh] relative"></div>
-      {/* <Suspense>
-        <ProductFilter />
-      </Suspense> */}
       <div className="spaced-t">
-        <BentoHome products={products} />
+        <div className="h-[65vh] grid place-content-center top-[100px] sticky">
+          <HeaderOne className="text-center">
+            <span className="md:hidden">
+              Discover
+              {"\n"}a world
+              {"\n"}
+              of organic and local
+              {"\n"}
+              goodness!
+              {"\n"}
+              <ScrollDown />
+            </span>
+            <span className="hidden md:block">
+              Discover a world{"\n"}
+              of organic and local
+              {"\n"}
+              goodness!
+              <ScrollDown />
+            </span>
+          </HeaderOne>
+        </div>
+        <ProductsGrid productList={productList} />
       </div>
     </>
   );

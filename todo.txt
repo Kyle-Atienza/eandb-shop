@@ -1,4 +1,3 @@
-2. make cart mobile responsive
 
 db
 [] add images

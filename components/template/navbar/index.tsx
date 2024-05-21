@@ -30,7 +30,7 @@ export function Navbar() {
           className="relative -translate-x-0 -translate-y-0"
         >
           <div className="w-10 aspect-square">
-            <Image src={brand} alt="" />
+            {/* <Image src={brand} alt="" /> */}
           </div>
         </TransitionLink>
         {user ? (
