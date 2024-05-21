@@ -1,20 +1,49 @@
+"use client";
+
 import { Input } from "@/components/common/forms/input";
 import { HeaderOne } from "@/components/common/header";
 import { Label } from "@/components/common/label";
+import { useUserStore } from "@/state/user";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
+  const router = useRouter();
+  const { signIn, user } = useUserStore();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
+
   return (
-    <>
-      <div className="spaced border-t-2 border-light">
-        <form action="" className="flex flex-col gap-spaced-sm">
-          <Input label="Email Address" labelClassName="text-light" />
-          <Input label="Password" labelClassName="text-light" />
-        </form>
+    <form action={signIn}>
+      <div className="spaced border-t-2 border-light flex flex-col gap-spaced-sm">
+        {/* <form action={signIn} className="flex flex-col gap-spaced-sm">
+        </form> */}
+        <Input
+          label="Email Address"
+          name="email"
+          labelClassName="text-light"
+          type="text"
+          required
+        />
+        <Input
+          label="Password"
+          name="password"
+          labelClassName="text-light"
+          type="password"
+          required
+        />
       </div>
-      <div className="spaced-x spaced-y-md hover:bg-primary border-t-2 border-light flex justify-center transition-colors">
+      <button
+        type="submit"
+        className="spaced-x spaced-y-md hover:bg-primary border-t-2 border-light flex justify-center transition-colors w-full"
+      >
         <Label className="text-light">Log In</Label>
-      </div>
-    </>
+      </button>
+    </form>
   );
 }
