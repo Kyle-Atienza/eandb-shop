@@ -8,6 +8,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     label: string;
     value: string;
   }[];
+  innerClassName?: string;
 }
 
 export function Select({
@@ -15,6 +16,7 @@ export function Select({
   options,
   placeholder,
   className,
+  innerClassName,
   ...rest
 }: SelectProps) {
   return (
@@ -26,7 +28,9 @@ export function Select({
             <Label>{label}</Label>
           </label>
         ) : null}
-        <div className="flex  spaced-sm bg-secondary rounded">
+        <div
+          className={`flex spaced-sm bg-secondary rounded ${innerClassName}`}
+        >
           <select className="w-full font-gopher  focus:outline-0" {...rest}>
             {options.map((option, index) => {
               return (

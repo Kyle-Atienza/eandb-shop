@@ -1,9 +1,10 @@
+import { Select } from "@/components/common/forms/select";
 import { HeaderOne } from "@/components/common/header";
 import { ScrollDown } from "@/components/decorations/scroll-down";
-import { BentoHome } from "@/components/pages/home/products-bento";
+import { Catalog } from "@/components/pages/home/catalog";
 import { ProductsGrid } from "@/components/pages/products/grid";
 import { ProductFilter } from "@/components/products/filter";
-import { Suspense } from "react";
+import { ChangeEvent, Suspense, useState } from "react";
 
 async function getProducts() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/products`);
@@ -18,9 +19,6 @@ async function getProductList(group: string) {
 }
 
 export default async function Home() {
-  const products = await getProducts();
-  const productList: ProductListingItem[] = await getProductList("all");
-
   return (
     <>
       <div className="spaced-t">
@@ -45,7 +43,7 @@ export default async function Home() {
             </span>
           </HeaderOne>
         </div>
-        <ProductsGrid productList={productList} />
+        <Catalog />
       </div>
     </>
   );
