@@ -11,6 +11,7 @@ interface OrdersState {
   isError: boolean;
   orders: Order[];
   cart: Order;
+  localCart: Order | null;
   addresses: OrderAddress[];
   addToCart: (productId: string, count?: number) => void;
   updateCartItemQuantity: (data: FormData) => void;
@@ -22,6 +23,7 @@ interface OrdersState {
   createAddress: (data: FormData) => void;
   updateAddress: (data: FormData) => void;
   deleteAddress: (id: string) => void;
+  checkLocalCart: () => void;
 }
 
 const initialState = {
@@ -38,72 +40,149 @@ const initialState = {
       shipping: null,
     },
   },
+  localCart: null,
   addresses: [],
+};
+
+const config = (token: string) => {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
 export const useOrdersStore = create<OrdersState>((set) => ({
   ...initialState,
   isLoading: false,
   isError: false,
-  addToCart: async (productId: string, count?: number) => {
-    set({ isLoading: true });
-
-    const existingCartItem = useOrdersStore
-      .getState()
-      .cart.items.find((cartItem) => cartItem.product._id === productId);
-    if (existingCartItem) {
-      toast.loading("Updating Item Quantity");
+  checkLocalCart: () => {
+    if (localStorage.getItem("cart")) {
+      set({ localCart: JSON.parse(localStorage.getItem("cart")!) });
+      console.log("retrieved local cart", useOrdersStore.getState().localCart);
     } else {
-      toast.loading("Adding Item to Cart");
+      localStorage.setItem("cart", JSON.stringify(initialState.cart));
+      set({ localCart: JSON.parse(localStorage.getItem("cart")!) });
+      console.log("created local cart", useOrdersStore.getState().localCart);
     }
+  },
+  addToCart: async (cartItemId: string, count?: number) => {
+    const user = useUserStore.getState().user;
+    const { cart, localCart } = useOrdersStore.getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
+    if (!user && localCart) {
+      const existingCartItemIndex = localCart.items.findIndex(
+        (item) => item.productItemId === cartItemId
+      );
 
-    await axios
-      .post(`${API_URL}/cart/add`, { productId, count: count ?? 1 }, config)
-      .then((res) => {
-        set({ cart: res.data });
-        toast.dismiss();
-        if (existingCartItem) {
-          toast.success("Succesfully Updated Item Quantity");
+      let updatedCart;
+
+      if (existingCartItemIndex === -1) {
+        const newCartItem = { productItemId: cartItemId, count: count || 1 };
+        updatedCart = {
+          ...localCart,
+          items: [...localCart.items, newCartItem],
+        };
+        toast.success("Item added to cart!");
+      } else {
+        const existingCartItem = localCart.items[existingCartItemIndex];
+        if (existingCartItem.count === 1 && count === -1) {
+          updatedCart = {
+            ...localCart,
+            items: localCart.items.filter(
+              (item) => item.productItemId !== cartItemId
+            ),
+          };
+          toast.success("Item deleted 🗑");
         } else {
-          toast.success("Succesfully Added Item to Cart");
+          const updatedItems = [...localCart.items];
+          updatedItems[existingCartItemIndex] = {
+            ...existingCartItem,
+            count: existingCartItem.count + (count || 1),
+          };
+          updatedCart = { ...localCart, items: updatedItems };
+          toast.success("Item quantity updated");
         }
-      })
-      .catch((e) => {
-        console.log(e);
-        set({ isError: true });
-        toast.dismiss();
-        toast.error(e.message);
-      })
-      .finally(() => {
-        set({ isLoading: false });
-      });
+      }
+
+      set({ localCart: updatedCart });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      const existingCartItem = useOrdersStore
+        .getState()
+        .cart.items.find((cartItem) => cartItem.productItemId === cartItemId);
+      if (existingCartItem) {
+        toast.loading("Updating Item Quantity");
+      } else {
+        toast.loading("Adding Item to Cart");
+      }
+
+      if (existingCartItem?.count === 1 && count === -1) {
+        useOrdersStore.getState().deleteCartItem(cartItemId);
+      } else {
+        await axios
+          .post(
+            `${API_URL}/cart/add`,
+            { productItemId: cartItemId, count: count ?? 1 },
+            config(useUserStore.getState().user?.token!)
+          )
+          .then((res) => {
+            set({ cart: res.data });
+            toast.dismiss();
+            if (existingCartItem) {
+              toast.success("Succesfully Updated Item Quantity");
+            } else {
+              toast.success("Succesfully Added Item to Cart");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            set({ isError: true });
+            toast.dismiss();
+            toast.error(e.message);
+          })
+          .finally(() => {
+            set({ isLoading: false });
+          });
+      }
+    }
   },
   updateCartItemQuantity: async (data: FormData) => {
-    const productId = data.get("product-id");
-    const product = useOrdersStore
-      .getState()
-      .cart.items.find((item) => item.product._id === productId);
-    const count = Number(data.get("quantity")) - (product?.count || 0);
+    const user = useUserStore.getState().user;
+    const { cart, localCart } = useOrdersStore.getState();
 
-    if (
-      Number(data.get("quantity")) !== 0 &&
-      Number(data.get("quantity")) !== (product?.count || 0)
-    ) {
+    const cartItemId = data.get("product-id");
+    const cartItem = (user ? cart : localCart)?.items.find(
+      (item) => item.productItemId === cartItemId
+    );
+    const count = Number(data.get("quantity")) - (cartItem?.count || 0);
+
+    if (!user && localCart) {
+      const cartItemIndex = localCart.items.findIndex(
+        (item) => item.productItemId === cartItemId
+      );
+
+      if (cartItem) {
+        const updatedItems = [...localCart.items];
+        updatedItems[cartItemIndex] = {
+          ...cartItem,
+          count: cartItem.count + (count || 1),
+        };
+        const updatedCart = { ...localCart, items: updatedItems };
+        toast.success("Item quantity updated");
+
+        set({ localCart: updatedCart });
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+      }
+    } else {
       set({ isLoading: true });
-      const config = {
-        headers: {
-          Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-        },
-      };
 
       await axios
-        .post(`${API_URL}/cart/add`, { productId, count }, config)
+        .post(
+          `${API_URL}/cart/add`,
+          { productItemId: cartItemId, count },
+          config(useUserStore.getState().user?.token!)
+        )
         .then((res) => {
           set({ cart: res.data });
           toast.success("Succesfully Updated Item Quantity");
@@ -118,36 +197,45 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         });
     }
   },
-  deleteCartItem: async (productId: string) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
+  deleteCartItem: async (cartItemId: string) => {
+    const user = useUserStore.getState().user;
+    const { cart, localCart } = useOrdersStore.getState();
 
-    await axios
-      .post(`${API_URL}/cart/remove`, { productId }, config)
-      .then((res) => {
-        set({ cart: res.data });
-      })
-      .catch((e) => {
-        console.log(e);
-        set({ isError: true });
-      })
-      .finally(() => {
-        set({ isLoading: false });
-      });
+    if (!user && localCart) {
+      const updatedCart = {
+        ...localCart,
+        items: localCart.items.filter(
+          (item) => item.productItemId !== cartItemId
+        ),
+      };
+      toast.success("Item deleted 🗑");
+
+      set({ localCart: updatedCart });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      await axios
+        .post(
+          `${API_URL}/cart/remove`,
+          { productItemId: cartItemId },
+          config(useUserStore.getState().user?.token!)
+        )
+        .then((res) => {
+          set({ cart: res.data });
+        })
+        .catch((e) => {
+          console.log(e);
+          set({ isError: true });
+        })
+        .finally(() => {
+          set({ isLoading: false });
+        });
+    }
   },
   getCart: async () => {
     set({ isLoading: true });
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
 
     await axios
-      .get(`${API_URL}/cart`, config)
+      .get(`${API_URL}/cart`, config(useUserStore.getState().user?.token!))
       .then((res) => {
         set({ cart: res.data });
       })
@@ -161,14 +249,9 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   },
   getOrders: async () => {
     set({ isLoading: true });
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
 
     await axios
-      .get(`${API_URL}/`, config)
+      .get(`${API_URL}/`, config(useUserStore.getState().user?.token!))
       .then((res) => {
         set({ orders: res.data });
       })
@@ -183,14 +266,9 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   resetOrdersStore: () => set(initialState),
   getAddresses: async () => {
     set({ isLoading: true });
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
 
     await axios
-      .get(`${API_URL}/address`, config)
+      .get(`${API_URL}/address`, config(useUserStore.getState().user?.token!))
       .then((res) => {
         set({ addresses: res.data });
       })
@@ -208,14 +286,12 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     let addressData: any = {};
     data.forEach((value, key) => (addressData[key] = value));
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
     await axios
-      .post(`${API_URL}/address`, addressData, config)
+      .post(
+        `${API_URL}/address`,
+        addressData,
+        config(useUserStore.getState().user?.token!)
+      )
       .then((res) => {
         console.log(res);
         set({ addresses: [...useOrdersStore().addresses, res.data] });
@@ -234,14 +310,12 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     let addressData: any = {};
     data.forEach((value, key) => (addressData[key] = value));
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
     await axios
-      .put(`${API_URL}/address/${addressId}`, addressData, config)
+      .put(
+        `${API_URL}/address/${addressId}`,
+        addressData,
+        config(useUserStore.getState().user?.token!)
+      )
       .then((res) => {
         console.log(res);
       })
@@ -254,14 +328,11 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       });
   },
   deleteAddress: async (id: string) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
     await axios
-      .delete(`${API_URL}/address/${id}`, config)
+      .delete(
+        `${API_URL}/address/${id}`,
+        config(useUserStore.getState().user?.token!)
+      )
       .then((res) => {
         console.log(res);
         set({

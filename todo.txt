@@ -1,7 +1,9 @@
-on checkout use billing address
-- select
-
-finish cart ui
+1. add to cart without login
+    - transfer cartitem._id to cartitem._productItemId
+    - working on cart items for acc
+2. make cart mobile responsive
 
 db
 [] add images
+
+

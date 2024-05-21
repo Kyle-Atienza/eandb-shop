@@ -13,6 +13,7 @@ import {
 import { useOrdersStore } from "@/state/orders";
 import { useUserStore } from "@/state/user";
 import toast from "react-hot-toast";
+import { count } from "console";
 
 const getRelatedProducts = (
   productList: ProductListingItem[],
@@ -69,7 +70,16 @@ export function ProductDetails({
             <button
               className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
               onClick={() => {
-                if (user) {
+                const item = productOptions[0]
+                  ? productOptions[0].options.find((option) => option.selected)
+                  : productItem;
+
+                if (item) {
+                  addToCart(item._id, quantity);
+                  setQuantity(1);
+                }
+
+                /* if (user) {
                   addToCart(
                     productOptions[0]
                       ? productOptions[0].options.find(
@@ -83,7 +93,7 @@ export function ProductDetails({
                   toast.error(
                     "Please login first to start adding items to your cart"
                   );
-                }
+                } */
               }}
             >
               Add to Cart

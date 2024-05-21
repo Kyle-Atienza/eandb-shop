@@ -51,9 +51,10 @@ declare global {
     };
   }
   interface CartItem {
-    _id: string;
-    product: ProductItem;
-    price: number;
+    _id?: string;
+    productItemId: string;
+    // product: ProductItem;
+    // price: number;
     count: number;
   }
 

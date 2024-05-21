@@ -5,7 +5,7 @@ import { ProductBentoCard } from "@/components/products/bento-card";
 import { BentoLogin } from "./login";
 
 import { useProductsStore } from "@/state/products";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useRouter, redirect } from "next/navigation";
 
 import gsap from "gsap";
@@ -14,6 +14,7 @@ import { ScrollTrigger } from "gsap/all";
 import { useUserStore } from "@/state/user";
 import { Divider } from "@/components/decorations/divider";
 import { BentoUserInfo } from "./user-info";
+import { ProductFilter } from "@/components/products/filter";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
@@ -35,13 +36,18 @@ function Main() {
   );
 
   return (
-    <div className="relative flex flex-col justify-end col-span-1 main-card gap-spaced md:col-span-2 xl:col-span-3 font-ranille text-light">
+    <div className="relative flex flex-col justify-end col-span-1 main-card md:col-span-2 xl:col-span-3 font-ranille text-light">
       {/* <Label>{user ? `Hi ${user.name}!` : "Welcome!"}</Label> */}
-      <div className=" text-[10vw] md:text-[7vw] leading-[1em]">
-        {"Discover what's in store for you!"}
+      <div className=" text-[10vw] md:text-[8vw] leading-[0.85em] whitespace-pre-line z-10 relative">
+        {/* {"Discover what's in store for you!"} */}
+        Discover
+        {"\n"}
+        what{"'"}s in store
+        {"\n"}
+        for you!
         <span ref={scrollDown} className="relative group">
           <span className="opacity-0">M</span>
-          <div className="absolute top-0 w-4/5 overflow-hidden transition-colors -translate-x-1/2 rounded-full bg-dark group-hover:bg-primary aspect-square left-1/2">
+          <div className="absolute top-1/2 w-4/6 overflow-hidden transition-colors -translate-x-1/2 -translate-y-1/2 rounded-full bg-dark group-hover:bg-primary aspect-square left-1/2">
             <div className="absolute flex flex-col items-center justify-center w-full h-full">
               <i className="arrow-down text-[5vw] text-light bi bi-arrow-down"></i>
               <i className="arrow-down text-[5vw] text-light bi bi-arrow-down"></i>
@@ -49,6 +55,11 @@ function Main() {
             </div>
           </div>
         </span>
+      </div>
+      <div>
+        <Suspense>
+          <ProductFilter />
+        </Suspense>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Login } from "./login";
 import { useUserStore } from "@/state/user";
 import { useOrdersStore } from "@/state/orders";
+import { CartDrawerToggle } from "@/components/cart/toggle";
 
 function DrawerToggle({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -27,18 +28,7 @@ function DrawerToggle({ className }: { className?: string }) {
           drawer ? "bg-danger" : "bg-tertiary"
         }`}
       >
-        {drawer ? (
-          <i className="bi bi-x"></i>
-        ) : (
-          <>
-            {cart.items.length ? (
-              <div className="absolute top-0 right-0 w-4 text-xs rounded-full aspect-square bg-dark font-gopher">
-                {cart.items.length}
-              </div>
-            ) : null}
-            <i className={`bi bi-cart ${!user ? "opacity-40" : ""}`}></i>
-          </>
-        )}
+        {drawer ? <i className="bi bi-x"></i> : <CartDrawerToggle />}
       </button>
     </div>
   );
@@ -70,16 +60,14 @@ export function Drawer() {
         <DrawerToggle
           className={`spaced-x absolute top-0 md:top-[120px] left-[20px] md:left-0 md:-translate-y-0 md:-translate-x-full rounded-tl-full rounded-tr-full md:rounded-tr-none rounded-bl-none md:rounded-bl-full transition-transform 
           ${drawer ? "-translate-y-full" : ""}
-          ${!user ? "block md:hidden" : ""}
         `}
         />
         {!user ? (
-          <div className="absolute top-0 left-0 flex flex-col flex-1 w-full h-full md:justify-center spaced">
+          <div className=" flex flex-col flex-1 w-full h-full md:justify-center spaced z-10">
             <Login />
           </div>
-        ) : (
-          <Cart />
-        )}
+        ) : null}
+        <Cart />
       </div>
     </>
   );

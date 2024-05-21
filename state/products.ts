@@ -11,6 +11,7 @@ interface ProductsState {
   setIsLoading: (isLoading: boolean) => void;
   setProducts: (products: Product[]) => void;
   getProducts: () => void;
+  getProductItems: () => void;
   getProductList: (group: string) => void;
 }
 
@@ -31,6 +32,24 @@ export const useProductsStore = create<ProductsState>((set) => ({
     })
       .then((res) => {
         set({ products: res.data });
+      })
+      .catch((e) => {
+        console.log(e);
+        set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  getProductItems: async () => {
+    set({ isLoading: true, isError: false });
+
+    await axios({
+      method: "get",
+      url: `${API_URL}/items`,
+    })
+      .then((res) => {
+        set({ items: res.data });
       })
       .catch((e) => {
         console.log(e);

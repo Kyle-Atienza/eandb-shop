@@ -6,7 +6,7 @@ export function Login() {
   const { signIn } = useUserStore();
 
   return (
-    <form action={signIn} className="h-[500px]">
+    <form action={signIn} className="">
       <div className="flex flex-col gap-spaced-sm">
         <Input label="Email Address" type="email" name="email" id="email" />
         <Input label="Password" type="password" name="password" id="password" />

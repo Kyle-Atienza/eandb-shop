@@ -1,7 +1,6 @@
 import { Select } from "@/components/common/forms/select";
 import { Label } from "@/components/common/label";
 import { useOrdersStore } from "@/state/orders";
-import { getCartItemsAmount } from "@/utils/orders";
 import { useEffect, useState } from "react";
 
 const status = [
@@ -95,9 +94,9 @@ export function Orders() {
                       {new Date(order.createdAt).toDateString()}
                     </td>
                     <td className="px-2 py-4 text-xl">{order.items.length}</td>
-                    <td className="px-2 py-4 text-xl">
+                    {/* <td className="px-2 py-4 text-xl">
                       P{getCartItemsAmount(order.items).toFixed(2)}
-                    </td>
+                    </td> */}
                   </tr>
                 );
               })}

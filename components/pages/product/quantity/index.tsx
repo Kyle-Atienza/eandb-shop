@@ -83,7 +83,7 @@ export function ProductQuantity({
   }, [quantity]);
 
   useEffect(() => {
-    if (!isLoading && !isError && cart.items.length) {
+    if (!isLoading && !isError && cart?.items?.length) {
       /* toast.dismiss();
       toast.success(message); */
     }
@@ -92,7 +92,6 @@ export function ProductQuantity({
 
   return (
     <form
-      method="POST"
       action={cartItemId ? updateCartItemQuantity : () => {}}
       className={`flex flex-col gap-spaced-sm w-min ${textColorClassName(
         color

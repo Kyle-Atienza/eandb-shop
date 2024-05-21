@@ -56,7 +56,6 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     if (addresses.length > 0) {
-      console.log("back");
     }
   }, [addresses.length]);
 

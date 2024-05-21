@@ -23,7 +23,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   const { drawer, closeDrawer } = useOptionsStore();
   const { user, checkSavedUser } = useUserStore();
-  const { getCart } = useOrdersStore();
+  const { getCart, checkLocalCart } = useOrdersStore();
 
   useEffect(() => {
     if (user) {
@@ -34,6 +34,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     checkSavedUser();
+    checkLocalCart();
     animatePageIn();
     if (drawer) {
       closeDrawer();

@@ -7,9 +7,9 @@ function ReceiptItem({ item }: { item: CartItem }) {
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex flex-col items-start">
-        <p>
+        {/* <p>
           {item?.product?.details?.name} - {item?.product?.name}
-        </p>
+        </p> */}
         {/* <p>x{item?.count}</p> */}
         <p className="flex">
           x
@@ -22,7 +22,7 @@ function ReceiptItem({ item }: { item: CartItem }) {
           </form>
         </p>
       </div>
-      <p>P{(item?.count * item?.price).toFixed(2)}</p>
+      {/* <p>P{(item?.count * item?.price).toFixed(2)}</p> */}
     </div>
   );
 }
@@ -30,10 +30,10 @@ function ReceiptItem({ item }: { item: CartItem }) {
 export function Receipt() {
   const { cart } = useOrdersStore();
 
-  const totalAmount = cart.items.reduce((total, item) => {
+  /* const totalAmount = cart.items.reduce((total, item) => {
     total += item.count * item.price;
     return total;
-  }, 0);
+  }, 0); */
   const [fees, setFees] = useState<Fees>({
     delivery: 20,
   });
@@ -74,7 +74,7 @@ export function Receipt() {
         <div className="border-t-[1px] w-full border-dark border-dashed" />
         <div className="flex justify-between w-full">
           <p className="w-1/2 text-start">Total Amount:</p>
-          <p className="w-1/2 text-end">P{totalAmount.toFixed(2)}</p>
+          {/* <p className="w-1/2 text-end">P{totalAmount.toFixed(2)}</p> */}
         </div>
         <div className="flex justify-between w-full">
           <p className="w-1/2 text-start">Delivery Fee:</p>
@@ -82,9 +82,9 @@ export function Receipt() {
         </div>
         <div className="flex justify-between w-full">
           <p className="w-1/2 text-start">Grand Total:</p>
-          <p className="w-1/2 text-end">
+          {/* <p className="w-1/2 text-end">
             P{(totalAmount + fees.delivery).toFixed(2)}
-          </p>
+          </p> */}
         </div>
         {/*  <div className="border-t-[1px] w-full border-dark border-dashed" />
         <p className="text-3xl font-merchant-wide">Thank You</p> */}

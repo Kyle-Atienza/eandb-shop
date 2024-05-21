@@ -33,14 +33,7 @@ export default async function Page({
     <>
       <div className="flex flex-col gap-spaced">
         <div className="h-[65vh] grid place-content-center top-[100px] sticky">
-          {/* <h1 className="text-6xl text-center whitespace-pre-line text-light font-ranille">
-            ✨Discover✨ a world
-            {"\n"}
-            of organic and local
-            {"\n"}
-            goodness!
-          </h1> */}
-          <HeaderOne>
+          <HeaderOne className="text-center">
             ✨Discover✨ a world
             {"\n"}
             of organic and local
