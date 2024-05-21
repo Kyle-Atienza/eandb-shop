@@ -83,7 +83,7 @@ export function ProductQuantity({
   }, [quantity]);
 
   useEffect(() => {
-    if (!isLoading && !isError && cart.items.length) {
+    if (!isLoading && !isError && cart?.items?.length) {
       /* toast.dismiss();
       toast.success(message); */
     }

@@ -14,7 +14,6 @@ interface OrdersState {
   localCart: Order | null;
   addresses: OrderAddress[];
   addToCart: (productId: string, count?: number) => void;
-  addToLocalCart: (cartItemId: string, count?: number) => void;
   updateCartItemQuantity: (data: FormData) => void;
   deleteCartItem: (productId: string) => void;
   getCart: () => void;
@@ -45,6 +44,14 @@ const initialState = {
   addresses: [],
 };
 
+const config = (token: string) => {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
+
 export const useOrdersStore = create<OrdersState>((set) => ({
   ...initialState,
   isLoading: false,
@@ -59,10 +66,11 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       console.log("created local cart", useOrdersStore.getState().localCart);
     }
   },
-  addToLocalCart: (cartItemId: string, count?: number) => {
-    const localCart = useOrdersStore.getState().localCart;
+  addToCart: async (cartItemId: string, count?: number) => {
+    const user = useUserStore.getState().user;
+    const { cart, localCart } = useOrdersStore.getState();
 
-    if (localCart) {
+    if (!user && localCart) {
       const existingCartItemIndex = localCart.items.findIndex(
         (item) => item.productItemId === cartItemId
       );
@@ -99,50 +107,47 @@ export const useOrdersStore = create<OrdersState>((set) => ({
 
       set({ localCart: updatedCart });
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-    }
-  },
-  addToCart: async (productId: string, count?: number) => {
-    /* set({ isLoading: true });
-
-    const existingCartItem = useOrdersStore
-      .getState()
-      .cart.items.find((cartItem) => cartItem.product._id === productId);
-    if (existingCartItem) {
-      toast.loading("Updating Item Quantity");
     } else {
-      toast.loading("Adding Item to Cart");
+      const existingCartItem = useOrdersStore
+        .getState()
+        .cart.items.find((cartItem) => cartItem.productItemId === cartItemId);
+      if (existingCartItem) {
+        toast.loading("Updating Item Quantity");
+      } else {
+        toast.loading("Adding Item to Cart");
+      }
+
+      if (existingCartItem?.count === 1 && count === -1) {
+        useOrdersStore.getState().deleteCartItem(cartItemId);
+      } else {
+        await axios
+          .post(
+            `${API_URL}/cart/add`,
+            { productItemId: cartItemId, count: count ?? 1 },
+            config(useUserStore.getState().user?.token!)
+          )
+          .then((res) => {
+            set({ cart: res.data });
+            toast.dismiss();
+            if (existingCartItem) {
+              toast.success("Succesfully Updated Item Quantity");
+            } else {
+              toast.success("Succesfully Added Item to Cart");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            set({ isError: true });
+            toast.dismiss();
+            toast.error(e.message);
+          })
+          .finally(() => {
+            set({ isLoading: false });
+          });
+      }
     }
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
-    await axios
-      .post(`${API_URL}/cart/add`, { productId, count: count ?? 1 }, config)
-      .then((res) => {
-        set({ cart: res.data });
-        toast.dismiss();
-        if (existingCartItem) {
-          toast.success("Succesfully Updated Item Quantity");
-        } else {
-          toast.success("Succesfully Added Item to Cart");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        set({ isError: true });
-        toast.dismiss();
-        toast.error(e.message);
-      })
-      .finally(() => {
-        set({ isLoading: false });
-      }); */
   },
   updateCartItemQuantity: async (data: FormData) => {
-    set({ isLoading: true });
-
     const user = useUserStore.getState().user;
     const { cart, localCart } = useOrdersStore.getState();
 
@@ -153,10 +158,6 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     const count = Number(data.get("quantity")) - (cartItem?.count || 0);
 
     if (!user && localCart) {
-      if (Math.abs(count) === (cartItem?.count || 0)) {
-        toast.error("Invalid item quantity");
-      }
-
       const cartItemIndex = localCart.items.findIndex(
         (item) => item.productItemId === cartItemId
       );
@@ -173,31 +174,15 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         set({ localCart: updatedCart });
         localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
-
-      set({ isLoading: false });
-      // const updatedItems = [...localCart.items];
     } else {
-      // do something
-    }
-    /* const productId = data.get("product-id");
-    const product = useOrdersStore
-      .getState()
-      .cart.items.find((item) => item.product._id === productId);
-    const count = Number(data.get("quantity")) - (product?.count || 0);
-
-    if (
-      Number(data.get("quantity")) !== 0 &&
-      Number(data.get("quantity")) !== (product?.count || 0)
-    ) {
       set({ isLoading: true });
-      const config = {
-        headers: {
-          Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-        },
-      };
 
       await axios
-        .post(`${API_URL}/cart/add`, { productId, count }, config)
+        .post(
+          `${API_URL}/cart/add`,
+          { productItemId: cartItemId, count },
+          config(useUserStore.getState().user?.token!)
+        )
         .then((res) => {
           set({ cart: res.data });
           toast.success("Succesfully Updated Item Quantity");
@@ -210,7 +195,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
         .finally(() => {
           set({ isLoading: false });
         });
-    } */
+    }
   },
   deleteCartItem: async (cartItemId: string) => {
     const user = useUserStore.getState().user;
@@ -227,36 +212,30 @@ export const useOrdersStore = create<OrdersState>((set) => ({
 
       set({ localCart: updatedCart });
       localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      await axios
+        .post(
+          `${API_URL}/cart/remove`,
+          { productItemId: cartItemId },
+          config(useUserStore.getState().user?.token!)
+        )
+        .then((res) => {
+          set({ cart: res.data });
+        })
+        .catch((e) => {
+          console.log(e);
+          set({ isError: true });
+        })
+        .finally(() => {
+          set({ isLoading: false });
+        });
     }
-    /* const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
-    await axios
-      .post(`${API_URL}/cart/remove`, { productId }, config)
-      .then((res) => {
-        set({ cart: res.data });
-      })
-      .catch((e) => {
-        console.log(e);
-        set({ isError: true });
-      })
-      .finally(() => {
-        set({ isLoading: false });
-      }); */
   },
   getCart: async () => {
     set({ isLoading: true });
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
 
     await axios
-      .get(`${API_URL}/cart`, config)
+      .get(`${API_URL}/cart`, config(useUserStore.getState().user?.token!))
       .then((res) => {
         set({ cart: res.data });
       })
@@ -270,14 +249,9 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   },
   getOrders: async () => {
     set({ isLoading: true });
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
 
     await axios
-      .get(`${API_URL}/`, config)
+      .get(`${API_URL}/`, config(useUserStore.getState().user?.token!))
       .then((res) => {
         set({ orders: res.data });
       })
@@ -292,14 +266,9 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   resetOrdersStore: () => set(initialState),
   getAddresses: async () => {
     set({ isLoading: true });
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
 
     await axios
-      .get(`${API_URL}/address`, config)
+      .get(`${API_URL}/address`, config(useUserStore.getState().user?.token!))
       .then((res) => {
         set({ addresses: res.data });
       })
@@ -317,14 +286,12 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     let addressData: any = {};
     data.forEach((value, key) => (addressData[key] = value));
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
     await axios
-      .post(`${API_URL}/address`, addressData, config)
+      .post(
+        `${API_URL}/address`,
+        addressData,
+        config(useUserStore.getState().user?.token!)
+      )
       .then((res) => {
         console.log(res);
         set({ addresses: [...useOrdersStore().addresses, res.data] });
@@ -343,14 +310,12 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     let addressData: any = {};
     data.forEach((value, key) => (addressData[key] = value));
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
     await axios
-      .put(`${API_URL}/address/${addressId}`, addressData, config)
+      .put(
+        `${API_URL}/address/${addressId}`,
+        addressData,
+        config(useUserStore.getState().user?.token!)
+      )
       .then((res) => {
         console.log(res);
       })
@@ -363,14 +328,11 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       });
   },
   deleteAddress: async (id: string) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${useUserStore.getState().user?.token}`,
-      },
-    };
-
     await axios
-      .delete(`${API_URL}/address/${id}`, config)
+      .delete(
+        `${API_URL}/address/${id}`,
+        config(useUserStore.getState().user?.token!)
+      )
       .then((res) => {
         console.log(res);
         set({

@@ -62,11 +62,11 @@ export function Drawer() {
           ${drawer ? "-translate-y-full" : ""}
         `}
         />
-        {/* {!user ? (
-          <div className="absolute top-0 left-0 flex flex-col flex-1 w-full h-full md:justify-center spaced z-10">
+        {!user ? (
+          <div className=" flex flex-col flex-1 w-full h-full md:justify-center spaced z-10">
             <Login />
           </div>
-        ) : null} */}
+        ) : null}
         <Cart />
       </div>
     </>

@@ -38,7 +38,7 @@ export function ProductDetails({
   productItem: ProductItem;
   product: ProductListingItem;
 }) {
-  const { addToCart, addToLocalCart } = useOrdersStore();
+  const { addToCart } = useOrdersStore();
   const { user } = useUserStore();
 
   const [quantity, setQuantity] = useState<number>(1);
@@ -75,15 +75,9 @@ export function ProductDetails({
                   : productItem;
 
                 if (item) {
-                  addToLocalCart(item._id, quantity);
+                  addToCart(item._id, quantity);
                   setQuantity(1);
                 }
-
-                /* if (item) {
-                  // addToCart(item._id, quantity);
-                  addToLocalCart(item, quantity);
-                  setQuantity(1);
-                } */
 
                 /* if (user) {
                   addToCart(
