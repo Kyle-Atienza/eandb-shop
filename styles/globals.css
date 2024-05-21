@@ -122,6 +122,12 @@ body {
   .spaced-x-md {
     @apply px-3 lg:px-5;
   }
+  .spaced-r-md {
+    @apply pr-3 lg:pr-5;
+  }
+  .spaced-b-md {
+    @apply pb-3 lg:pb-5;
+  }
 
   .spaced-sm {
     @apply p-2 lg:p-3;

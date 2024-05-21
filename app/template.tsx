@@ -48,12 +48,12 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <AnimatedCursor />
         <Navbar />
         <Drawer />
-        <div
+        {/* <div
           className={`w-full h-full fixed top-0 left-0 ${
             !drawer ? "pointer-events-none" : ""
           }`}
           onClick={closeDrawer}
-        ></div>
+        ></div> */}
         <Toaster />
       </div>
       <main id="main" className="flex flex-col flex-1 opacity-0">

@@ -15,7 +15,7 @@ function Quantity({ item, quantity }: { item: ProductItem; quantity: number }) {
     <div className="flex flex-col">
       <button
         disabled={isLoading}
-        className="h-[40px] disabled:opacity-50 disabled:pointer-events-none"
+        className="h-[40px] md:h-[30px] disabled:opacity-50 disabled:pointer-events-none"
         onClick={() => addToCart(item._id, 1)}
       >
         <i className="bi bi-caret-up-fill text-light"></i>
@@ -41,7 +41,7 @@ function Quantity({ item, quantity }: { item: ProductItem; quantity: number }) {
           type="text"
           name="quantity"
           value={count}
-          className="w-14 h-[60px] bg-[transparent] text-center text-3xl disabled:opacity-50 disabled:pointer-events-none"
+          className="w-14 h-[60px] md:h-[40px] bg-[transparent] text-center text-3xl disabled:opacity-50 disabled:pointer-events-none"
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const re = /^[0-9\b]+$/;
 
@@ -54,7 +54,7 @@ function Quantity({ item, quantity }: { item: ProductItem; quantity: number }) {
       </form>
       <button
         disabled={isLoading}
-        className="h-[40px] disabled:opacity-50 disabled:pointer-events-none"
+        className="h-[40px] md:h-[30px] disabled:opacity-50 disabled:pointer-events-none"
         onClick={() => addToCart(item._id, -1)}
       >
         <i
@@ -82,16 +82,19 @@ export function CartItem({
     <>
       <tr className="font-merchant text-light *:border-2 border-light ">
         <td>
-          <div className="w-[100px] h-[140px] flex-shrink-0"></div>
+          <div className="w-[100px] h-[140px] md:h-[100px] flex-shrink-0"></div>
         </td>
-        <td className="w-[100%] spaced-sm  text-3xl !leading-[0.8em]">
-          <div>
+        <td className="w-[100%] spaced-sm text-3xl !leading-[0.8em]">
+          <div className="flex flex-col md:flex-row md:items-center gap-spaced-sm">
             {item?.details?.name}
             {item?.attributes?.map((attribute, index) => {
               return (
-                <p key={index}>
-                  {attribute.type}: {attribute.value}
-                </p>
+                <div
+                  key={index}
+                  className="uppercase text-[0.7em] tracking-widest spaced-x-sm bg-light rounded-[10px] text-dark w-fit"
+                >
+                  {attribute.value}
+                </div>
               );
             })}
           </div>
