@@ -13,10 +13,10 @@ export function Input({
   ...rest
 }: InputProps) {
   return (
-    <div className={`flex flex-col gap-spaced-xs ${labelClassName}`}>
+    <div className={`flex flex-col gap-spaced-xs`}>
       {label ? (
         <label htmlFor={rest.name}>
-          <Label>{label}</Label>
+          <Label className={labelClassName}>{label}</Label>
         </label>
       ) : null}
       <input

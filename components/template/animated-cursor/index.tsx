@@ -64,7 +64,7 @@ export function AnimatedCursor() {
       id="animated-cursor"
       className="fixed top-0 left-0 z-50 w-screen h-screen pointer-events-none"
     >
-      <div ref={hoverCursorContainer} className="">
+      <div ref={hoverCursorContainer} className="z-50">
         <div
           ref={hoverCursor}
           className="w-[2vw] h-[2vw] absolute z-10 flex items-center justify-center "

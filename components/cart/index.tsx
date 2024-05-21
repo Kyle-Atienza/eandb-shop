@@ -7,8 +7,6 @@ import { useCart } from "@/hooks/useCart";
 export function CartItems() {
   const { getCartItemData, cartItems } = useCart();
 
-  console.log(cartItems);
-
   return (
     <>
       {cartItems?.map((cartItem, index) => {

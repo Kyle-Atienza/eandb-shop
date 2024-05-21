@@ -58,21 +58,11 @@ export function Navbar() {
             </SimpleButton>
           </div>
         ) : (
-          <SimpleButton
-            className="bg-light"
-            onClick={() => {
-              toggleDrawer();
-            }}
-          >
-            Log In
-          </SimpleButton>
+          <TransitionLink href="/account/login">
+            <SimpleButton className="bg-light">Log In</SimpleButton>
+          </TransitionLink>
         )}
       </div>
     </div>
   );
-}
-
-{
-  /* <FakeBorderRadius position="topLeft" className="top-full" />
-<FakeBorderRadius position="topRight" className="right-0 top-full" /> */
 }

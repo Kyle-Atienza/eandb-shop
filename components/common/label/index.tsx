@@ -7,7 +7,7 @@ export function Label({
 }) {
   return (
     <p
-      className={`tracking-[0.05em] font-gopher text-xs lg:text-sm uppercase inline ${className}`}
+      className={`font-merchant text-xs lg:text-xl tracking-widest uppercase inline ${className}`}
     >
       {children}
     </p>
