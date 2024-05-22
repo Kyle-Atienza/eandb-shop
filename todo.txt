@@ -1,4 +1,3 @@
-add overlay to bg
 redesign product page
 profile page
     - hide delete address on add address
