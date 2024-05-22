@@ -108,7 +108,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       set({ localCart: updatedCart });
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     } else {
-      const cartItems = useOrdersStore.getState().cart.items;
+      const cartItems = useOrdersStore.getState().cart?.items;
 
       const existingCartItem = cartItems?.find(
         (cartItem) => cartItem.productItemId === cartItemId

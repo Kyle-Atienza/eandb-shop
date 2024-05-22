@@ -1,4 +1,7 @@
 qa login and signup and cart items
+navbar
+    - home
+add overlay to bg
 
 db
 [] add images
