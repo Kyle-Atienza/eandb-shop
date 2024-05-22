@@ -2,16 +2,27 @@
 
 import { HeaderOne } from "@/components/common/header";
 import { Label } from "@/components/common/label";
+import { useUserStore } from "@/state/user";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const isLogin = pathname.includes("login");
+
+  const { user, isError } = useUserStore();
+
+  useEffect(() => {
+    if (user && !isError) {
+      router.push("/");
+    }
+  }, [user]);
 
   return (
     <div className="flex justify-center items-center">
-      <div className="max-w-lg border-2 border-light flex-1 flex flex-col h-fit">
+      <div className="max-w-xl border-2 border-light flex-1 flex flex-col h-fit">
         <div className="flex flex-col lg:flex-row">
           <div className="bg-light spaced">
             <HeaderOne className="text-tertiary">

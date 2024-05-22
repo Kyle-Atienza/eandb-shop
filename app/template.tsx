@@ -16,6 +16,7 @@ import toast, { Toaster } from "react-hot-toast";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { animatePageIn } from "@/utils/animations";
+import { useProductsStore } from "@/state/products";
 gsap.registerPlugin(useGSAP);
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -23,7 +24,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   const { drawer, closeDrawer } = useOptionsStore();
   const { user, checkSavedUser } = useUserStore();
-  const { getCart, checkLocalCart } = useOrdersStore();
+  const { getCart, checkLocalCart, cart } = useOrdersStore();
 
   useEffect(() => {
     if (user) {

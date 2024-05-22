@@ -16,13 +16,12 @@ export default function Page() {
     if (user) {
       router.push("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
     <form action={signIn}>
       <div className="spaced border-t-2 border-light flex flex-col gap-spaced-sm">
-        {/* <form action={signIn} className="flex flex-col gap-spaced-sm">
-        </form> */}
         <Input
           label="Email Address"
           name="email"

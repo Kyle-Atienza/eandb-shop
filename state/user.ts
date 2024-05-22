@@ -3,6 +3,7 @@ import axios from "axios";
 import { useOrdersStore } from "./orders";
 import { useOptionsStore } from "./options";
 import { isJsonString } from "@/utils/formData";
+import toast from "react-hot-toast";
 
 const API_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/users`;
 
@@ -21,6 +22,7 @@ interface UserState {
   isError: boolean;
   user: User | null;
   signIn: (data: FormData) => void;
+  signUp: (data: FormData) => void;
   updateMe: (data: FormData) => void;
   getMe: () => void;
   signOut: () => void;
@@ -64,6 +66,36 @@ export const useUserStore = create<UserState>((set) => ({
       .catch((e) => {
         console.log(e);
         set({ isError: true });
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+  signUp: async (data: FormData) => {
+    set({ isLoading: true, isError: false });
+    toast.loading("Creating your account");
+
+    // data.delete("confirm-password");
+
+    await axios
+      .post(`${API_URL}/signup`, {
+        name: data.get("name"),
+        email: data.get("email"),
+        password: data.get("password"),
+      })
+      .then((res) => {
+        set({ user: localUserData(res.data) });
+        localStorage.setItem("user", JSON.stringify(localUserData(res.data)));
+        useOptionsStore.getState().closeDrawer();
+        toast.dismiss();
+        toast.success("Account created succefully");
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.error(e.message);
+        set({ isError: true });
+        toast.dismiss();
+        toast.success("Something went wrong");
       })
       .finally(() => {
         set({ isLoading: false });

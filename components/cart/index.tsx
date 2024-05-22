@@ -68,18 +68,6 @@ export default function Cart() {
               </tbody>
             </table>
           </div>
-          {/* <div className="border-t-2 border-light flex text-3xl font-merchant">
-            <div className="w-full  spaced-x spaced-y-md bg-light  flex justify-between text-dark">
-              <div>Total: </div>
-              <div>P{totalAmount?.toFixed(2)}</div>
-            </div>
-            <Link
-              href={"/checkout"}
-              className="bg-tertiary spaced-x text-light hover:bg-primary transition-colors flex items-center"
-            >
-              Checkout
-            </Link>
-          </div> */}
         </div>
       )}
     </>

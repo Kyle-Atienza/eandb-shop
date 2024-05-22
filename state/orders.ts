@@ -108,9 +108,11 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       set({ localCart: updatedCart });
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     } else {
-      const existingCartItem = useOrdersStore
-        .getState()
-        .cart.items.find((cartItem) => cartItem.productItemId === cartItemId);
+      const cartItems = useOrdersStore.getState().cart.items;
+
+      const existingCartItem = cartItems?.find(
+        (cartItem) => cartItem.productItemId === cartItemId
+      );
       if (existingCartItem) {
         toast.loading("Updating Item Quantity");
       } else {

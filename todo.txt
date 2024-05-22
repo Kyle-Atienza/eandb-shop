@@ -1,4 +1,4 @@
-fixed login
+qa login and signup and cart items
 
 db
 [] add images
