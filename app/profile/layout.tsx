@@ -34,11 +34,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { user } = useUserStore();
+  const { user, signOut } = useUserStore();
 
   return (
     <div className="mt-[50px]">
-      <HeaderOne>Hi {user?.name} ✨</HeaderOne>
+      <div className="flex justify-between items-center">
+        <HeaderOne>Hi {user?.name}</HeaderOne>
+        <SimpleButton
+          onClick={() => {
+            signOut();
+            router.push("/");
+          }}
+          className="bg-danger h-fit"
+        >
+          Log Out
+        </SimpleButton>
+      </div>
       <div className="grid grid-cols-[200px_1fr] gap-spaced spaced-t">
         <div className="flex flex-col overflow-hidden border-2 rounded-md border-secondary h-fit">
           <SideNavButton

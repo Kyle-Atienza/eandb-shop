@@ -37,35 +37,19 @@ export function Navbar() {
         </TransitionLink>
         {/* left */}
         <div className="ml-auto">
-          {user ? (
-            <div className="flex ml-auto gap-spaced-sm">
-              <div
-                className={` flex gap-spaced bg-light w-9 md:w-10 aspect-square items-center justify-center rounded-full transition-colors ${
-                  pathname.includes("/profile") ? "bg-primary text-light" : ""
-                }`}
-              >
-                <TransitionLink href="/profile">
-                  <div>
-                    <i className="text-xl md:text-2xl bi bi-person"></i>
-                  </div>
-                </TransitionLink>
+          <TransitionLink href={user ? "/profile" : "/account/login"}>
+            <div
+              className={` flex gap-spaced bg-light w-9 md:w-10 aspect-square items-center justify-center rounded-full transition-colors hover:bg-primary group`}
+            >
+              <div>
+                {user ? (
+                  <i className="text-xl md:text-2xl text-primary bi bi-person-fill group-hover:text-light"></i>
+                ) : (
+                  <i className="text-xl md:text-2xl bi bi-person"></i>
+                )}
               </div>
-              <SimpleButton
-                className="bg-light"
-                onClick={() => {
-                  signOut();
-                  resetOrdersStore();
-                  router.push("/");
-                }}
-              >
-                Log Out
-              </SimpleButton>
             </div>
-          ) : (
-            <TransitionLink href="/account/login">
-              <SimpleButton className="bg-light">Log In</SimpleButton>
-            </TransitionLink>
-          )}
+          </TransitionLink>
         </div>
       </div>
     </div>
