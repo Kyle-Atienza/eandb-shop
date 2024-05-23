@@ -40,6 +40,18 @@ export async function useProduct(slug: string) {
     )!;
   };
 
+  /* const relatedItems = (
+    productList: ProductListingItem[],
+    product: ProductListingItem,
+    slug: string
+  ) => {
+    return productList.filter(
+      (listItem) =>
+        listItem.details._id === product.details._id &&
+        parseProductListItemId(listItem._id) !== slug
+    )!;
+  }; */
+
   const setInitalProductOptions = (
     product: ProductListingItem
   ): ProductOptionSelectItem[] => {
@@ -78,6 +90,11 @@ export async function useProduct(slug: string) {
     setInitalProductOptions(product)!
   );
   const productItem: ProductItem = getProductItem(product, selectedOptions)!;
+  const relatedItems = productList.filter(
+    (listItem) =>
+      listItem.details._id === product.details._id &&
+      parseProductListItemId(listItem._id) !== slug
+  )!;
 
-  return { product, productItem };
+  return { product, productItem, relatedItems };
 }
