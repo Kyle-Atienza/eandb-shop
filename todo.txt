@@ -1,8 +1,11 @@
-redesign product page
+add spaced-x
+update backend for additional data in products page
 profile page
     - hide delete address on add address
     - fix ui
+home gsap fix (scrub is not workign properly)
 add footer
+
 
 db
 [] add images
