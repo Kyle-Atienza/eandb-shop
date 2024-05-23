@@ -28,9 +28,9 @@ export default async function Home() {
               Discover
               {"\n"}a world
               {"\n"}
-              of organic and local
+              of organic and
               {"\n"}
-              goodness!
+              local goodness!
               {"\n"}
               <ScrollDown />
             </span>

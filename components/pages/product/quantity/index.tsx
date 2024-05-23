@@ -1,183 +1,57 @@
-import { Label } from "@/components/common/label";
 import { useOrdersStore } from "@/state/orders";
-import { ChangeEvent, ReactNode, useEffect, useState } from "react";
-
-import {
-  buttonColorClassName,
-  textColorClassName,
-  inputSize,
-  borderColorClassName,
-} from "@/utils/classnames";
-import toast from "react-hot-toast";
-
-const re = /^[0-9\b]+$/;
-
-function QuantityButton({
-  size,
-  color,
-  onClick,
-  children,
-  disabled = false,
-}: {
-  size?: "sm";
-  color?: "dark" | "base" | "light" | "primary" | "tertiary";
-  onClick?: React.MouseEventHandler;
-  children: ReactNode;
-  disabled?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      disabled={disabled}
-      className={`transition-colors rounded-sm  hover:bg-primary font-gopher disabled:opacity-50 h-7 aspect-square ${buttonColorClassName(
-        color
-      )}`}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
+import { ChangeEvent } from "react";
 
 export function ProductQuantity({
   quantity,
-  color,
-  border = true,
-  size,
-  deleteButton,
-  label = true,
-  cartItemId,
   onChange,
 }: {
-  color?: "dark" | "base" | "light" | "primary" | "tertiary";
-  border?: boolean;
-  size?: "sm";
-  deleteButton?: boolean;
-  label?: boolean;
-  //
   quantity: number;
-  onChange?: (val: number) => void;
-  //
-  cartItemId?: string;
+  onChange: (val: number) => void;
 }) {
-  const {
-    addToCart,
-    updateCartItemQuantity,
-    deleteCartItem,
-    message,
-    isLoading,
-    isError,
-    cart,
-  } = useOrdersStore();
-
-  const [productItemQuantity, setProductItemQuantity] =
-    useState<number>(quantity);
-
-  useEffect(() => {
-    onChange ? onChange(productItemQuantity) : null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productItemQuantity]);
-
-  useEffect(() => {
-    setProductItemQuantity(quantity);
-  }, [quantity]);
-
-  useEffect(() => {
-    if (!isLoading && !isError && cart?.items?.length) {
-      /* toast.dismiss();
-      toast.success(message); */
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, message]);
+  const { updateCartItemQuantity, addToCart, deleteCartItem, isLoading } =
+    useOrdersStore();
 
   return (
-    <form
-      action={cartItemId ? updateCartItemQuantity : () => {}}
-      className={`flex flex-col gap-spaced-sm w-min ${textColorClassName(
-        color
-      )}`}
-    >
-      {cartItemId ? (
+    <div className="flex font-merchant text-light h-full spaced-y-md">
+      <button
+        disabled={isLoading}
+        className="w-14 disabled:opacity-50 disabled:pointer-events-none"
+        onClick={() => onChange(1)}
+      >
+        <i className="bi bi-caret-up-fill text-light"></i>
+      </button>
+      <form className="flex-1 text-center" action={updateCartItemQuantity}>
         <input
+          disabled={isLoading}
           type="text"
-          name="product-id"
-          id="product-id"
-          className="hidden"
-          value={cartItemId}
+          name="quantity"
+          value={`QTY: ${quantity}`}
+          className="w-24 bg-[transparent] text-center text-xl lg:text-2xl disabled:opacity-50 disabled:pointer-events-none"
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            const re = /^[0-9\b]+$/;
+
+            if (
+              e.target.value === "" ||
+              re.test(e.target.value) ||
+              Number(e.target.value) > 0
+            ) {
+              onChange(Number(e.target.value) - quantity);
+            }
+          }}
         />
-      ) : null}
-      <button type="submit" className="hidden"></button>
-      {label ? (
-        <label htmlFor="flavors" className="">
-          <Label>Quantity:</Label>
-        </label>
-      ) : null}
-      <div className="flex items-center gap-spaced-xs">
-        <div
-          className={`flex ${
-            border ? "border-2 rounded-md spaced-xs" : ""
-          }  ${borderColorClassName(color)}`}
-        >
-          <QuantityButton
-            disabled={quantity < 2}
-            color={color}
-            size={size}
-            onClick={
-              cartItemId
-                ? () => addToCart(cartItemId, -1)
-                : () => setProductItemQuantity!(productItemQuantity - 1)
-            }
-          >
-            -
-          </QuantityButton>
-          {/* <input
-            name="quantity"
-            className={`text-center bg-[transparent] ${
-              size ? `spaced-${size}` : "spaced-md"
-            } ${textColorClassName(color)} w-14`}
-            value={productItemQuantity}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setProductItemQuantity(Number(e.target.value))
-            }
-            type="text"
-            id="quantity"
-          /> */}
-          <input
-            name="quantity"
-            className={`text-center bg-[transparent] ${textColorClassName(
-              color
-            )} w-10`}
-            value={productItemQuantity}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setProductItemQuantity(Number(e.target.value))
-            }
-            type="text"
-            id="quantity"
-          />
-          <QuantityButton
-            color={color}
-            size={size}
-            onClick={
-              cartItemId
-                ? () => addToCart(cartItemId, 1)
-                : () => setProductItemQuantity!(productItemQuantity + 1)
-            }
-          >
-            +
-          </QuantityButton>
-        </div>
-        {deleteButton && cartItemId ? (
-          <button
-            type="button"
-            className={`transition-colors rounded-sm hover:bg-danger spaced-xs font-gopher ${buttonColorClassName(
-              color
-            )}`}
-            onClick={() => deleteCartItem(cartItemId)}
-          >
-            <i className={`bi bi-trash text-lg`}></i>
-          </button>
-        ) : null}
-      </div>
-    </form>
+        <button type="submit" className="hidden"></button>
+      </form>
+      <button
+        disabled={isLoading}
+        className="w-14 disabled:opacity-50 disabled:pointer-events-none"
+        onClick={() => (quantity > 1 ? onChange(-1) : null)}
+      >
+        <i
+          className={`bi bi-caret-down-fill text-light ${
+            quantity === 1 ? "text-danger" : ""
+          }`}
+        ></i>
+      </button>
+    </div>
   );
 }

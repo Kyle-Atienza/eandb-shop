@@ -1,107 +1,93 @@
-"use client";
+import React from "react";
 
-import { Label } from "@/components/common/label";
-import { Divider } from "@/components/decorations/divider";
-import { useState } from "react";
-import { ProductOption, ProductOptions } from "../options";
-import { ProductQuantity } from "../quantity";
-import { ProductRelatedItems } from "../related";
-import {
-  parseProductListItemId,
-  setInitalProductOptions,
-} from "@/utils/products";
-import { useOrdersStore } from "@/state/orders";
-import { useUserStore } from "@/state/user";
-import toast from "react-hot-toast";
-import { count } from "console";
-
-const getRelatedProducts = (
-  productList: ProductListingItem[],
-  product: ProductListingItem,
-  slug: string
-) => {
-  return productList.filter(
-    (listItem) =>
-      listItem.details._id === product.details._id &&
-      parseProductListItemId(listItem._id) !== slug
-  )!;
-};
-
-export function ProductDetails({
-  productList,
-  slug,
-  productItem,
-  product,
-}: {
-  productList: ProductListingItem[];
-  slug: string;
-  productItem: ProductItem;
-  product: ProductListingItem;
-}) {
-  const { addToCart } = useOrdersStore();
-  const { user } = useUserStore();
-
-  const [quantity, setQuantity] = useState<number>(1);
-
-  const relatedProducts: ProductListingItem[] = getRelatedProducts(
-    productList,
-    product,
-    slug
-  );
-
-  const [productOptions, setProductOptions] = useState<
-    ProductOptionSelectItem[]
-  >(setInitalProductOptions(product));
-
+function SummaryBadge({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <div className="flex flex-col gap-spaced">
-        <div className="flex flex-col gap-spaced">
-          <ProductOptions
-            productOptions={productOptions}
-            onSelect={(val) => setProductOptions(val)}
-          />
-          <div className={`flex items-end gap-space-md`}>
-            <ProductQuantity
-              quantity={quantity}
-              onChange={(val) => setQuantity(val)}
-              size="sm"
-            />
-            <button
-              className="w-full transition-colors rounded bg-light spaced-md text-dark hover:bg-primary font-gopher"
-              onClick={() => {
-                const item = productOptions[0]
-                  ? productOptions[0].options.find((option) => option.selected)
-                  : productItem;
+    <div className="rounded border-2 text-sm tracking border-tertiary w-fit spaced-x-sm spaced-y-xs font-gopher">
+      {children}
+    </div>
+  );
+}
 
-                if (item) {
-                  addToCart(item._id, quantity);
-                  setQuantity(1);
-                }
+function Unit({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="font-merchant text-xl leading-[0.5em]">{children}</span>
+  );
+}
 
-                /* if (user) {
-                  addToCart(
-                    productOptions[0]
-                      ? productOptions[0].options.find(
-                          (option) => option.selected
-                        )?._id ?? ""
-                      : productItem._id,
-                    quantity
-                  );
-                  setQuantity(1);
-                } else {
-                  toast.error(
-                    "Please login first to start adding items to your cart"
-                  );
-                } */
-              }}
-            >
-              Add to Cart
-            </button>
-          </div>
-          <ProductRelatedItems items={relatedProducts} />
-        </div>
-      </div>
-    </>
+function Details({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <details className=" spaced-y-md border-b-2 border-tertiary no-marker">
+      <summary className="text-tertiary font-merchant text-xl uppercase tracking-widest flex justify-between">
+        {label}
+        <i className="bi bi-plus-lg"></i>
+      </summary>
+      <div className="spaced-t-sm flex flex-wrap gap-spaced-xs">{children}</div>
+    </details>
+  );
+}
+
+export function ProductDetails() {
+  return (
+    <div className="border-t-2 border-tertiary">
+      <Details label="Nutritional Facts">
+        <SummaryBadge>
+          Serving Size:
+          <Unit>{"  "}33g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Calories:
+          <Unit>{"  "}171g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Sat Fat:
+          <Unit>{"  "}4g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Trans Fat:
+          <Unit>{"  "}0g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Cholesterol:
+          <Unit>{"  "}0g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Sodium:
+          <Unit>{"  "}172mg</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Total Carbohydrate:
+          <Unit>{"  "}14g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Sugar:
+          <Unit>{"  "}0g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Protein:
+          <Unit>{"  "}5g</Unit>
+        </SummaryBadge>
+        <SummaryBadge>
+          Vit C:
+          <Unit>{"  "}5mg</Unit>
+        </SummaryBadge>
+      </Details>
+      <Details label="Ingredients">
+        <SummaryBadge>Oyster Mushroom</SummaryBadge>
+        <SummaryBadge>Cassava Flour</SummaryBadge>
+        <SummaryBadge>Coconut Oil</SummaryBadge>
+        <SummaryBadge>Salt</SummaryBadge>
+        <SummaryBadge>Pepper</SummaryBadge>
+        <SummaryBadge>Garlic Powder</SummaryBadge>
+      </Details>
+      <Details label="Allergens">
+        <SummaryBadge>No Allergens</SummaryBadge>
+      </Details>
+    </div>
   );
 }

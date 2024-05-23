@@ -61,6 +61,31 @@ export const customCursorAnimation = (
   const { target, x, y } = e;
   const onProductCard = (target as HTMLElement).closest(".product-card");
   const productCardRect = onProductCard?.getBoundingClientRect();
+  const onNavBrand = (target as HTMLElement).closest(".nav-brand");
+  const navBrandRect = onNavBrand?.getBoundingClientRect();
+
+  const hoveredCursorSize = () => {
+    let size = {
+      width: 20,
+      height: 20,
+    };
+
+    if (onProductCard) {
+      size = {
+        width: productCardRect?.width! + productCardRect?.width! * 0.15,
+        height: productCardRect?.height! + productCardRect?.height! * 0.15,
+      };
+    }
+
+    if (onNavBrand) {
+      size = {
+        width: navBrandRect?.width! + navBrandRect?.width! * 0.15,
+        height: navBrandRect?.width! + navBrandRect?.width! * 0.15,
+      };
+    }
+
+    return size;
+  };
 
   if (hoverCursorContainer.current) {
     gsap.to(hoverCursorContainer.current, {
@@ -76,7 +101,7 @@ export const customCursorAnimation = (
     });
   }
 
-  if (hoverCursor?.current) {
+  /* if (hoverCursor?.current) {
     gsap.to(hoverCursor.current, {
       width: onProductCard
         ? productCardRect?.width! + productCardRect?.width! * 0.15
@@ -84,6 +109,17 @@ export const customCursorAnimation = (
       height: onProductCard
         ? productCardRect?.height! + productCardRect?.height! * 0.15
         : 20,
+      xPercent: -50,
+      yPercent: -50,
+      scale: 1,
+      ease: "power4",
+    });
+  } */
+
+  if (hoverCursor?.current) {
+    gsap.to(hoverCursor.current, {
+      width: hoveredCursorSize().width,
+      height: hoveredCursorSize().height,
       xPercent: -50,
       yPercent: -50,
       scale: 1,

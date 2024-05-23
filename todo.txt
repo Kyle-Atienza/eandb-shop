@@ -1,7 +1,8 @@
-qa login and signup and cart items
-navbar
-    - home
-add overlay to bg
+redesign product page
+profile page
+    - hide delete address on add address
+    - fix ui
+add footer
 
 db
 [] add images
