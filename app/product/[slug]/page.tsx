@@ -8,6 +8,7 @@ import { ProductSelect } from "@/components/pages/product/select";
 import { HeaderOne, HeaderTwo } from "@/components/common/header";
 import { ProductDetails } from "@/components/pages/product/details";
 import { useProduct } from "@/hooks/useProduct";
+import { ProductRelatedItems } from "@/components/pages/product/related";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { product, productItem } = await useProduct(params.slug);
@@ -72,11 +73,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </div>
-      <div className="spaced border-t-2 border-light">
+      {/* <div className="spaced border-t-2 border-light">
         <Label className="whitespace-pre-line text-light">
           Related{"\n"}Products
         </Label>
-      </div>
+      </div> */}
+      {/* <ProductRelatedItems items={productItem} /> */}
     </>
   );
 }
