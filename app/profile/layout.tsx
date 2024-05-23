@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useUserStore();
 
   return (
-    <div className="mt-[50px]">
+    <div className="mt-[50px] spaced-x">
       <div className="flex justify-between items-center">
         <HeaderOne>Hi {user?.name}</HeaderOne>
         <SimpleButton

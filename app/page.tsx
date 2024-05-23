@@ -21,7 +21,7 @@ async function getProductList(group: string) {
 export default async function Home() {
   return (
     <>
-      <div className="spaced-t">
+      <div className="spaced-x">
         <div className="h-[65vh] grid place-content-center top-[100px] sticky">
           <HeaderOne className="text-center">
             <span className="md:hidden">
