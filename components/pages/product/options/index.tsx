@@ -14,14 +14,11 @@ export function ProductOption({
 }) {
   return (
     <>
-      {/* select component (no functionality) */}
+      {/* wtf is this */}
       <div className="flex flex-col gap-spaced-sm">
-        <label htmlFor={productOption.name} className="text-light">
-          <Label>{productOption.name}: </Label>
-        </label>
-        <div className="flex rounded-md spaced-sm bg-light">
+        <div className="flex spaced-sm">
           <select
-            className="w-full font-gopher focus:outline-0"
+            className="w-full font-merchant text-xl lg:text-2xl focus:outline-0 text-center uppercase text-light"
             name={productOption.name}
             id={productOption.name}
             value={value}

@@ -297,3 +297,7 @@ body {
     display: none;
   }
 }
+
+details.no-marker summary::-webkit-details-marker {
+  display: none !important;
+}

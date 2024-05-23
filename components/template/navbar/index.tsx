@@ -30,7 +30,7 @@ export function Navbar() {
           href="/"
           className="flex flex-col text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 nav-brand hover:text-primary transition-colors cursor-pointer"
         >
-          <div className="text-3xl font-gopher ">E&B</div>
+          <div className="text-3xl font-ranille text-dark ">E&B</div>
           <div className="font-gopher uppercase text-xs leading-[0.8em]">
             Farm
           </div>

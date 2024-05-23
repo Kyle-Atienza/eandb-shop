@@ -53,7 +53,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       </div>
       <main id="main" className="flex flex-col flex-1 opacity-0">
         <div
-          className={`grid relative flex-1 spaced-x transition-opacity duration-500 ${
+          className={`grid relative flex-1 transition-opacity duration-500 ${
             drawer ? "pointer-events-none opacity-30" : ""
           }`}
         >
