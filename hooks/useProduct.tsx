@@ -40,18 +40,6 @@ export async function useProduct(slug: string) {
     )!;
   };
 
-  /* const relatedItems = (
-    productList: ProductListingItem[],
-    product: ProductListingItem,
-    slug: string
-  ) => {
-    return productList.filter(
-      (listItem) =>
-        listItem.details._id === product.details._id &&
-        parseProductListItemId(listItem._id) !== slug
-    )!;
-  }; */
-
   const setInitalProductOptions = (
     product: ProductListingItem
   ): ProductOptionSelectItem[] => {
@@ -95,9 +83,27 @@ export async function useProduct(slug: string) {
       listItem.details._id === product.details._id &&
       parseProductListItemId(listItem._id) !== slug
   )!;
+  const otherItems = productList.filter((listItem) => {
+    return !relatedItems.some(
+      (item) => item.details._id === listItem.details._id
+    );
+  });
+  const recommendedItems = () => {
+    const randomElements = [];
+
+    for (let i = 0; i < 4; i++) {
+      const randomIndex = Math.floor(Math.random() * otherItems.length);
+
+      randomElements.push(otherItems.splice(randomIndex, 1)[0]);
+    }
+
+    return randomElements;
+  };
+
+  const suggestedItems = [...relatedItems, ...recommendedItems()].slice(0, 4);
 
   const { ingredients, allergens, nutritionalFacts, awards } = product.details;
   const productDetails = { ingredients, allergens, nutritionalFacts, awards };
 
-  return { product, productItem, relatedItems, productDetails };
+  return { product, productItem, relatedItems, productDetails, suggestedItems };
 }

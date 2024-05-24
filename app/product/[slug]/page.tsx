@@ -51,8 +51,9 @@ async function RightSection({ slug }: { slug: string }) {
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { product, productItem, relatedItems, productDetails } =
-    await useProduct(params.slug);
+  const { product, suggestedItems, productDetails } = await useProduct(
+    params.slug
+  );
 
   return (
     <>
@@ -98,7 +99,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           Related Products
         </Label>
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced">
-          <ProductRelatedItems items={relatedItems} />
+          {/* <ProductRelatedItems items={relatedItems} /> */}
+          <ProductRelatedItems items={suggestedItems} />
         </div>
       </div>
     </>
