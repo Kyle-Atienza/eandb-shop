@@ -3,12 +3,21 @@ declare global {
     _id: string;
     name: string;
     description?: string;
+    taglines?: string;
     gallery: string[];
     items: {
       name: string;
       options: ProductItem[];
     }[];
     group: string;
+    nutritionalFacts: {
+      content: string;
+      value: string;
+    }[];
+    ingredients: string[];
+    allergens: string[];
+    awards: string[];
+    netWeight: string;
   }
   interface ProductOption {
     _id: string;

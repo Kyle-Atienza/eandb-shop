@@ -32,61 +32,57 @@ function Details({
   );
 }
 
-export function ProductDetails() {
+export function ProductDetails({
+  details,
+}: {
+  details?: {
+    nutritionalFacts?: {
+      content: string;
+      value: string;
+    }[];
+    ingredients?: string[];
+    allergens?: string[];
+    awards?: string[];
+  };
+}) {
   return (
     <div className="border-t-2 border-tertiary">
-      <Details label="Nutritional Facts">
-        <SummaryBadge>
-          Serving Size:
-          <Unit>{"  "}33g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Calories:
-          <Unit>{"  "}171g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Sat Fat:
-          <Unit>{"  "}4g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Trans Fat:
-          <Unit>{"  "}0g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Cholesterol:
-          <Unit>{"  "}0g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Sodium:
-          <Unit>{"  "}172mg</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Total Carbohydrate:
-          <Unit>{"  "}14g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Sugar:
-          <Unit>{"  "}0g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Protein:
-          <Unit>{"  "}5g</Unit>
-        </SummaryBadge>
-        <SummaryBadge>
-          Vit C:
-          <Unit>{"  "}5mg</Unit>
-        </SummaryBadge>
-      </Details>
+      {details?.nutritionalFacts?.length ? (
+        <Details label="Ingredients">
+          {details?.nutritionalFacts.map((fact, index) => {
+            return (
+              <SummaryBadge key={index}>
+                {fact.content}:
+                <Unit>
+                  {"  "}
+                  {fact.value}
+                </Unit>
+              </SummaryBadge>
+            );
+          })}
+        </Details>
+      ) : null}
       <Details label="Ingredients">
-        <SummaryBadge>Oyster Mushroom</SummaryBadge>
-        <SummaryBadge>Cassava Flour</SummaryBadge>
-        <SummaryBadge>Coconut Oil</SummaryBadge>
-        <SummaryBadge>Salt</SummaryBadge>
-        <SummaryBadge>Pepper</SummaryBadge>
-        <SummaryBadge>Garlic Powder</SummaryBadge>
+        {details?.ingredients?.length ? (
+          <>
+            {details?.ingredients?.map((ingredient, index) => {
+              return <SummaryBadge key={index}>{ingredient}</SummaryBadge>;
+            })}
+          </>
+        ) : (
+          <SummaryBadge>No Ingredients Data</SummaryBadge>
+        )}
       </Details>
       <Details label="Allergens">
-        <SummaryBadge>No Allergens</SummaryBadge>
+        {details?.allergens?.length ? (
+          <>
+            {details?.allergens?.map((allergen, index) => {
+              return <SummaryBadge key={index}>{allergen}</SummaryBadge>;
+            })}
+          </>
+        ) : (
+          <SummaryBadge>No Allergens</SummaryBadge>
+        )}
       </Details>
     </div>
   );

@@ -14,34 +14,33 @@ async function RightSection({ slug }: { slug: string }) {
   const { product, productItem } = await useProduct(slug);
 
   return (
-    <div className="spaced lg:sticky top-0">
-      <div className="h-fit lg:h-screen  flex flex-col justify-center">
-        <div className="flex flex-col sm:flex-row justify-between spaced-b sm:spaced-none">
-          <div className="w-3/5 spaced-b">
+    <div className="spaced lg:sticky top-[100px]">
+      <div className="h-fit lg:h-screen flex flex-col">
+        <div className="flex flex-col sm:flex-row justify-between spaced-b sm:spaced-none gap-spaced-sm">
+          <div className="w-3/5 flex flex-col gap-spaced-md lg:spaced-b">
             <HeaderOne className="">{product?.name}</HeaderOne>
           </div>
-          <div className=" font-merchant flex items-start">
-            <div className="bg-light spaced-x-sm rounded-sm">
+          <div className=" flex lg:flex-col gap-spaced-sm items-stretch lg:items-end">
+            <div className="bg-light spaced-x-sm rounded-sm font-merchant flex items-center">
               <Label className="!text-3xl">
                 P{productItem?.amount.toFixed(2)}
               </Label>
             </div>
+            <div className="border-2 border-light spaced-x-sm rounded-sm font-merchant ">
+              <Label className="!text-3xl text-light normal-case">
+                {product.details.netWeight}
+              </Label>
+            </div>
           </div>
         </div>
-        <div className="spaced-y border-t-2 border-light text-light font-gopher *:mb-3">
-          <p>
-            {" "}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.{" "}
-          </p>
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </p>
+        <div className="spaced-y border-t-2 border-light text-light text-lg lg:text-2xl 2xl:text-3xl  font-gopher *:mb-3">
+          {product.details.description ? (
+            <>
+              {product.details.description.split("\n").map((detail, index) => {
+                return <p key={index}>{detail}</p>;
+              })}
+            </>
+          ) : null}
         </div>
         <div className="border-t-2 border-light">
           <ProductSelect productItem={productItem} product={product} />
@@ -52,7 +51,8 @@ async function RightSection({ slug }: { slug: string }) {
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { product, productItem, relatedItems } = await useProduct(params.slug);
+  const { product, productItem, relatedItems, productDetails } =
+    await useProduct(params.slug);
 
   return (
     <>
@@ -75,19 +75,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
           <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
             <div className="container flex flex-col items-center gap-spaced">
-              <HeaderOne className=" text-tertiary">
-                Guilt free goodness in every crunch!
-              </HeaderOne>
+              {product.details.taglines ? (
+                <HeaderOne className=" text-tertiary">
+                  {product.details.taglines}
+                </HeaderOne>
+              ) : null}
               <div className="text-2xl text-dark font-merchant w-1/2 leading-[0.9em]">
                 Most Innovative Product of MIMAROPA 2016
               </div>
             </div>
           </div>
           <div className="spaced-x bg-light relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex flex-col justify-center">
-            <ProductDetails />
+            <ProductDetails details={productDetails} />
           </div>
         </div>
-        <div className="hidden lg:block mt-[30vh]">
+        <div className="hidden lg:block mt-[40vh]">
           <RightSection slug={params.slug} />
         </div>
       </div>
@@ -95,7 +97,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <Label className="whitespace-pre-line text-light">
           Related Products
         </Label>
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced ]">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced">
           <ProductRelatedItems items={relatedItems} />
         </div>
       </div>

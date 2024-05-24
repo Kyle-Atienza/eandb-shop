@@ -96,5 +96,8 @@ export async function useProduct(slug: string) {
       parseProductListItemId(listItem._id) !== slug
   )!;
 
-  return { product, productItem, relatedItems };
+  const { ingredients, allergens, nutritionalFacts, awards } = product.details;
+  const productDetails = { ingredients, allergens, nutritionalFacts, awards };
+
+  return { product, productItem, relatedItems, productDetails };
 }
