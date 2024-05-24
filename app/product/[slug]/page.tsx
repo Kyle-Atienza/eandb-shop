@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 mt-[-40px]">
-        <div className=" spaced-b bg-light ">
+        <div className=" bg-light ">
           <div className="lg:relative h-[calc(100vh-70px)] sticky top-0">
             {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 border-2 border-primary"></div> */}
             <Image
@@ -96,14 +96,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <RightSection slug={params.slug} />
         </div>
       </div>
-      <div className="spaced flex flex-col gap-spaced border-t-2 border-light mb-24">
+      {/* <div className="spaced flex flex-col gap-spaced border-t-2 border-light mb-24">
         <Label className="whitespace-pre-line text-light">
           Related Products
         </Label>
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced">
-          <ProductRelatedItems items={suggestedItems} />
         </div>
-      </div>
+      </div> */}
+      <ProductRelatedItems items={suggestedItems} />
     </>
   );
 }
