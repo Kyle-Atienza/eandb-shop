@@ -18,6 +18,10 @@ const sliceArrayEveryN = (arr: any[], n: number, startIndex: number) => {
   return result;
 };
 
+function Spacer() {
+  return <div className="aspect-[2/3] bg-secondary "></div>;
+}
+
 export function ProductsGrid({
   productList,
 }: {
@@ -49,9 +53,10 @@ export function ProductsGrid({
       ease: "none",
       scrollTrigger: {
         trigger: column,
-        start: "top 70%",
+        start: "top bottom",
         end: "bottom bottom",
         scrub: 0.8,
+        // markers: true,
       },
     });
   };
@@ -63,7 +68,7 @@ export function ProductsGrid({
       animateColumn(".col-3", -5);
       animateColumn(".col-4", 10);
     },
-    { scope: container, dependencies: [slice] }
+    { scope: container, dependencies: [productList] }
   );
 
   const renderProducts = (startIndex: number) => {
@@ -75,18 +80,34 @@ export function ProductsGrid({
   };
 
   return (
-    <div className="flex gap-spaced" ref={container}>
+    <div className="flex gap-spaced relative" ref={container}>
       <div className="flex flex-col flex-1 col col-1 gap-spaced h-min">
         {slice ? renderProducts(1) : null}
+        {/* <Spacer />
+        <Spacer />
+        <Spacer />
+        <Spacer /> */}
       </div>
       <div className="flex flex-col flex-1 col col-2 gap-spaced h-min">
         {slice ? renderProducts(2) : null}
+        {/* <Spacer />
+        <Spacer />
+        <Spacer />
+        <Spacer /> */}
       </div>
       <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min">
         {slice ? renderProducts(3) : null}
+        {/* <Spacer />
+        <Spacer />
+        <Spacer />
+        <Spacer /> */}
       </div>
       <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min">
         {slice ? renderProducts(4) : null}
+        {/* <Spacer />
+        <Spacer />
+        <Spacer />
+        <Spacer /> */}
       </div>
     </div>
   );

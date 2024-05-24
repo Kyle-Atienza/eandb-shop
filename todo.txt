@@ -1,4 +1,3 @@
-add spaced-x
 update backend for additional data in products page
 profile page
     - hide delete address on add address

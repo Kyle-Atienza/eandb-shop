@@ -45,7 +45,7 @@ export function Catalog() {
       <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
         <Select
           className="w-[100px] md:w-[200px]"
-          innerClassName="!bg-light"
+          innerClassName="!bg-secondary border-light border-2"
           options={productFilters}
           value={filter}
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
@@ -53,7 +53,7 @@ export function Catalog() {
           }}
         />
       </div>
-      <div className="spaced-t-sm">
+      <div className="spaced-t">
         <ProductsGrid productList={productList} />
       </div>
     </div>

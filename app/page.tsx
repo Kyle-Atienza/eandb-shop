@@ -21,29 +21,33 @@ async function getProductList(group: string) {
 export default async function Home() {
   return (
     <>
-      <div className="spaced-x">
-        <div className="h-[65vh] grid place-content-center top-[100px] sticky">
-          <HeaderOne className="text-center">
-            <span className="md:hidden">
-              Discover
-              {"\n"}a world
-              {"\n"}
-              of organic and
-              {"\n"}
-              local goodness!
-              {"\n"}
-              <ScrollDown />
-            </span>
-            <span className="hidden md:block">
-              Discover a world{"\n"}
-              of organic and local
-              {"\n"}
-              goodness!
-              <ScrollDown />
-            </span>
-          </HeaderOne>
+      <div className="mt-[-40px]">
+        <div className="bg-light h-[100vh] flex justify-center">
+          <div className=" flex items-center justify-center h-[65vh] mt-[100px]">
+            <HeaderOne className="text-center *:whitespace-pre-line !text-dark">
+              <span className="md:hidden">
+                Discover
+                {"\n"}a world
+                {"\n"}
+                of organic and
+                {"\n"}
+                local goodness!
+                {"\n"}
+                <ScrollDown />
+              </span>
+              <span className="hidden md:block">
+                Discover a world{"\n"}
+                of organic and local
+                {"\n"}
+                goodness!
+                <ScrollDown />
+              </span>
+            </HeaderOne>
+          </div>
         </div>
-        <Catalog />
+        <div className="spaced-x spaced-t mt-[-35vh]">
+          <Catalog />
+        </div>
       </div>
     </>
   );

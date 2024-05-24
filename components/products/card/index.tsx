@@ -86,7 +86,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
 
   return (
     <div
-      className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group
+      className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group border-2 border-tertiary
       
       `}
       onClick={() => router.push(`/product/${product._id}`)}
