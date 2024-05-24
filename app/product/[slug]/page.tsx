@@ -42,7 +42,7 @@ async function RightSection({ slug }: { slug: string }) {
             </>
           ) : null}
         </div>
-        <div className="border-t-2 border-light">
+        <div className="">
           <ProductSelect productItem={productItem} product={product} />
         </div>
       </div>
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 mt-[-40px]">
         <div className=" spaced-b bg-light ">
           <div className="lg:relative h-[calc(100vh-70px)] sticky top-0">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 border-2 border-primary"></div>
+            {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 border-2 border-primary"></div> */}
             <Image
               src={productImage}
               fill
@@ -82,7 +82,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </HeaderOne>
               ) : null}
               <div className="text-2xl text-dark font-merchant w-1/2 leading-[0.9em]">
-                Most Innovative Product of MIMAROPA 2016
+                {product.details.awards?.map((award, index) => {
+                  return <p key={index}>{award}</p>;
+                })}
               </div>
             </div>
           </div>
@@ -99,7 +101,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
           Related Products
         </Label>
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced">
-          {/* <ProductRelatedItems items={relatedItems} /> */}
           <ProductRelatedItems items={suggestedItems} />
         </div>
       </div>

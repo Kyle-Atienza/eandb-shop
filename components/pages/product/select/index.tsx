@@ -26,14 +26,14 @@ export function ProductSelect({
     <>
       <div className="flex flex-col sm:flex-row *:flex-1 items-stretch">
         {productOptions.length ? (
-          <div className="flex items-center *:w-full sm:border-r-2 border-light spaced-y-sm">
+          <div className="flex items-center *:w-full sm:border-r-2 spaced-y-sm border-t-2 border-light">
             <ProductOptions
               productOptions={productOptions}
               onSelect={(val) => setProductOptions(val)}
             />
           </div>
         ) : null}
-        <div className="flex items-center *:w-full border-t-2 sm:border-t-0 border-light sm:border-none">
+        <div className="flex items-center *:w-full border-t-2 border-light ">
           <ProductQuantity
             quantity={quantity}
             onChange={(val) => setQuantity(quantity + val)}
