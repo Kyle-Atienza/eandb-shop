@@ -8,7 +8,8 @@ import { ProductSelect } from "@/components/pages/product/select";
 import { HeaderOne, HeaderTwo } from "@/components/common/header";
 import { ProductDetails } from "@/components/pages/product/details";
 import { useProduct } from "@/hooks/useProduct";
-import { ProductRelatedItems } from "@/components/pages/product/related";
+import { ProductSuggestedItems } from "@/components/pages/product/related";
+import { BackButton } from "@/components/pages/product/back";
 
 async function RightSection({ slug }: { slug: string }) {
   const { product, productItem } = await useProduct(slug);
@@ -56,11 +57,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
   );
 
   return (
-    <>
+    <div className="relative">
+      <div className="sticky top-[100px] z-20">
+        <BackButton />
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 mt-[-40px]">
         <div className=" bg-light ">
           <div className="lg:relative h-[calc(100vh-70px)] sticky top-0">
-            {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 border-2 border-primary"></div> */}
             <Image
               src={productImage}
               fill
@@ -96,14 +99,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <RightSection slug={params.slug} />
         </div>
       </div>
-      {/* <div className="spaced flex flex-col gap-spaced border-t-2 border-light mb-24">
-        <Label className="whitespace-pre-line text-light">
-          Related Products
-        </Label>
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced">
-        </div>
-      </div> */}
-      <ProductRelatedItems items={suggestedItems} />
-    </>
+      <ProductSuggestedItems items={suggestedItems} />
+    </div>
   );
 }
