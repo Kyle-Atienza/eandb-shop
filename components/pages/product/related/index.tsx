@@ -155,16 +155,16 @@ export function ProductRelatedItems({
               <ProductCard product={items[3]} />
             </div>
           </div> */}
-          <div>
+          <div className="*:!h-full">
             <ProductCard product={items[0]} />
           </div>
-          <div>
+          <div className="*:!h-full">
             <ProductCard product={items[1]} />
           </div>
-          <div>
+          <div className="*:!h-full">
             <ProductCard product={items[2]} />
           </div>
-          <div>
+          <div className="*:!h-full">
             <ProductCard product={items[3]} />
           </div>
         </div>
