@@ -51,7 +51,6 @@ export function ProductsGrid({
     gsap.to(column, {
       yPercent: yOffset,
       ease: "none",
-      reversed: true,
       scrollTrigger: {
         trigger: column,
         start: "top bottom",

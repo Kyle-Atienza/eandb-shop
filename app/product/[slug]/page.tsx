@@ -1,4 +1,4 @@
-import productImage from "@/public/product-detail-temp.webp";
+import productImage from "@/public/sample-product-image.png";
 import nutrifacts from "@/public/nutrition-facts-label-download-image1 1.png";
 
 import Image from "next/image";
