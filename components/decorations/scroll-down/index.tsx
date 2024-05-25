@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { useRef } from "react";
 gsap.registerPlugin(useGSAP);
 
-export function ScrollDown() {
+export function InlineScrollDown() {
   const container = useRef(null);
 
   useGSAP(
@@ -28,6 +28,34 @@ export function ScrollDown() {
           <i className="arrow-down text-[0.6em] text-light bi bi-arrow-down"></i>
           <i className="arrow-down text-[0.6em] text-light bi bi-arrow-down"></i>
           <i className="arrow-down text-[0.6em] text-light bi bi-arrow-down"></i>
+        </div>
+      </div>
+    </span>
+  );
+}
+
+export function ScrollDown() {
+  const container = useRef(null);
+
+  useGSAP(
+    () => {
+      gsap.to(".arrow-down", {
+        yPercent: 100,
+        repeat: -1,
+        duration: 1.2,
+        ease: "none",
+      });
+    },
+    { scope: container }
+  );
+
+  return (
+    <span ref={container} className="relative group">
+      <div className="w-[70px] overflow-hidden transition-colors -translate-x-1/2 -translate-y-1/2 rounded-full bg-dark group-hover:bg-primary aspect-square left-1/2">
+        <div className="absolute flex flex-col items-center justify-center w-full h-full *:text-light *:text-4xl spaced-b-sm">
+          <i className="arrow-down bi bi-arrow-down"></i>
+          <i className="arrow-down bi bi-arrow-down"></i>
+          <i className="arrow-down bi bi-arrow-down"></i>
         </div>
       </div>
     </span>

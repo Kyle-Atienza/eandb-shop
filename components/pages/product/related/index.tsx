@@ -31,7 +31,6 @@ export function ProductSuggestedItems({
       ease: "power3.inOut",
       scrollTrigger: {
         trigger: ".recommended",
-        markers: true,
         start: "top 80%",
       },
     });
