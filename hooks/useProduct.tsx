@@ -1,4 +1,5 @@
 import { parseProductListItemId } from "@/utils/products";
+import { revalidatePath } from "next/cache";
 
 interface Props {
   listingItem: ProductListingItem;
@@ -30,6 +31,7 @@ export async function useProduct(slug: string) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/products/list`
     );
+    revalidatePath(`${process.env.NEXT_PUBLIC_BASE_URL}/products/list`);
     return await res.json();
   };
 
