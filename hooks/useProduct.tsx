@@ -84,8 +84,9 @@ export async function useProduct(slug: string) {
       parseProductListItemId(listItem._id) !== slug
   )!;
   const otherItems = productList.filter((listItem) => {
-    return !relatedItems.some(
-      (item) => item.details._id === listItem.details._id
+    return (
+      !relatedItems.some((item) => item.details._id === listItem.details._id) &&
+      listItem._id !== product._id
     );
   });
   const recommendedItems = () => {

@@ -135,7 +135,7 @@ export function ProductRelatedItems({
           </div>
         </div>
         <div className="recommended spaced grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced">
-          <div className="card-1">
+          {/* <div className="card-1">
             <div className="rotate-3 translate-y-12">
               <ProductCard product={items[0]} />
             </div>
@@ -154,8 +154,8 @@ export function ProductRelatedItems({
             <div className="rotate-3 translate-y-20">
               <ProductCard product={items[3]} />
             </div>
-          </div>
-          {/* <div>
+          </div> */}
+          <div>
             <ProductCard product={items[0]} />
           </div>
           <div>
@@ -166,7 +166,7 @@ export function ProductRelatedItems({
           </div>
           <div>
             <ProductCard product={items[3]} />
-          </div> */}
+          </div>
         </div>
       </div>
     </>
