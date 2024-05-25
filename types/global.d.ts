@@ -30,6 +30,7 @@ declare global {
     amount: number;
     details: Product;
     attributes: ProductOption[];
+    attribute: ProductOption;
     netWeight: string;
   }
   interface ProductListingItem {
@@ -39,7 +40,12 @@ declare global {
     details: Product;
   }
 
-  interface ProductOptionSelect extends ProductOption {
+  /* interface ProductOptionSelect extends ProductOption { //before
+    selected: boolean;
+  } */
+
+  interface ProductOptionSelect extends ProductItem {
+    //current
     selected: boolean;
   }
 

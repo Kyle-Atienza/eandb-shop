@@ -37,51 +37,8 @@ export async function useProduct(slug: string) {
     return await res.json();
   };
 
-  const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
-    return productOptions?.map(
-      (option) =>
-        option.options.find((selectedOption) => selectedOption.selected)?.value!
-    )!;
-  };
-
-  const setInitalProductOptions = (
-    product: ProductListingItem
-  ): ProductOptionSelectItem[] => {
-    return product?.options.reduce(
-      (options: ProductOptionSelectItem[], option, index) => {
-        option.attributes.forEach((optionListItem) => {
-          const { type } = optionListItem;
-          const optionValue = {
-            ...optionListItem,
-            _id: option._id,
-            selected: !index,
-          };
-          const existingOption = options.find(
-            (opt: ProductOptionSelectItem) => opt.name === type
-          );
-
-          if (!existingOption) {
-            options.push({
-              name: type,
-              options: [optionValue],
-            });
-          } else {
-            existingOption.options.push(optionValue);
-          }
-        });
-
-        return options;
-      },
-      []
-    );
-  };
-
   const productList: ProductListingItem[] = await getProductList();
   const product: ProductListingItem = getProduct(productList, slug);
-  const selectedOptions: string[] = getSelectedOptions(
-    setInitalProductOptions(product)!
-  );
-  const productItem: ProductItem = getProductItem(product, selectedOptions)!;
   const relatedItems = productList.filter(
     (listItem) =>
       listItem.details._id === product.details._id &&
@@ -110,6 +67,14 @@ export async function useProduct(slug: string) {
 
     return randomElements;
   };
+  const productOptions: ProductOptionSelect[] = product.options.map(
+    (option) => ({
+      ...option,
+      selected: false,
+    })
+  );
+
+  console.log("debugs", productOptions);
 
   const suggestedItems = [
     ...relatedItems,
@@ -117,10 +82,14 @@ export async function useProduct(slug: string) {
     ...recommendedItems(),
   ].slice(0, 4);
 
-  console.log(productItem._id);
-
   const { ingredients, allergens, nutritionalFacts, awards } = product.details;
   const productDetails = { ingredients, allergens, nutritionalFacts, awards };
 
-  return { product, productItem, relatedItems, productDetails, suggestedItems };
+  return {
+    product,
+    relatedItems,
+    productDetails,
+    suggestedItems,
+    productOptions,
+  };
 }

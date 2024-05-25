@@ -11,49 +11,10 @@ import { useProduct } from "@/hooks/useProduct";
 import { ProductSuggestedItems } from "@/components/pages/product/related";
 import { BackButton } from "@/components/pages/product/back";
 
-async function RightSection({ slug }: { slug: string }) {
-  const { product, productItem } = await useProduct(slug);
-
-  return (
-    <div className="spaced lg:sticky top-[100px]">
-      <div className="h-fit lg:h-screen flex flex-col">
-        <div className="flex flex-col sm:flex-row justify-between spaced-b sm:spaced-none gap-spaced-sm">
-          <div className="w-3/5 flex flex-col gap-spaced-md lg:spaced-b">
-            <HeaderOne className="">{product?.name}</HeaderOne>
-          </div>
-          <div className=" flex lg:flex-col gap-spaced-sm items-stretch lg:items-end">
-            <div className="bg-light spaced-x-sm rounded-sm font-merchant flex items-center">
-              <Label className="!text-3xl">
-                P{productItem?.amount.toFixed(2)}
-              </Label>
-            </div>
-            <div className="border-2 border-light spaced-x-sm rounded-sm font-merchant ">
-              <Label className="!text-3xl text-light normal-case">
-                {productItem.netWeight}
-              </Label>
-            </div>
-          </div>
-        </div>
-        <div className="spaced-y border-t-2 border-light text-light text-lg lg:text-2xl 2xl:text-3xl  font-gopher *:mb-3">
-          {product.details.description ? (
-            <>
-              {product.details.description.split("\n").map((detail, index) => {
-                return <p key={index}>{detail}</p>;
-              })}
-            </>
-          ) : null}
-        </div>
-        <div className="">
-          <ProductSelect productItem={productItem} product={product} />z
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { product, suggestedItems, productDetails, productItem } =
-    await useProduct(params.slug);
+  const { product, suggestedItems, productDetails } = await useProduct(
+    params.slug
+  );
 
   return (
     <div className="relative">
@@ -73,8 +34,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
           <div className="z-10 relative spaced-x lg:hidden">
             <div className="bg-tertiary container mx-auto">
-              {/* <RightSection slug={params.slug} /> */}
-              <ProductSelect productItem={productItem} product={product} />
+              <ProductSelect product={product} />
             </div>
           </div>
           <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
@@ -96,8 +56,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
         <div className="hidden lg:block mt-[40vh]">
-          {/* <RightSection slug={params.slug} /> */}
-          <ProductSelect productItem={productItem} product={product} />
+          <ProductSelect product={product} />
         </div>
       </div>
       <ProductSuggestedItems items={suggestedItems} />

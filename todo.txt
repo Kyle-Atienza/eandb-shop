@@ -1,4 +1,7 @@
-back button on product page
+currently doing:
+for some reason poductitem name is not showing on cart
+
+
 profile page
     - hide delete address on add address
     - fix ui

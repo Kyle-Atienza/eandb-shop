@@ -1,33 +1,23 @@
 "use client";
 
 import { Label } from "@/components/common/label";
-import { useState } from "react";
-import { ProductOptions } from "../options";
+import { ChangeEvent, useState } from "react";
 import { ProductQuantity } from "../quantity";
-import { setInitalProductOptions } from "@/utils/products";
 import { useOrdersStore } from "@/state/orders";
 import { HeaderOne } from "@/components/common/header";
-import { useProduct } from "@/hooks/useProduct";
-import { useProductsStore } from "@/state/products";
 
-export function ProductSelect({
-  productItem,
-  product,
-}: {
-  productItem: ProductItem;
-  product: ProductListingItem;
-}) {
+export function ProductSelect({ product }: { product: ProductListingItem }) {
   const { addToCart } = useOrdersStore();
   // const {} = useProduct('')
 
   const [quantity, setQuantity] = useState<number>(1);
-
-  const [productOptions, setProductOptions] = useState<
-    ProductOptionSelectItem[]
-  >(setInitalProductOptions(product));
-  const selectedItem = productOptions[0]
-    ? productOptions[0].options.find((option) => option.selected)
-    : productItem;
+  const [productOptions, setProductOptions] = useState<ProductOptionSelect[]>(
+    product.options.map((option, index) => ({
+      ...option,
+      selected: index === 0 ? true : false,
+    }))
+  );
+  const selectedItem = productOptions.find((option) => option.selected);
 
   return (
     <>
@@ -40,12 +30,12 @@ export function ProductSelect({
             <div className=" flex lg:flex-col gap-spaced-sm items-stretch lg:items-end">
               <div className="bg-light spaced-x-sm rounded-sm font-merchant flex items-center">
                 <Label className="!text-3xl">
-                  P{productItem?.amount.toFixed(2)}
+                  P{selectedItem?.amount.toFixed(2)}
                 </Label>
               </div>
               <div className="border-2 border-light spaced-x-sm rounded-sm font-merchant ">
                 <Label className="!text-3xl text-light normal-case">
-                  {/* {selectedItem.} */}t
+                  {selectedItem?.netWeight}
                 </Label>
               </div>
             </div>
@@ -63,12 +53,30 @@ export function ProductSelect({
           </div>
           <div className="">
             <div className="flex flex-col sm:flex-row *:flex-1 items-stretch">
-              {productOptions.length ? (
+              {productOptions.length > 1 ? (
                 <div className="flex items-center *:w-full sm:border-r-2 spaced-y-sm border-t-2 border-light">
-                  <ProductOptions
-                    productOptions={productOptions}
-                    onSelect={(val) => setProductOptions(val)}
-                  />
+                  <select
+                    name=""
+                    id=""
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                      console.log(e.target.value);
+                      setProductOptions((prevState) =>
+                        prevState.map((option) => ({
+                          ...option,
+                          selected:
+                            e.target.value === option._id ? true : false,
+                        }))
+                      );
+                    }}
+                  >
+                    {productOptions.map((option, index) => {
+                      return (
+                        <option value={option._id} key={index}>
+                          {option.attribute.value}
+                        </option>
+                      );
+                    })}
+                  </select>
                 </div>
               ) : null}
               <div className="flex items-center *:w-full border-t-2 border-light ">
@@ -95,56 +103,3 @@ export function ProductSelect({
     </>
   );
 }
-
-/* export function ProductSelect({
-  productItem,
-  product,
-}: {
-  productItem: ProductItem;
-  product: ProductListingItem;
-}) {
-  const { addToCart } = useOrdersStore();
-
-  const [quantity, setQuantity] = useState<number>(1);
-
-  const [productOptions, setProductOptions] = useState<
-    ProductOptionSelectItem[]
-  >(setInitalProductOptions(product));
-  const selectedItem = productOptions[0]
-    ? productOptions[0].options.find((option) => option.selected)
-    : productItem;
-
-  console.log();
-
-  return (
-    <>
-      <div className="flex flex-col sm:flex-row *:flex-1 items-stretch">
-        {productOptions.length ? (
-          <div className="flex items-center *:w-full sm:border-r-2 spaced-y-sm border-t-2 border-light">
-            <ProductOptions
-              productOptions={productOptions}
-              onSelect={(val) => setProductOptions(val)}
-            />
-          </div>
-        ) : null}
-        <div className="flex items-center *:w-full border-t-2 border-light ">
-          <ProductQuantity
-            quantity={quantity}
-            onChange={(val) => setQuantity(quantity + val)}
-          />
-        </div>
-      </div>
-      <button
-        className="border-2 border-light spaced text-center hover:bg-primary transition-colors text-light w-full"
-        onClick={() => {
-          if (selectedItem) {
-            addToCart(selectedItem._id, quantity);
-            setQuantity(1);
-          }
-        }}
-      >
-        <Label> Add to Cart</Label>
-      </button>
-    </>
-  );
-} */
