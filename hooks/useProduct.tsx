@@ -29,7 +29,8 @@ export async function useProduct(slug: string) {
 
   const getProductList = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/products/list`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/products/list`,
+      { next: { revalidate: 10 } }
     );
     revalidatePath(`${process.env.NEXT_PUBLIC_BASE_URL}/products/list`);
     return await res.json();
