@@ -134,27 +134,7 @@ export function ProductRelatedItems({
             </div>
           </div>
         </div>
-        <div className="recommended spaced grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-spaced">
-          {/* <div className="card-1">
-            <div className="rotate-3 translate-y-12">
-              <ProductCard product={items[0]} />
-            </div>
-          </div>
-          <div className="card-2">
-            <div className="-rotate-2 translate-y-32">
-              <ProductCard product={items[1]} />
-            </div>
-          </div>
-          <div className="card-3">
-            <div className="rotate-6">
-              <ProductCard product={items[2]} />
-            </div>
-          </div>
-          <div className="card-4">
-            <div className="rotate-3 translate-y-20">
-              <ProductCard product={items[3]} />
-            </div>
-          </div> */}
+        <div className="recommended spaced grid grid-cols-2 lg:grid-cols-4 gap-spaced">
           <div className="*:!h-full">
             <ProductCard product={items[0]} />
           </div>

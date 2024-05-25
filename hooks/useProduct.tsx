@@ -82,11 +82,17 @@ export async function useProduct(slug: string) {
     (listItem) =>
       listItem.details._id === product.details._id &&
       parseProductListItemId(listItem._id) !== slug
+  );
+  const categoryItems = productList.filter(
+    (listItem) =>
+      listItem.details.group === product.details.group &&
+      listItem.details._id !== product.details._id
   )!;
   const otherItems = productList.filter((listItem) => {
     return (
-      !relatedItems.some((item) => item.details._id === listItem.details._id) &&
-      listItem._id !== product._id
+      ![...relatedItems, ...categoryItems].some(
+        (item) => item.details._id === listItem.details._id
+      ) && listItem.details._id !== product.details._id
     );
   });
   const recommendedItems = () => {
@@ -101,7 +107,11 @@ export async function useProduct(slug: string) {
     return randomElements;
   };
 
-  const suggestedItems = [...relatedItems, ...recommendedItems()].slice(0, 4);
+  const suggestedItems = [
+    ...relatedItems,
+    ...categoryItems,
+    ...recommendedItems(),
+  ].slice(0, 4);
 
   const { ingredients, allergens, nutritionalFacts, awards } = product.details;
   const productDetails = { ingredients, allergens, nutritionalFacts, awards };
