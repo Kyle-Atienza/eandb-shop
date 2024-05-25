@@ -48,7 +48,7 @@ export function ProductDetails({
   return (
     <div className="border-t-2 border-tertiary">
       {details?.nutritionalFacts?.length ? (
-        <Details label="Ingredients">
+        <Details label="Nutritional Facts">
           {details?.nutritionalFacts.map((fact, index) => {
             return (
               <SummaryBadge key={index}>
