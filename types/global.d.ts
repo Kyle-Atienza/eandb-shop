@@ -30,6 +30,7 @@ declare global {
     amount: number;
     details: Product;
     attributes: ProductOption[];
+    netWeight: string;
   }
   interface ProductListingItem {
     _id: string;

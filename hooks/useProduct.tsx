@@ -1,3 +1,4 @@
+import { useProductsStore } from "@/state/products";
 import { parseProductListItemId } from "@/utils/products";
 import { revalidatePath } from "next/cache";
 
@@ -115,6 +116,8 @@ export async function useProduct(slug: string) {
     ...categoryItems,
     ...recommendedItems(),
   ].slice(0, 4);
+
+  console.log(productItem._id);
 
   const { ingredients, allergens, nutritionalFacts, awards } = product.details;
   const productDetails = { ingredients, allergens, nutritionalFacts, awards };

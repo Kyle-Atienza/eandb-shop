@@ -29,7 +29,7 @@ async function RightSection({ slug }: { slug: string }) {
             </div>
             <div className="border-2 border-light spaced-x-sm rounded-sm font-merchant ">
               <Label className="!text-3xl text-light normal-case">
-                {product.details.netWeight}
+                {productItem.netWeight}
               </Label>
             </div>
           </div>
@@ -44,7 +44,7 @@ async function RightSection({ slug }: { slug: string }) {
           ) : null}
         </div>
         <div className="">
-          <ProductSelect productItem={productItem} product={product} />
+          <ProductSelect productItem={productItem} product={product} />z
         </div>
       </div>
     </div>
@@ -52,9 +52,8 @@ async function RightSection({ slug }: { slug: string }) {
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { product, suggestedItems, productDetails } = await useProduct(
-    params.slug
-  );
+  const { product, suggestedItems, productDetails, productItem } =
+    await useProduct(params.slug);
 
   return (
     <div className="relative">
@@ -74,7 +73,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
           <div className="z-10 relative spaced-x lg:hidden">
             <div className="bg-tertiary container mx-auto">
-              <RightSection slug={params.slug} />
+              {/* <RightSection slug={params.slug} /> */}
+              <ProductSelect productItem={productItem} product={product} />
             </div>
           </div>
           <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
@@ -96,7 +96,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
         <div className="hidden lg:block mt-[40vh]">
-          <RightSection slug={params.slug} />
+          {/* <RightSection slug={params.slug} /> */}
+          <ProductSelect productItem={productItem} product={product} />
         </div>
       </div>
       <ProductSuggestedItems items={suggestedItems} />
