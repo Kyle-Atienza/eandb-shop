@@ -10,10 +10,6 @@ import Link from "next/link";
 
 gsap.registerPlugin(useGSAP);
 
-interface ProductCardOption extends ProductItem {
-  amount: number;
-}
-
 function Options({
   options,
   className,
@@ -48,35 +44,6 @@ export function ProductCard({
 }) {
   const container = useRef(null);
 
-  /* const options = product.options.reduce((optionList: string[], option) => {
-    option.attributes.forEach((optionItem) =>
-      optionList.push(optionItem.value)
-    );
-    return optionList;
-  }, []); */
-  const router = useRouter();
-  const rotation = Math.random() * 10 - 5;
-  /* const getAmount = () => {
-    const prizes = product?.options
-      .reduce((prizes: number[], option: ProductCardOption) => {
-        if (!prizes.includes(option.amount)) {
-          prizes.push(option.amount);
-        }
-        return prizes;
-      }, [])
-      .sort((a: number, b: number) => a - b);
-
-    if (prizes.length > 1) {
-      return (
-        <>{`P${prizes[0].toFixed(2)} - P${prizes[prizes.length - 1].toFixed(
-          2
-        )}`}</>
-      );
-    } else {
-      return <>{`P${prizes[0].toFixed(2)}`}</>;
-    }
-  }; */
-
   const images = product.variants
     .map((variant) => variant.images)
     .flat()
@@ -92,12 +59,14 @@ export function ProductCard({
 
   useGSAP(
     () => {
-      gsap.to(".options", {
-        xPercent: -100,
-        repeat: -1,
-        duration: 8,
-        ease: "none",
-      });
+      if (variantTags.length) {
+        gsap.to(".options", {
+          xPercent: -100,
+          repeat: -1,
+          duration: 8,
+          ease: "none",
+        });
+      }
     },
     { scope: container }
   );

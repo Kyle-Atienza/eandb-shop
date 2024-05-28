@@ -18,10 +18,6 @@ const sliceArrayEveryN = (arr: any[], n: number, startIndex: number) => {
   return result;
 };
 
-function Spacer() {
-  return <div className="aspect-[2/3] bg-secondary "></div>;
-}
-
 export function ProductsGrid({
   productList,
 }: {
@@ -97,16 +93,16 @@ export function ProductsGrid({
   return (
     <div className="flex gap-spaced relative" ref={container}>
       <div className="flex flex-col flex-1 col col-1 gap-spaced h-min">
-        {slice ? renderProducts(1) : null}
+        {slice ? renderProducts(0) : null}
       </div>
       <div className="flex flex-col flex-1 col col-2 gap-spaced h-min">
-        {slice ? renderProducts(2) : null}
+        {slice ? renderProducts(1) : null}
       </div>
       <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min">
-        {slice ? renderProducts(3) : null}
+        {slice ? renderProducts(2) : null}
       </div>
       <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min">
-        {slice ? renderProducts(4) : null}
+        {slice ? renderProducts(3) : null}
       </div>
     </div>
   );

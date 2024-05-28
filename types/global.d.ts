@@ -37,16 +37,9 @@ declare global {
       tag: string;
     };
   }
-  /* interface ProductListingItem {
-    _id: string;
-    name: string;
-    options: ProductItem[];
-    details: Product;
-  } */
 
   interface ProductListingItem {
     _id: string;
-    // name: string;
     options: ProductListingItemOption[];
     details: Product;
   }
@@ -58,12 +51,7 @@ declare global {
     details: Product;
   }
 
-  /* interface ProductOptionSelect extends ProductOption { //before
-    selected: boolean;
-  } */
-
   interface ProductOptionSelect extends ProductItem {
-    //current
     selected: boolean;
   }
 
