@@ -54,8 +54,13 @@ export function ProductCard({
   const variantTags = product.variants.map(
     (variant) => variant.attribute?.value
   );
+  const slug = `${product.details.name}${
+    product.name ? ` ${product.name}` : ""
+  }`
+    .toLocaleLowerCase()
+    .replaceAll(" ", "-");
 
-  console.log();
+  console.log(`${slug}?variant=${product.variants[0]._id}`);
 
   useGSAP(
     () => {
@@ -76,7 +81,7 @@ export function ProductCard({
       className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group border-2 border-tertiary
       
       `}
-      href={`/product/${product._id}`}
+      href={`/product/${slug}?variant=${product.variants[0]._id}`}
       ref={container}
     >
       <div className="overflow-hidden rounded">
