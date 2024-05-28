@@ -32,11 +32,29 @@ declare global {
     attributes: ProductOption[];
     attribute: ProductOption;
     netWeight: string;
+    images: {
+      url: string;
+      tag: string;
+    };
   }
-  interface ProductListingItem {
+  /* interface ProductListingItem {
     _id: string;
     name: string;
     options: ProductItem[];
+    details: Product;
+  } */
+
+  interface ProductListingItem {
+    _id: string;
+    // name: string;
+    options: ProductListingItemOption[];
+    details: Product;
+  }
+
+  interface ProductListingItemOption {
+    _id: string;
+    name: string;
+    variants: ProductItem[];
     details: Product;
   }
 

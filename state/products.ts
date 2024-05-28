@@ -64,7 +64,8 @@ export const useProductsStore = create<ProductsState>((set) => ({
 
     await axios({
       method: "get",
-      url: `${API_URL}/list/${group}`,
+      // url: `${API_URL}/list/${group}`,
+      url: `${API_URL}/list`,
     })
       .then((res) => {
         set({ productList: res.data });

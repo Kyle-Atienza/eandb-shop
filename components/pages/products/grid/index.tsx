@@ -30,6 +30,21 @@ export function ProductsGrid({
   const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
 
+  const productListItemsOptions = productList.reduce(
+    (items: ProductListingItemOption[], productListItem) => {
+      let productListItemOptions: ProductListingItemOption[] = [];
+      productListItem.options.forEach((option) => {
+        productListItemOptions.push({
+          ...option,
+          _id: productListItem._id,
+          details: productListItem.details,
+        });
+      });
+      return items.concat(productListItemOptions);
+    },
+    []
+  );
+
   const getSlice = () => {
     setSlice(
       Array.from(document.querySelectorAll(".col")).filter((element) => {
@@ -56,7 +71,7 @@ export function ProductsGrid({
         start: "top bottom",
         end: "bottom bottom",
         scrub: 0.8,
-        // markers: true,
+        markers: true,
       },
     });
   };
@@ -72,7 +87,7 @@ export function ProductsGrid({
   );
 
   const renderProducts = (startIndex: number) => {
-    return sliceArrayEveryN(productList, slice, startIndex)?.map(
+    return sliceArrayEveryN(productListItemsOptions, slice, startIndex)?.map(
       (listingItem, index) => {
         return <ProductCard product={listingItem} key={index} />;
       }
@@ -83,31 +98,15 @@ export function ProductsGrid({
     <div className="flex gap-spaced relative" ref={container}>
       <div className="flex flex-col flex-1 col col-1 gap-spaced h-min">
         {slice ? renderProducts(1) : null}
-        {/* <Spacer />
-        <Spacer />
-        <Spacer />
-        <Spacer /> */}
       </div>
       <div className="flex flex-col flex-1 col col-2 gap-spaced h-min">
         {slice ? renderProducts(2) : null}
-        {/* <Spacer />
-        <Spacer />
-        <Spacer />
-        <Spacer /> */}
       </div>
       <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min">
         {slice ? renderProducts(3) : null}
-        {/* <Spacer />
-        <Spacer />
-        <Spacer />
-        <Spacer /> */}
       </div>
       <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min">
         {slice ? renderProducts(4) : null}
-        {/* <Spacer />
-        <Spacer />
-        <Spacer />
-        <Spacer /> */}
       </div>
     </div>
   );

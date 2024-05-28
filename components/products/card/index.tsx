@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import Link from "next/link";
 
 gsap.registerPlugin(useGSAP);
 
@@ -40,18 +41,22 @@ function Options({
   );
 }
 
-export function ProductCard({ product }: { product: ProductListingItem }) {
+export function ProductCard({
+  product,
+}: {
+  product: ProductListingItemOption;
+}) {
   const container = useRef(null);
 
-  const options = product.options.reduce((optionList: string[], option) => {
+  /* const options = product.options.reduce((optionList: string[], option) => {
     option.attributes.forEach((optionItem) =>
       optionList.push(optionItem.value)
     );
     return optionList;
-  }, []);
+  }, []); */
   const router = useRouter();
   const rotation = Math.random() * 10 - 5;
-  const getAmount = () => {
+  /* const getAmount = () => {
     const prizes = product?.options
       .reduce((prizes: number[], option: ProductCardOption) => {
         if (!prizes.includes(option.amount)) {
@@ -70,7 +75,20 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
     } else {
       return <>{`P${prizes[0].toFixed(2)}`}</>;
     }
-  };
+  }; */
+
+  const images = product.variants
+    .map((variant) => variant.images)
+    .flat()
+    .filter((image) => image.tag === "three fourths");
+  const displayPrize = product.variants
+    .map((variant) => variant.amount)
+    .sort((a, b) => (a > b ? -1 : 1))[0];
+  const variantTags = product.variants.map(
+    (variant) => variant.attribute?.value
+  );
+
+  console.log();
 
   useGSAP(
     () => {
@@ -85,42 +103,50 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
   );
 
   return (
-    <div
+    <Link
       className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group border-2 border-tertiary
       
       `}
-      onClick={() => router.push(`/product/${product._id}`)}
+      href={`/product/${product._id}`}
       ref={container}
     >
       <div className="overflow-hidden rounded">
         <div className="aspect-[4/5] relative overflow-hidden">
-          {product.details.gallery.length ? (
+          {images.length ? (
             <Image
               className={`transition-all object-cover object-center group-hover:scale-105 duration-500`}
-              src={product.details.gallery[0]}
+              src={images[0].url}
               alt=""
               fill={true}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              objectFit="cover"
               priority
             />
+          ) : (
+            <div className="grid place-content-center h-full">
+              <p className="font-gopher">No Image Provided</p>
+            </div>
+          )}
+          {variantTags.length ? (
+            <div className="absolute top-0 left-0 flex items-end justify-center w-full h-full spaced-md">
+              <Options className="options" options={variantTags} />
+              <Options className="options" options={variantTags} />
+              <Options className="options" options={variantTags} />
+            </div>
           ) : null}
-          <div className="absolute top-0 left-0 flex items-end justify-center w-full h-full spaced-md">
-            <Options className="options" options={options} />
-            <Options className="options" options={options} />
-            <Options className="options" options={options} />
-          </div>
         </div>
         <div className="flex spaced-md justify-between">
           <div className="w-2/5 lg:w-1/3 spaced-b-sm ">
-            <p className="text-md lg:text-xl font-gopher">{product.name}</p>
+            <p className="text-md lg:text-xl font-gopher">
+              {product.details.name}
+            </p>
           </div>
           <div className="rotate-90 md:rotate-0 origin-top-right">
             <p className="text-xl lg:text-3xl font-merchant translate-x-full md:translate-x-0">
-              {getAmount()}
+              P{displayPrize.toFixed(2)}
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

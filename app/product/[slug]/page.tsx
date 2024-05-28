@@ -10,6 +10,7 @@ import { ProductDetails } from "@/components/pages/product/details";
 import { useProduct } from "@/hooks/useProduct";
 import { ProductSuggestedItems } from "@/components/pages/product/related";
 import { BackButton } from "@/components/pages/product/back";
+import { useState } from "react";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { product, suggestedItems, productDetails } = await useProduct(

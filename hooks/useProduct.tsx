@@ -1,10 +1,5 @@
-import { useProductsStore } from "@/state/products";
 import { parseProductListItemId } from "@/utils/products";
 import { revalidatePath } from "next/cache";
-
-interface Props {
-  listingItem: ProductListingItem;
-}
 
 export async function useProduct(slug: string) {
   const getProduct = (productList: ProductListingItem[], slug: string) => {
@@ -13,27 +8,20 @@ export async function useProduct(slug: string) {
     )!;
   };
 
-  const getProductItem = (
-    product: ProductListingItem,
-    selectedOptions: string[]
-  ) => {
-    return product?.options.find((productOption: ProductItem) => {
-      const productItemAttributes = productOption.attributes.map(
-        (attribute) => attribute.value
-      );
-
-      return productItemAttributes.every(
-        (value, index) => value === selectedOptions?.sort()[index]
-      );
-    });
-  };
-
   const getProductList = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/products/list`,
       { next: { revalidate: 10 } }
     );
     revalidatePath(`${process.env.NEXT_PUBLIC_BASE_URL}/products/list`);
+    return await res.json();
+  };
+
+  const getProductItem = async () => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/products/item/`,
+      { next: { revalidate: 10 } }
+    );
     return await res.json();
   };
 
