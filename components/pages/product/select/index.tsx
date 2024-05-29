@@ -63,7 +63,9 @@ export function ProductSelect({ pageItem }: { pageItem: ProductPageItem }) {
                       pageItem.variants[0].attribute._id
                     }
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                      router.push(`${pathname}?variant=${e.target.value}`);
+                      router.push(`${pathname}?variant=${e.target.value}`, {
+                        scroll: false,
+                      });
                     }}
                   >
                     {pageItem.variants.map((variant, index) => {

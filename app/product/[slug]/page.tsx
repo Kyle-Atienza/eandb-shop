@@ -63,29 +63,29 @@ export default async function Page({
               <ProductSelect pageItem={productPageItem} />
             </div>
           </div>
-          {/* <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
+          <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
             <div className="container flex flex-col items-center gap-spaced">
-              {productPageItem.details.taglines ? (
+              {productPageItem.taglines ? (
                 <HeaderOne className=" text-tertiary">
-                  {productPageItem.details.taglines}
+                  {productPageItem.taglines}
                 </HeaderOne>
               ) : null}
               <div className="text-2xl text-dark font-merchant w-1/2 leading-[0.9em]">
-                {productPageItem.details.awards?.map((award, index) => {
+                {productPageItem.awards?.map((award, index) => {
                   return <p key={index}>{award}</p>;
                 })}
               </div>
             </div>
-          </div> */}
+          </div>
           <div className="spaced-x bg-light relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex flex-col justify-center">
-            {/* <ProductDetails details={productDetails} /> */}
+            <ProductDetails details={productDetails} />
           </div>
         </div>
         <div className="hidden lg:block mt-[40vh]">
           <ProductSelect pageItem={productPageItem} />
         </div>
       </div>
-      {/* <ProductSuggestedItems items={suggestedItems} /> */}
+      {<ProductSuggestedItems items={suggestedItems} />}
     </div>
   );
 }

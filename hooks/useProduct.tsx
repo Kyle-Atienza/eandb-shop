@@ -2,12 +2,6 @@ import { parseProductListItemId } from "@/utils/products";
 import { revalidatePath } from "next/cache";
 
 export async function useProduct(slug: string, variant?: string) {
-  /* const getProduct = (productList: ProductListingItem[], slug: string) => {
-    return productList.find(
-      (listItem) => parseProductListItemId(listItem._id) === slug
-    )!;
-  }; */
-
   const getProductList = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/products/list`,
@@ -26,31 +20,25 @@ export async function useProduct(slug: string, variant?: string) {
   };
 
   const productList: ProductListingItem[] = await getProductList();
-  // const product: ProductListingItem = getProduct(productList, slug);
   const productPageItem: ProductPageItem = await getProductPageItem();
-  /* const productOptions: ProductOptionSelect[] = productPageItem?.variants?.map(
-    (variant) => ({
-      ...variant,
-      selected: false,
-    })
-  ); */
+
   const productOptions: ProductOptionSelect[] = [];
 
-  /* const relatedItems = productList.filter(
+  const relatedItems = productList.filter(
     (listItem) =>
-      listItem.details._id === product.details._id &&
+      listItem.details._id === productPageItem._id &&
       parseProductListItemId(listItem._id) !== slug
   );
   const categoryItems = productList.filter(
     (listItem) =>
-      listItem.details.group === product.details.group &&
-      listItem.details._id !== product.details._id
+      listItem.details.group === productPageItem.group &&
+      listItem.details._id !== productPageItem._id
   )!;
   const otherItems = productList.filter((listItem) => {
     return (
       ![...relatedItems, ...categoryItems].some(
         (item) => item.details._id === listItem.details._id
-      ) && listItem.details._id !== product.details._id
+      ) && listItem.details._id !== productPageItem._id
     );
   });
   const recommendedItems = () => {
@@ -68,17 +56,14 @@ export async function useProduct(slug: string, variant?: string) {
     ...relatedItems,
     ...categoryItems,
     ...recommendedItems(),
-  ].slice(0, 4); */
+  ].slice(0, 4);
 
-  const suggestedItems: ProductListingItem[] = [];
-
-  /* const { ingredients, allergens, nutritionalFacts, awards } =
-    productPageItem.details; */
+  const { ingredients, allergens, nutritionalFacts, awards } = productPageItem;
   const productDetails = {
-    ingredients: [],
-    allergens: [],
-    nutritionalFacts: [],
-    awards: [],
+    ingredients,
+    allergens,
+    nutritionalFacts,
+    awards,
   };
 
   return {

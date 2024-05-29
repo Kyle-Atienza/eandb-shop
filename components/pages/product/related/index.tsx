@@ -134,7 +134,7 @@ export function ProductSuggestedItems({
           </div>
         </div>
         <div className="recommended spaced grid grid-cols-2 lg:grid-cols-4 gap-spaced">
-          <div className="*:!h-full">
+          {/* <div className="*:!h-full">
             <ProductCard product={items[0]} />
           </div>
           <div className="*:!h-full">
@@ -145,7 +145,7 @@ export function ProductSuggestedItems({
           </div>
           <div className="*:!h-full">
             <ProductCard product={items[3]} />
-          </div>
+          </div> */}
         </div>
       </div>
     </>
