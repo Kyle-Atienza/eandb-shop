@@ -12,10 +12,31 @@ import { ProductSuggestedItems } from "@/components/pages/product/related";
 import { BackButton } from "@/components/pages/product/back";
 import { useState } from "react";
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { product, suggestedItems, productDetails } = await useProduct(
-    params.slug
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: {
+    [key: string]: string | string[] | undefined;
+    variant?: string;
+  };
+}) {
+  const { suggestedItems, productDetails, productPageItem } = await useProduct(
+    params.slug,
+    searchParams?.variant
   );
+
+  const selectedVariant = productPageItem.variants.find((variant) =>
+    searchParams?.variant
+      ? variant.attribute._id === searchParams?.variant
+      : variant.default
+  );
+  const image = selectedVariant
+    ? selectedVariant.images.find((image) => image.tag === "three fourths")?.url
+    : null;
+
+  // console.log(selectedVariant);
 
   return (
     <div className="relative">
@@ -25,42 +46,46 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 mt-[-40px]">
         <div className=" bg-light ">
           <div className="lg:relative h-[calc(100vh-70px)] sticky top-0">
-            <Image
-              src={productImage}
-              fill
-              alt={`${product.name} image`}
-              objectFit="cover"
-              priority
-            />
+            {image ? (
+              <Image
+                src={image}
+                fill
+                alt={`product image`}
+                objectFit="cover"
+                priority
+              />
+            ) : (
+              <p className="font-gopher">No Image provided</p>
+            )}
           </div>
           <div className="z-10 relative spaced-x lg:hidden">
             <div className="bg-tertiary container mx-auto">
-              <ProductSelect product={product} />
+              <ProductSelect pageItem={productPageItem} />
             </div>
           </div>
-          <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
+          {/* <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
             <div className="container flex flex-col items-center gap-spaced">
-              {product.details.taglines ? (
+              {productPageItem.details.taglines ? (
                 <HeaderOne className=" text-tertiary">
-                  {product.details.taglines}
+                  {productPageItem.details.taglines}
                 </HeaderOne>
               ) : null}
               <div className="text-2xl text-dark font-merchant w-1/2 leading-[0.9em]">
-                {product.details.awards?.map((award, index) => {
+                {productPageItem.details.awards?.map((award, index) => {
                   return <p key={index}>{award}</p>;
                 })}
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="spaced-x bg-light relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex flex-col justify-center">
-            <ProductDetails details={productDetails} />
+            {/* <ProductDetails details={productDetails} /> */}
           </div>
         </div>
         <div className="hidden lg:block mt-[40vh]">
-          <ProductSelect product={product} />
+          <ProductSelect pageItem={productPageItem} />
         </div>
       </div>
-      <ProductSuggestedItems items={suggestedItems} />
+      {/* <ProductSuggestedItems items={suggestedItems} /> */}
     </div>
   );
 }

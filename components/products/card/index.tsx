@@ -60,8 +60,6 @@ export function ProductCard({
     .toLocaleLowerCase()
     .replaceAll(" ", "-");
 
-  console.log(`${slug}?variant=${product.variants[0]._id}`);
-
   useGSAP(
     () => {
       if (variantTags.length) {
@@ -81,7 +79,7 @@ export function ProductCard({
       className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group border-2 border-tertiary
       
       `}
-      href={`/product/${slug}?variant=${product.variants[0]._id}`}
+      href={`/product/${slug}`}
       ref={container}
     >
       <div className="overflow-hidden rounded">

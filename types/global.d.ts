@@ -18,6 +18,7 @@ declare global {
     allergens: string[];
     awards: string[];
     netWeight: string;
+    sort: number;
   }
   interface ProductOption {
     _id: string;
@@ -35,7 +36,12 @@ declare global {
     images: {
       url: string;
       tag: string;
-    };
+    }[];
+    default: boolean;
+  }
+
+  interface ProductPageItem extends Product {
+    variants: ProductItem[];
   }
 
   interface ProductListingItem {

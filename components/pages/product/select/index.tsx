@@ -5,19 +5,21 @@ import { ChangeEvent, useState } from "react";
 import { ProductQuantity } from "../quantity";
 import { useOrdersStore } from "@/state/orders";
 import { HeaderOne } from "@/components/common/header";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export function ProductSelect({ product }: { product: ProductListingItem }) {
+export function ProductSelect({ pageItem }: { pageItem: ProductPageItem }) {
   const { addToCart } = useOrdersStore();
-  // const {} = useProduct('')
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [quantity, setQuantity] = useState<number>(1);
-  const [productOptions, setProductOptions] = useState<ProductOptionSelect[]>(
-    product.options.map((option, index) => ({
-      ...option,
-      selected: index === 0 ? true : false,
-    }))
+
+  const selectedVariant = pageItem.variants.find((variant, index) =>
+    searchParams.get("variant")
+      ? variant.attribute._id === searchParams.get("variant")
+      : index === 0
   );
-  const selectedItem = productOptions.find((option) => option.selected);
 
   return (
     <>
@@ -25,54 +27,49 @@ export function ProductSelect({ product }: { product: ProductListingItem }) {
         <div className="h-fit lg:h-screen flex flex-col">
           <div className="flex flex-col sm:flex-row justify-between spaced-b sm:spaced-none gap-spaced-sm">
             <div className="w-3/5 flex flex-col gap-spaced-md lg:spaced-b">
-              <HeaderOne className="">{product?.name}</HeaderOne>
+              <HeaderOne className="">{pageItem?.name}</HeaderOne>
             </div>
             <div className=" flex lg:flex-col gap-spaced-sm items-stretch lg:items-end">
               <div className="bg-light spaced-x-sm rounded-sm font-merchant flex items-center">
                 <Label className="!text-3xl">
-                  P{selectedItem?.amount.toFixed(2)}
+                  P{selectedVariant?.amount.toFixed(2)}
                 </Label>
               </div>
               <div className="border-2 border-light spaced-x-sm rounded-sm font-merchant ">
                 <Label className="!text-3xl text-light normal-case">
-                  {selectedItem?.netWeight}
+                  {pageItem?.netWeight}
                 </Label>
               </div>
             </div>
           </div>
           <div className="spaced-y border-t-2 border-light text-light text-lg lg:text-2xl 2xl:text-3xl  font-gopher *:mb-3">
-            {product.details.description ? (
+            {pageItem.description ? (
               <>
-                {product.details.description
-                  .split("\n")
-                  .map((detail, index) => {
-                    return <p key={index}>{detail}</p>;
-                  })}
+                {pageItem.description.split("\n").map((detail, index) => {
+                  return <p key={index}>{detail}</p>;
+                })}
               </>
             ) : null}
           </div>
           <div className="">
             <div className="flex flex-col sm:flex-row *:flex-1 items-stretch">
-              {productOptions.length > 1 ? (
+              {pageItem.variants.length > 1 ? (
                 <div className="flex items-center *:w-full sm:border-r-2 spaced-y-sm border-t-2 border-light">
                   <select
                     name=""
                     id=""
+                    defaultValue={
+                      searchParams.get("variant") ||
+                      pageItem.variants[0].attribute._id
+                    }
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                      console.log(e.target.value);
-                      setProductOptions((prevState) =>
-                        prevState.map((option) => ({
-                          ...option,
-                          selected:
-                            e.target.value === option._id ? true : false,
-                        }))
-                      );
+                      router.push(`${pathname}?variant=${e.target.value}`);
                     }}
                   >
-                    {productOptions.map((option, index) => {
+                    {pageItem.variants.map((variant, index) => {
                       return (
-                        <option value={option._id} key={index}>
-                          {option.attribute.value}
+                        <option value={variant.attribute._id} key={index}>
+                          {variant.attribute.value}
                         </option>
                       );
                     })}
@@ -89,8 +86,9 @@ export function ProductSelect({ product }: { product: ProductListingItem }) {
             <button
               className="border-2 border-light spaced text-center hover:bg-primary transition-colors text-light w-full"
               onClick={() => {
-                if (selectedItem) {
-                  addToCart(selectedItem._id, quantity);
+                console.log(selectedVariant);
+                if (selectedVariant) {
+                  addToCart(selectedVariant._id, quantity);
                   setQuantity(1);
                 }
               }}
