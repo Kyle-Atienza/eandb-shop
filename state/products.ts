@@ -7,7 +7,7 @@ interface ProductsState {
   isError: boolean;
   products: Product[];
   items: ProductItem[];
-  productList: ProductListingItem[];
+  productList: ProductOptions[];
   setIsLoading: (isLoading: boolean) => void;
   setProducts: (products: Product[]) => void;
   getProducts: () => void;

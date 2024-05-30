@@ -37,11 +37,7 @@ function Options({
   );
 }
 
-export function ProductCard({
-  product,
-}: {
-  product: ProductListingItemOption;
-}) {
+export function ProductCard({ product }: { product: ProductListingItem }) {
   const container = useRef(null);
 
   const images = product.variants

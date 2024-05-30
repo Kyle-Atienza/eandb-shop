@@ -21,14 +21,14 @@ const sliceArrayEveryN = (arr: any[], n: number, startIndex: number) => {
 export function ProductsGrid({
   productList,
 }: {
-  productList: ProductListingItem[];
+  productList: ProductOptions[];
 }) {
   const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
 
   const productListItemsOptions = productList.reduce(
-    (items: ProductListingItemOption[], productListItem) => {
-      let productListItemOptions: ProductListingItemOption[] = [];
+    (items: ProductListingItem[], productListItem) => {
+      let productListItemOptions: ProductListingItem[] = [];
       productListItem.options.forEach((option) => {
         productListItemOptions.push({
           ...option,

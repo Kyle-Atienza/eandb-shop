@@ -19,7 +19,7 @@ export async function useProduct(slug: string, variant?: string) {
     return await res.json();
   };
 
-  const productList: ProductListingItem[] = await getProductList();
+  const productList: ProductOptions[] = await getProductList();
   const productPageItem: ProductPageItem = await getProductPageItem();
 
   const productOptions: ProductOptionSelect[] = [];

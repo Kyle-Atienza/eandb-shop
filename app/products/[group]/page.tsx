@@ -28,7 +28,7 @@ export default async function Page({
   params: { group: string };
   searchParams: SearchParams;
 }) {
-  const productList: ProductListingItem[] = await getProductList(params.group);
+  const productList: ProductOptions[] = await getProductList(params.group);
 
   return (
     <>

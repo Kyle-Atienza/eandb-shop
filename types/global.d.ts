@@ -44,13 +44,13 @@ declare global {
     variants: ProductItem[];
   }
 
-  interface ProductListingItem {
+  interface ProductOptions {
     _id: string;
-    options: ProductListingItemOption[];
+    options: ProductListingItem[];
     details: Product;
   }
 
-  interface ProductListingItemOption {
+  interface ProductListingItem {
     _id: string;
     name: string;
     variants: ProductItem[];

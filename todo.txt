@@ -1,6 +1,6 @@
 currently doing:
 provide correct data for related productlis
-also change ProductListingItemOption type, this doesn't make sence
+also change ProductListingItem type, this doesn't make sence
 - dc grid component
 
 and now the animations don't work

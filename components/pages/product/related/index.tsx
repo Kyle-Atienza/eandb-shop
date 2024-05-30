@@ -8,11 +8,7 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function ProductSuggestedItems({
-  items,
-}: {
-  items: ProductListingItem[];
-}) {
+export function ProductSuggestedItems({ items }: { items: ProductOptions[] }) {
   const container = useRef(null);
   const card1 = useRef(null);
   const card2 = useRef(null);
