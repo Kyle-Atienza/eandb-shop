@@ -5,7 +5,7 @@ import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
 // not used
 
-export function ProductListingOptions({
+export function ProductOption({
   productOption,
   value,
   onSelect,
@@ -40,23 +40,23 @@ export function ProductListingOptions({
   );
 }
 
-export function ProductListingOptions({
-  ProductListingOptions,
+export function ProductOptions({
+  productOptions,
   onSelect,
 }: {
-  ProductListingOptions: ProductOptionSelectItem[];
+  productOptions: ProductOptionSelectItem[];
   onSelect: (val: ProductOptionSelectItem[]) => void;
 }) {
   const getSelectedOption = (name: string) => {
-    if (ProductListingOptions) {
-      return ProductListingOptions.find(
-        (option) => option.name === name
-      )?.options.find((option) => !!option.selected);
+    if (productOptions) {
+      return productOptions
+        .find((option) => option.name === name)
+        ?.options.find((option) => !!option.selected);
     }
   };
 
   const onChageProductOption = (value: string, optionName?: string) => {
-    /* return ProductListingOptions?.map((productOption) => {
+    /* return productOptions?.map((productOption) => {
       if (productOption.name === optionName) {
         productOption.options.forEach((optionItem) => {
           optionItem.selected = optionItem.value === value;
@@ -68,9 +68,9 @@ export function ProductListingOptions({
 
   return (
     <>
-      {/* {ProductListingOptions?.map((productOption, index) => {
+      {/* {productOptions?.map((productOption, index) => {
         return (
-          <ProductListingOptions
+          <ProductOption
             key={index}
             productOption={productOption}
             value={getSelectedOption(productOption.name)?.value || ""}

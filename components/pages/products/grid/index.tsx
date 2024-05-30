@@ -19,14 +19,14 @@ const sliceArrayEveryN = (arr: any[], n: number, startIndex: number) => {
 };
 
 export function ProductsGrid({
-  productsOptions,
+  productListingOptions,
 }: {
-  productsOptions: ProductListingOptions[];
+  productListingOptions: ProductListingOptions[];
 }) {
   const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
 
-  const productListingItems = productsOptions.reduce(
+  const productListingItems = productListingOptions.reduce(
     (items: ProductListingItem[], productListItem) => {
       let productListItemOptions: ProductListingItem[] = [];
       productListItem.options.forEach((option) => {
@@ -79,7 +79,7 @@ export function ProductsGrid({
       animateColumn(".col-3", -5);
       animateColumn(".col-4", 10); */
     },
-    { scope: container, dependencies: [productsOptions] }
+    { scope: container, dependencies: [productListingOptions] }
   );
 
   const renderProducts = (startIndex: number) => {

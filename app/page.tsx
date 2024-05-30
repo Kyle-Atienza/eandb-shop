@@ -23,7 +23,9 @@ export default async function Home({
     products?: string;
   };
 }) {
-  const productsOptions = await getProductsOptions(searchParams?.products);
+  const productListingOptions = await getProductsOptions(
+    searchParams?.products
+  );
 
   return (
     <>
@@ -60,7 +62,7 @@ export default async function Home({
       </div>
       <div className="catalog spaced-x spaced-t">
         <Catalog
-          productsOptions={productsOptions}
+          productListingOptions={productListingOptions}
           filter={searchParams?.products}
         />
       </div>
