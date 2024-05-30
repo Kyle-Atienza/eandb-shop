@@ -1,9 +1,7 @@
 currently doing:
-u changed structure of productlist
-u now fixing cart to adjust to new productlistoption to show per card
-so that on click card it will have the id of the variant to call getProductItem
-so that no need for use state to store what item is currently selected, 
-just fetch new data on change of option
+provide correct data for related productlis
+also change ProductListingItemOption type, this doesn't make sence
+- dc grid component
 
 and now the animations don't work
 

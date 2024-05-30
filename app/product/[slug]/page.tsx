@@ -36,7 +36,7 @@ export default async function Page({
     ? selectedVariant.images.find((image) => image.tag === "three fourths")?.url
     : null;
 
-  // console.log(selectedVariant);
+  // console.log(productPageItem.variants, searchParams?.variant);
 
   return (
     <div className="relative">
