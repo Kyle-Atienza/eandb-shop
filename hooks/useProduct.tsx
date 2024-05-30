@@ -2,9 +2,9 @@ import { parseProductListItemId } from "@/utils/products";
 import { revalidatePath } from "next/cache";
 
 export async function useProduct(slug: string, variant?: string) {
-  const getProductList = async () => {
+  const getProductOptions = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/products/list`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/products/options`,
       { next: { revalidate: 10 } }
     );
     revalidatePath(`${process.env.NEXT_PUBLIC_BASE_URL}/products/list`);
@@ -19,22 +19,22 @@ export async function useProduct(slug: string, variant?: string) {
     return await res.json();
   };
 
-  const productList: ProductOptions[] = await getProductList();
+  const productOptions: ProductOption[] = await getProductOptions();
   const productPageItem: ProductPageItem = await getProductPageItem();
 
-  const productOptions: ProductOptionSelect[] = [];
+  const ProductOption: ProductOptionSelect[] = [];
 
-  const relatedItems = productList.filter(
+  const relatedItems = productOptions.filter(
     (listItem) =>
       listItem.details._id === productPageItem._id &&
       parseProductListItemId(listItem._id) !== slug
   );
-  const categoryItems = productList.filter(
+  const categoryItems = productOptions.filter(
     (listItem) =>
       listItem.details.group === productPageItem.group &&
       listItem.details._id !== productPageItem._id
   )!;
-  const otherItems = productList.filter((listItem) => {
+  const otherItems = productOptions.filter((listItem) => {
     return (
       ![...relatedItems, ...categoryItems].some(
         (item) => item.details._id === listItem.details._id
@@ -71,6 +71,6 @@ export async function useProduct(slug: string, variant?: string) {
     // relatedItems,
     productDetails,
     suggestedItems,
-    productOptions,
+    ProductOption,
   };
 }

@@ -1,7 +1,6 @@
 currently doing:
 provide correct data for related productlis
-also change ProductListingItem type, this doesn't make sence
-- dc grid component
+allow filtering on catalog
 
 and now the animations don't work
 

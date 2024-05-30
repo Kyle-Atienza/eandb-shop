@@ -40,23 +40,23 @@ export function ProductOption({
   );
 }
 
-export function ProductOptions({
-  productOptions,
+export function ProductOption({
+  ProductOption,
   onSelect,
 }: {
-  productOptions: ProductOptionSelectItem[];
+  ProductOption: ProductOptionSelectItem[];
   onSelect: (val: ProductOptionSelectItem[]) => void;
 }) {
   const getSelectedOption = (name: string) => {
-    if (productOptions) {
-      return productOptions
-        .find((option) => option.name === name)
-        ?.options.find((option) => !!option.selected);
+    if (ProductOption) {
+      return ProductOption.find((option) => option.name === name)?.options.find(
+        (option) => !!option.selected
+      );
     }
   };
 
   const onChageProductOption = (value: string, optionName?: string) => {
-    /* return productOptions?.map((productOption) => {
+    /* return ProductOption?.map((productOption) => {
       if (productOption.name === optionName) {
         productOption.options.forEach((optionItem) => {
           optionItem.selected = optionItem.value === value;
@@ -68,7 +68,7 @@ export function ProductOptions({
 
   return (
     <>
-      {/* {productOptions?.map((productOption, index) => {
+      {/* {ProductOption?.map((productOption, index) => {
         return (
           <ProductOption
             key={index}

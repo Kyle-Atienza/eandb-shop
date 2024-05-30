@@ -1,4 +1,5 @@
 declare global {
+  // products
   interface Product {
     _id: string;
     name: string;
@@ -44,7 +45,7 @@ declare global {
     variants: ProductItem[];
   }
 
-  interface ProductOptions {
+  interface ProductOption {
     _id: string;
     options: ProductListingItem[];
     details: Product;
@@ -66,6 +67,7 @@ declare global {
     options: ProductOptionSelect[];
   }
 
+  // user
   interface User {
     _id: string;
     name: string;
@@ -78,6 +80,8 @@ declare global {
       };
     };
   }
+
+  // cart
   interface CartItem {
     _id?: string;
     productItemId: string;
@@ -85,6 +89,8 @@ declare global {
     // price: number;
     count: number;
   }
+
+  // order
 
   interface OrderAddress {
     _id: string;

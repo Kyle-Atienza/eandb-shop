@@ -24,26 +24,15 @@ const productFilters = [
   },
 ];
 
-export function Catalog() {
-  const { getProductList, productList } = useProductsStore();
-  const [filter, setFilter] = useState("all");
-
-  useEffect(() => {
-    if (!productList.length) {
-      getProductList(filter);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    getProductList(filter);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
-
+export function Catalog({
+  productOptions,
+}: {
+  productOptions: ProductOption[];
+}) {
   return (
     <div className="min-h-screen">
       <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
-        <Select
+        {/* <Select
           className="w-[100px] md:w-[200px]"
           innerClassName="!bg-secondary border-light border-2"
           options={productFilters}
@@ -51,10 +40,10 @@ export function Catalog() {
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             setFilter(e.target.value);
           }}
-        />
+        /> */}
       </div>
       <div className="spaced-t">
-        <ProductsGrid productList={productList} />
+        <ProductsGrid productOptions={productOptions} />
       </div>
     </div>
   );
