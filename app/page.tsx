@@ -5,7 +5,7 @@ import {
 } from "@/components/decorations/scroll-down";
 import { Catalog } from "@/components/pages/home/catalog";
 
-const getProductOptions = async (group?: string) => {
+const getProductsOptions = async (group?: string) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/products/options/${
       group ? group : "all"
@@ -23,7 +23,7 @@ export default async function Home({
     products?: string;
   };
 }) {
-  const productOptions = await getProductOptions(searchParams?.products);
+  const productsOptions = await getProductsOptions(searchParams?.products);
 
   return (
     <>
@@ -60,7 +60,7 @@ export default async function Home({
       </div>
       <div className="catalog spaced-x spaced-t">
         <Catalog
-          productOptions={productOptions}
+          productsOptions={productsOptions}
           filter={searchParams?.products}
         />
       </div>

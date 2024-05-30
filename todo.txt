@@ -1,6 +1,6 @@
 currently doing:
 provide correct data for related productlis
-allow filtering on catalog
+product page doesn't properly work with products with multiple options
 
 and now the animations don't work
 

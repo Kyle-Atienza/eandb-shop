@@ -28,7 +28,9 @@ export default async function Page({
   params: { group: string };
   searchParams: SearchParams;
 }) {
-  const productList: ProductOption[] = await getProductList(params.group);
+  const productList: ProductListingOptions[] = await getProductList(
+    params.group
+  );
 
   return (
     <>
@@ -42,7 +44,7 @@ export default async function Page({
             goodness!
           </HeaderOne>
         </div>
-        <ProductsGrid productOptions={productList} />
+        <ProductsGrid productsOptions={productList} />
       </div>
     </>
   );

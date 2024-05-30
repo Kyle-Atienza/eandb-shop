@@ -45,7 +45,7 @@ declare global {
     variants: ProductItem[];
   }
 
-  interface ProductOption {
+  interface ProductListingOptions {
     _id: string;
     options: ProductListingItem[];
     details: Product;

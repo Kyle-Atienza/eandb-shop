@@ -1,8 +1,11 @@
-import { parseProductListItemId } from "@/utils/products";
+import {
+  mapListingOptionsToItems,
+  parseProductListItemId,
+} from "@/utils/products";
 import { revalidatePath } from "next/cache";
 
 export async function useProduct(slug: string, variant?: string) {
-  const getProductOptions = async () => {
+  const getProductListingOptions = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/products/options/all`,
       { next: { revalidate: 10 } }
@@ -19,22 +22,46 @@ export async function useProduct(slug: string, variant?: string) {
     return await res.json();
   };
 
-  const productOptions: ProductOption[] = await getProductOptions();
+  const productListingOptions: ProductListingOptions[] =
+    await getProductListingOptions();
   const productPageItem: ProductPageItem = await getProductPageItem();
+  const selectedVariant = productPageItem.variants.find((variantItem) =>
+    variant ? variantItem.attribute._id === variant : variantItem.default
+  );
 
-  const ProductOption: ProductOptionSelect[] = [];
+  const getRecommendations = (count: number = 4) => {
+    const items: ProductListingItem[] = mapListingOptionsToItems(
+      productListingOptions
+    );
 
-  const relatedItems = productOptions.filter(
+    const index = items.findIndex(
+      (item) =>
+        item.details._id === (selectedVariant?.details as unknown as string)
+    );
+    if (index === -1) return [];
+
+    const result = [];
+    let currentIndex = index + 1;
+
+    while (result.length < count) {
+      if (currentIndex >= items.length) currentIndex = 0;
+      result.push(items[currentIndex++]);
+    }
+
+    return result;
+  };
+
+  /* const relatedItems = productListingOptions.filter(
     (listItem) =>
       listItem.details._id === productPageItem._id &&
       parseProductListItemId(listItem._id) !== slug
   );
-  const categoryItems = productOptions.filter(
+  const categoryItems = productListingOptions.filter(
     (listItem) =>
       listItem.details.group === productPageItem.group &&
       listItem.details._id !== productPageItem._id
   )!;
-  const otherItems = productOptions.filter((listItem) => {
+  const otherItems = productListingOptions.filter((listItem) => {
     return (
       ![...relatedItems, ...categoryItems].some(
         (item) => item.details._id === listItem.details._id
@@ -51,12 +78,12 @@ export async function useProduct(slug: string, variant?: string) {
     }
 
     return randomElements;
-  };
-  const suggestedItems = [
+  }; */
+  /* const suggestedItems = [
     ...relatedItems,
     ...categoryItems,
     ...recommendedItems(),
-  ].slice(0, 4);
+  ].slice(0, 4); */
 
   const { ingredients, allergens, nutritionalFacts, awards } = productPageItem;
   const productDetails = {
@@ -68,9 +95,11 @@ export async function useProduct(slug: string, variant?: string) {
 
   return {
     productPageItem,
+    selectedVariant,
     // relatedItems,
     productDetails,
-    suggestedItems,
-    ProductOption,
+    // suggestedItems,
+
+    getRecommendations,
   };
 }

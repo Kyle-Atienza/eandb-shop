@@ -22,16 +22,13 @@ export default async function Page({
     variant?: string;
   };
 }) {
-  const { suggestedItems, productDetails, productPageItem } = await useProduct(
-    params.slug,
-    searchParams?.variant
-  );
+  const {
+    productDetails,
+    productPageItem,
+    selectedVariant,
+    getRecommendations,
+  } = await useProduct(params.slug, searchParams?.variant);
 
-  const selectedVariant = productPageItem.variants.find((variant) =>
-    searchParams?.variant
-      ? variant.attribute._id === searchParams?.variant
-      : variant.default
-  );
   const image = selectedVariant
     ? selectedVariant.images.find((image) => image.tag === "three fourths")?.url
     : null;
@@ -85,7 +82,7 @@ export default async function Page({
           <ProductSelect pageItem={productPageItem} />
         </div>
       </div>
-      {<ProductSuggestedItems items={suggestedItems} />}
+      {<ProductSuggestedItems items={getRecommendations()} />}
     </div>
   );
 }

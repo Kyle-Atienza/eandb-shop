@@ -26,10 +26,10 @@ const productFilters = [
 ];
 
 export function Catalog({
-  productOptions,
+  productsOptions,
   filter,
 }: {
-  productOptions: ProductOption[];
+  productsOptions: ProductListingOptions[];
   filter?: string;
 }) {
   const pathname = usePathname();
@@ -56,7 +56,7 @@ export function Catalog({
         />
       </div>
       <div className="spaced-t">
-        <ProductsGrid productOptions={productOptions} />
+        <ProductsGrid productsOptions={productsOptions} />
       </div>
     </div>
   );
