@@ -74,10 +74,10 @@ export function ProductsGrid({
 
   useGSAP(
     () => {
-      animateColumn(".col-1", -10);
+      /* animateColumn(".col-1", -10);
       animateColumn(".col-2", -25);
       animateColumn(".col-3", -5);
-      animateColumn(".col-4", 10);
+      animateColumn(".col-4", 10); */
     },
     { scope: container, dependencies: [productOptions] }
   );
