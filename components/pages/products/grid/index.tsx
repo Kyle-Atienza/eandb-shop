@@ -7,16 +7,10 @@ import { ProductCard } from "@/components/products/card";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { mapListingOptionsToItems } from "@/utils/products";
+import { sliceArrayEveryN } from "@/utils/array";
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
-
-const sliceArrayEveryN = (arr: any[], n: number, startIndex: number) => {
-  let result = [];
-  for (var i = startIndex; i < arr.length; i += n) {
-    result.push(arr[i]);
-  }
-  return result;
-};
 
 export function ProductsGrid({
   productListingOptions,
@@ -26,20 +20,7 @@ export function ProductsGrid({
   const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
 
-  const productListingItems = productListingOptions.reduce(
-    (items: ProductListingItem[], productListItem) => {
-      let productListItemOptions: ProductListingItem[] = [];
-      productListItem.options.forEach((option) => {
-        productListItemOptions.push({
-          ...option,
-          _id: productListItem._id,
-          details: productListItem.details,
-        });
-      });
-      return items.concat(productListItemOptions);
-    },
-    []
-  );
+  const productListingItems = mapListingOptionsToItems(productListingOptions);
 
   const getSlice = () => {
     setSlice(
