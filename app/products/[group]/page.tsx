@@ -42,7 +42,7 @@ export default async function Page({
             goodness!
           </HeaderOne>
         </div>
-        <ProductsGrid productList={productList} />
+        <ProductsGrid productOptions={productList} />
       </div>
     </>
   );

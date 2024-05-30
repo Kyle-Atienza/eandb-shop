@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 export async function useProduct(slug: string, variant?: string) {
   const getProductOptions = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/products/options`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/products/options/all`,
       { next: { revalidate: 10 } }
     );
     revalidatePath(`${process.env.NEXT_PUBLIC_BASE_URL}/products/list`);

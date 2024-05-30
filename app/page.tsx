@@ -4,18 +4,26 @@ import {
   ScrollDown,
 } from "@/components/decorations/scroll-down";
 import { Catalog } from "@/components/pages/home/catalog";
-import { get } from "http";
 
-const getProductOptions = async () => {
+const getProductOptions = async (group?: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/products/options`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/products/options/${
+      group ? group : "all"
+    }`,
     { next: { revalidate: 10 } }
   );
   return await res.json();
 };
 
-export default async function Home() {
-  const productOptions = await getProductOptions();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    [key: string]: string | string[] | undefined;
+    products?: string;
+  };
+}) {
+  const productOptions = await getProductOptions(searchParams?.products);
 
   return (
     <>
@@ -51,7 +59,10 @@ export default async function Home() {
         </div>
       </div>
       <div className="catalog spaced-x spaced-t">
-        <Catalog productOptions={productOptions} />
+        <Catalog
+          productOptions={productOptions}
+          filter={searchParams?.products}
+        />
       </div>
     </>
   );
