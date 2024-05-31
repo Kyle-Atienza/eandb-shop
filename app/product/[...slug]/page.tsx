@@ -48,7 +48,7 @@ export default async function Page({
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 mt-[-40px]">
           <div className=" bg-light ">
-            <div className="lg:relative h-[calc(100vh-70px)] sticky top-0">
+            <div className="lg:relative h-[calc(100vh-70px)] sticky top-0 grid place-content-center">
               {image ? (
                 <Image
                   src={image}
