@@ -20,6 +20,7 @@ declare global {
     awards: string[];
     netWeight: string;
     sort: number;
+    code: string;
   }
   interface ProductOption {
     _id: string;
