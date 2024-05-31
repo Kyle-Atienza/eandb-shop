@@ -79,21 +79,24 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
       ref={container}
     >
       <div className="overflow-hidden rounded">
-        <div className="aspect-[4/5] relative overflow-hidden">
-          {images.length ? (
-            <Image
-              className={`transition-all object-cover object-center group-hover:scale-105 duration-500`}
-              src={images[0].url}
-              alt=""
-              fill={true}
-              objectFit="cover"
-              priority
-            />
-          ) : (
-            <div className="grid place-content-center h-full">
-              <p className="font-gopher">No Image Provided</p>
-            </div>
-          )}
+        <div className="aspect-[4/5] relative">
+          <div className="absolute w-[130%] h-[130%] top-[-10%] left-1/2 -translate-x-1/2">
+            {images.length ? (
+              <Image
+                className={`transition-all object-cover object-center group-hover:scale-105 duration-500`}
+                src={images[0].url}
+                alt=""
+                fill={true}
+                objectFit="cover"
+                priority
+              />
+            ) : (
+              <div className="grid place-content-center h-full">
+                <p className="font-gopher">No Image Provided</p>
+              </div>
+            )}
+          </div>
+
           {variantTags.length ? (
             <div className="absolute top-0 left-0 flex items-end justify-center w-full h-full spaced-md">
               <Options className="options" options={variantTags} />

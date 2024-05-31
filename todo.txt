@@ -1,15 +1,7 @@
 currently doing:
-product page doesn't properly work with products with multiple options
-
-
 
 ui
 and now the animations don't work
-
-
-
-
-
 
 
 cart top showing wavy border from nav
