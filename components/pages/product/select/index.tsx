@@ -27,7 +27,9 @@ export function ProductSelect({ pageItem }: { pageItem: ProductPageItem }) {
         <div className="h-fit lg:h-screen flex flex-col">
           <div className="flex flex-col sm:flex-row justify-between spaced-b sm:spaced-none gap-spaced-sm">
             <div className="w-3/5 flex flex-col gap-spaced-md lg:spaced-b">
-              <HeaderOne className="">{pageItem?.name}</HeaderOne>
+              <HeaderOne className="">
+                {pageItem?.name} - {selectedVariant?.name}
+              </HeaderOne>
             </div>
             <div className=" flex lg:flex-col gap-spaced-sm items-stretch lg:items-end">
               <div className="bg-light spaced-x-sm rounded-sm font-merchant flex items-center">

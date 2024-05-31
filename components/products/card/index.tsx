@@ -50,8 +50,8 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
   const variantTags = product.variants.map(
     (variant) => variant.attribute?.value
   );
-  const slug = `${product.details.name}${
-    product.name ? ` ${product.name}` : ""
+  const path = `${product.details.name}/${
+    product.name ? `${product.name}` : ""
   }`
     .toLocaleLowerCase()
     .replaceAll(" ", "-");
@@ -75,7 +75,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
       className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group border-2 border-tertiary
       
       `}
-      href={`/product/${slug}`}
+      href={`/product/${path}`}
       ref={container}
     >
       <div className="overflow-hidden rounded">
@@ -105,7 +105,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
         <div className="flex spaced-md justify-between">
           <div className="w-2/5 lg:w-1/3 spaced-b-sm ">
             <p className="text-md lg:text-xl font-gopher">
-              {product.details.name}
+              {product.details.name} {product.name ? ` - ${product.name}` : ""}
             </p>
           </div>
           <div className="rotate-90 md:rotate-0 origin-top-right">

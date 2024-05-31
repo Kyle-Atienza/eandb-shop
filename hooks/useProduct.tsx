@@ -25,9 +25,10 @@ export async function useProduct(slug: string, variant?: string) {
   const productListingOptions: ProductListingOptions[] =
     await getProductListingOptions();
   const productPageItem: ProductPageItem = await getProductPageItem();
-  const selectedVariant = productPageItem.variants.find((variantItem) =>
-    variant ? variantItem.attribute._id === variant : variantItem.default
-  );
+  const selectedVariant =
+    productPageItem.variants.find((variantItem) =>
+      variant ? variantItem.attribute._id === variant : variantItem.default
+    ) || productPageItem.variants[0];
 
   const getRecommendations = (count: number = 4) => {
     const items: ProductListingItem[] = mapListingOptionsToItems(
@@ -51,40 +52,6 @@ export async function useProduct(slug: string, variant?: string) {
     return result;
   };
 
-  /* const relatedItems = productListingOptions.filter(
-    (listItem) =>
-      listItem.details._id === productPageItem._id &&
-      parseProductListItemId(listItem._id) !== slug
-  );
-  const categoryItems = productListingOptions.filter(
-    (listItem) =>
-      listItem.details.group === productPageItem.group &&
-      listItem.details._id !== productPageItem._id
-  )!;
-  const otherItems = productListingOptions.filter((listItem) => {
-    return (
-      ![...relatedItems, ...categoryItems].some(
-        (item) => item.details._id === listItem.details._id
-      ) && listItem.details._id !== productPageItem._id
-    );
-  });
-  const recommendedItems = () => {
-    const randomElements = [];
-
-    for (let i = 0; i < 4; i++) {
-      const randomIndex = Math.floor(Math.random() * otherItems.length);
-
-      randomElements.push(otherItems.splice(randomIndex, 1)[0]);
-    }
-
-    return randomElements;
-  }; */
-  /* const suggestedItems = [
-    ...relatedItems,
-    ...categoryItems,
-    ...recommendedItems(),
-  ].slice(0, 4); */
-
   const { ingredients, allergens, nutritionalFacts, awards } = productPageItem;
   const productDetails = {
     ingredients,
@@ -96,9 +63,7 @@ export async function useProduct(slug: string, variant?: string) {
   return {
     productPageItem,
     selectedVariant,
-    // relatedItems,
     productDetails,
-    // suggestedItems,
 
     getRecommendations,
   };
