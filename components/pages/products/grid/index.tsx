@@ -50,7 +50,7 @@ export function ProductsGrid({
         start: "top bottom",
         end: "bottom bottom",
         scrub: 1.2,
-        markers: true,
+        // markers: true,
       },
     });
   };
@@ -60,12 +60,13 @@ export function ProductsGrid({
       gsap.fromTo(
         ".products",
         {
-          yPercent: 15,
+          y: "50vh",
         },
         {
           ease: "expo.out",
-          duration: 1,
-          yPercent: 0,
+          duration: 1.5,
+          y: 0,
+          delay: 0.8,
         }
       );
 

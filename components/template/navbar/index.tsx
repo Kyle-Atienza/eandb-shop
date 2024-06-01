@@ -24,7 +24,7 @@ export function Navbar() {
 
   return (
     <div ref={container}>
-      <div className="navbar relative bg-secondary h-[70px] spaced-x">
+      <div className="navbar fixed top-0 w-screen h-[70px] spaced-x">
         <div className="flex items-center justify-between h-full gap-spaced relative">
           {/* middle */}
           {/* <TransitionLink
