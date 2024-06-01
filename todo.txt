@@ -1,9 +1,14 @@
-update backend for additional data in products page
+currently doing:
+ui
+and now the animations don't work
+add initial loading animation
+
+
+cart top showing wavy border from nav
+delete cart item btn
 profile page
     - hide delete address on add address
     - fix ui
-home gsap fix (scrub is not workign properly)
-add footer
 
 
 db

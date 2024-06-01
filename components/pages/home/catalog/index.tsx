@@ -4,6 +4,7 @@ import { Select } from "@/components/common/forms/select";
 import { ProductsGrid } from "../../products/grid";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useProductsStore } from "@/state/products";
+import { usePathname, useRouter } from "next/navigation";
 
 const productFilters = [
   {
@@ -11,50 +12,51 @@ const productFilters = [
     label: "All",
   },
   {
-    value: "Oyster Mushroom",
+    value: "oyster-mushroom",
     label: "Oyster Mushroom",
   },
   {
-    value: "Banana",
+    value: "banana",
     label: "Banana",
   },
   {
-    value: "Taro",
+    value: "taro",
     label: "Taro",
   },
 ];
 
-export function Catalog() {
-  const { getProductList, productList } = useProductsStore();
-  const [filter, setFilter] = useState("all");
-
-  useEffect(() => {
-    if (!productList.length) {
-      getProductList(filter);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    getProductList(filter);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
+export function Catalog({
+  productListingOptions,
+  filter,
+}: {
+  productListingOptions: ProductListingOptions[];
+  filter?: string;
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <div className="min-h-screen">
-      <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
+      {/* <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
         <Select
           className="w-[100px] md:w-[200px]"
           innerClassName="!bg-secondary border-light border-2"
           options={productFilters}
           value={filter}
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            setFilter(e.target.value);
+            console.log(e.target.value);
+            if (e.target.value !== "all") {
+              router.push(`${pathname}?products=${e.target.value}`, {
+                scroll: false,
+              });
+            } else {
+              router.push("/");
+            }
           }}
         />
-      </div>
+      </div> */}
       <div className="spaced-t">
-        <ProductsGrid productList={productList} />
+        <ProductsGrid productListingOptions={productListingOptions} />
       </div>
     </div>
   );

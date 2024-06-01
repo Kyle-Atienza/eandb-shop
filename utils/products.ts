@@ -2,43 +2,23 @@ const parseProductListItemId = (_id: string) => {
   return _id.toLowerCase().replaceAll(" ", "-");
 };
 
-const setInitalProductOptions = (
-  product: ProductListingItem
-): ProductOptionSelectItem[] => {
-  return product?.options.reduce(
-    (options: ProductOptionSelectItem[], option, index) => {
-      option.attributes.forEach((optionListItem) => {
-        const { type } = optionListItem;
-        const optionValue = {
-          ...optionListItem,
-          _id: option._id,
-          selected: !index,
-        };
-        const existingOption = options.find(
-          (opt: ProductOptionSelectItem) => opt.name === type
-        );
-
-        if (!existingOption) {
-          options.push({
-            name: type,
-            options: [optionValue],
-          });
-        } else {
-          existingOption.options.push(optionValue);
-        }
+const mapListingOptionsToItems = (
+  productListingOptions: ProductListingOptions[]
+) => {
+  return productListingOptions.reduce(
+    (items: ProductListingItem[], productListItem) => {
+      let productListItemOptions: ProductListingItem[] = [];
+      productListItem.options.forEach((option) => {
+        productListItemOptions.push({
+          ...option,
+          _id: productListItem._id,
+          details: productListItem.details,
+        });
       });
-
-      return options;
+      return items.concat(productListItemOptions);
     },
     []
   );
 };
 
-const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
-  return productOptions?.map(
-    (option) =>
-      option.options.find((selectedOption) => selectedOption.selected)?.value!
-  )!;
-};
-
-export { parseProductListItemId, setInitalProductOptions, getSelectedOptions };
+export { parseProductListItemId, mapListingOptionsToItems };

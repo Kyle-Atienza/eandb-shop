@@ -60,14 +60,14 @@ export default function Cart() {
       {isCartLoading ? (
         <p>Loading</p>
       ) : (
-        <div className="relative flex flex-col w-full h-full">
-          <div className="cart flex-1 bg-tertiary overflow-auto">
-            <table className="">
-              <tbody>
-                <CartItems />
-              </tbody>
-            </table>
-          </div>
+        <div className="relative flex flex-col w-full h-full overflow-auto bg-tertiary">
+          {/* <div className="cart flex-1 bg-tertiary overflow-auto">
+          </div> */}
+          <table className="">
+            <tbody>
+              <CartItems />
+            </tbody>
+          </table>
         </div>
       )}
     </>

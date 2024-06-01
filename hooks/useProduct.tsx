@@ -1,123 +1,70 @@
-import { parseProductListItemId } from "@/utils/products";
+import {
+  mapListingOptionsToItems,
+  parseProductListItemId,
+} from "@/utils/products";
 import { revalidatePath } from "next/cache";
 
-interface Props {
-  listingItem: ProductListingItem;
-}
-
-export async function useProduct(slug: string) {
-  const getProduct = (productList: ProductListingItem[], slug: string) => {
-    return productList.find(
-      (listItem) => parseProductListItemId(listItem._id) === slug
-    )!;
-  };
-
-  const getProductItem = (
-    product: ProductListingItem,
-    selectedOptions: string[]
-  ) => {
-    return product?.options.find((productOption: ProductItem) => {
-      const productItemAttributes = productOption.attributes.map(
-        (attribute) => attribute.value
-      );
-
-      return productItemAttributes.every(
-        (value, index) => value === selectedOptions?.sort()[index]
-      );
-    });
-  };
-
-  const getProductList = async () => {
+export async function useProduct(slug: string, variant?: string) {
+  const getProductListingOptions = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/products/list`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/products/options/all`,
       { next: { revalidate: 10 } }
     );
     revalidatePath(`${process.env.NEXT_PUBLIC_BASE_URL}/products/list`);
     return await res.json();
   };
 
-  const getSelectedOptions = (productOptions: ProductOptionSelectItem[]) => {
-    return productOptions?.map(
-      (option) =>
-        option.options.find((selectedOption) => selectedOption.selected)?.value!
-    )!;
+  const getProductPageItem = async () => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/products/item/${slug}`,
+      { next: { revalidate: 10 } }
+    );
+    return await res.json();
   };
 
-  const setInitalProductOptions = (
-    product: ProductListingItem
-  ): ProductOptionSelectItem[] => {
-    return product?.options.reduce(
-      (options: ProductOptionSelectItem[], option, index) => {
-        option.attributes.forEach((optionListItem) => {
-          const { type } = optionListItem;
-          const optionValue = {
-            ...optionListItem,
-            _id: option._id,
-            selected: !index,
-          };
-          const existingOption = options.find(
-            (opt: ProductOptionSelectItem) => opt.name === type
-          );
+  const productListingOptions: ProductListingOptions[] =
+    await getProductListingOptions();
+  const productPageItem: ProductPageItem = await getProductPageItem();
+  const selectedVariant =
+    productPageItem.variants.find((variantItem) =>
+      variant ? variantItem.attribute._id === variant : variantItem.default
+    ) || productPageItem.variants[0];
 
-          if (!existingOption) {
-            options.push({
-              name: type,
-              options: [optionValue],
-            });
-          } else {
-            existingOption.options.push(optionValue);
-          }
-        });
-
-        return options;
-      },
-      []
+  const getRecommendations = (count: number = 4) => {
+    const items: ProductListingItem[] = mapListingOptionsToItems(
+      productListingOptions
     );
-  };
 
-  const productList: ProductListingItem[] = await getProductList();
-  const product: ProductListingItem = getProduct(productList, slug);
-  const selectedOptions: string[] = getSelectedOptions(
-    setInitalProductOptions(product)!
-  );
-  const productItem: ProductItem = getProductItem(product, selectedOptions)!;
-  const relatedItems = productList.filter(
-    (listItem) =>
-      listItem.details._id === product.details._id &&
-      parseProductListItemId(listItem._id) !== slug
-  );
-  const categoryItems = productList.filter(
-    (listItem) =>
-      listItem.details.group === product.details.group &&
-      listItem.details._id !== product.details._id
-  )!;
-  const otherItems = productList.filter((listItem) => {
-    return (
-      ![...relatedItems, ...categoryItems].some(
-        (item) => item.details._id === listItem.details._id
-      ) && listItem.details._id !== product.details._id
+    const index = items.findIndex(
+      (item) =>
+        item.details._id === (selectedVariant?.details as unknown as string)
     );
-  });
-  const recommendedItems = () => {
-    const randomElements = [];
+    if (index === -1) return [];
 
-    for (let i = 0; i < 4; i++) {
-      const randomIndex = Math.floor(Math.random() * otherItems.length);
+    const result = [];
+    let currentIndex = index + 1;
 
-      randomElements.push(otherItems.splice(randomIndex, 1)[0]);
+    while (result.length < count) {
+      if (currentIndex >= items.length) currentIndex = 0;
+      result.push(items[currentIndex++]);
     }
 
-    return randomElements;
+    return result;
   };
 
-  const suggestedItems = [
-    ...relatedItems,
-    ...categoryItems,
-    ...recommendedItems(),
-  ].slice(0, 4);
+  const { ingredients, allergens, nutritionalFacts, awards } = productPageItem;
+  const productDetails = {
+    ingredients,
+    allergens,
+    nutritionalFacts,
+    awards,
+  };
 
-  const { ingredients, allergens, nutritionalFacts, awards } = product.details;
-  const productDetails = { ingredients, allergens, nutritionalFacts, awards };
+  return {
+    productPageItem,
+    selectedVariant,
+    productDetails,
 
-  return { product, productItem, relatedItems, productDetails, suggestedItems };
+    getRecommendations,
+  };
 }

@@ -3,6 +3,8 @@
 import { Label } from "@/components/common/label";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
+// not used
+
 export function ProductOption({
   productOption,
   value,
@@ -15,7 +17,7 @@ export function ProductOption({
   return (
     <>
       {/* wtf is this */}
-      <div className="flex flex-col gap-spaced-sm">
+      {/* <div className="flex flex-col gap-spaced-sm">
         <div className="flex spaced-sm">
           <select
             className="w-full font-merchant text-xl lg:text-2xl focus:outline-0 text-center uppercase text-light"
@@ -33,7 +35,7 @@ export function ProductOption({
             })}
           </select>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
@@ -54,19 +56,19 @@ export function ProductOptions({
   };
 
   const onChageProductOption = (value: string, optionName?: string) => {
-    return productOptions?.map((productOption) => {
+    /* return productOptions?.map((productOption) => {
       if (productOption.name === optionName) {
         productOption.options.forEach((optionItem) => {
           optionItem.selected = optionItem.value === value;
         });
       }
       return productOption;
-    });
+    }); */
   };
 
   return (
     <>
-      {productOptions?.map((productOption, index) => {
+      {/* {productOptions?.map((productOption, index) => {
         return (
           <ProductOption
             key={index}
@@ -77,7 +79,7 @@ export function ProductOptions({
             }
           />
         );
-      })}
+      })} */}
     </>
   );
 }

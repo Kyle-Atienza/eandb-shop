@@ -86,7 +86,7 @@ export function CartItem({
         </td>
         <td className="w-[100%] spaced-sm text-3xl !leading-[0.8em]">
           <div className="flex flex-col md:flex-row md:items-center gap-spaced-sm">
-            {item?.details?.name}
+            {item?.details?.name} {item.name ? `- ${item?.name}` : null}
             {item?.attributes?.map((attribute, index) => {
               return (
                 <div

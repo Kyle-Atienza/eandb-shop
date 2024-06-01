@@ -46,7 +46,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen spaced-x-hidden">
       <AnimatedCursor />
-      <div className="sticky top-0 z-20 spaced-b">
+      <div className="sticky top-0 z-20">
         <Navbar />
         <Drawer />
         <Toaster />

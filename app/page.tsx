@@ -1,30 +1,38 @@
-import { Select } from "@/components/common/forms/select";
 import { HeaderOne } from "@/components/common/header";
-import { ScrollDown } from "@/components/decorations/scroll-down";
+import {
+  InlineScrollDown,
+  ScrollDown,
+} from "@/components/decorations/scroll-down";
 import { Catalog } from "@/components/pages/home/catalog";
-import { ProductsGrid } from "@/components/pages/products/grid";
-import { ProductFilter } from "@/components/products/filter";
-import { ChangeEvent, Suspense, useState } from "react";
 
-async function getProducts() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/products`);
-  return await res.json();
-}
-
-async function getProductList(group: string) {
+const getProductsOptions = async (group?: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/products/list/${group}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/products/options/${
+      group ? group : "all"
+    }`,
+    { next: { revalidate: 10 } }
   );
   return await res.json();
-}
+};
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    [key: string]: string | string[] | undefined;
+    products?: string;
+  };
+}) {
+  const productListingOptions = await getProductsOptions(
+    searchParams?.products
+  );
+
   return (
     <>
-      <div className="mt-[-40px]">
-        <div className="bg-light h-[100vh] flex justify-center">
-          <div className=" flex items-center justify-center h-[65vh] mt-[100px]">
-            <HeaderOne className="text-center *:whitespace-pre-line !text-dark">
+      <div className="sticky top-[160px]">
+        <div className="hero flex flex-col items-center justify-center h-[65vh] text-center ">
+          <div className="flex flex-col items-center gap-spaced-md *:!text-light relative">
+            <HeaderOne className="text-center *:whitespace-pre-line w-fit relative">
               <span className="md:hidden">
                 Discover
                 {"\n"}a world
@@ -33,21 +41,30 @@ export default async function Home() {
                 {"\n"}
                 local goodness!
                 {"\n"}
-                <ScrollDown />
+                <InlineScrollDown />
               </span>
               <span className="hidden md:block">
                 Discover a world{"\n"}
                 of organic and local
                 {"\n"}
                 goodness!
-                <ScrollDown />
+                <InlineScrollDown />
               </span>
             </HeaderOne>
+            {/* <div className="font-gopher w-full lg:w-2/5 text-lg lg:text-2xl relative !leading-[1em]">
+              Explore a curated selection of fresh, organic, and locally sourced
+              products. From farm-fresh fruits and vegetables to artisanal
+              goods, experience the best nature has to offer right at your
+              doorstep.
+            </div> */}
           </div>
         </div>
-        <div className="spaced-x spaced-t mt-[-35vh]">
-          <Catalog />
-        </div>
+      </div>
+      <div className="catalog spaced-x spaced-t">
+        <Catalog
+          productListingOptions={productListingOptions}
+          filter={searchParams?.products}
+        />
       </div>
     </>
   );

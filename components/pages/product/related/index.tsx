@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function ProductRelatedItems({
+export function ProductSuggestedItems({
   items,
 }: {
   items: ProductListingItem[];
@@ -31,7 +31,6 @@ export function ProductRelatedItems({
       ease: "power3.inOut",
       scrollTrigger: {
         trigger: ".recommended",
-        markers: true,
         start: "top 80%",
       },
     });
@@ -63,77 +62,7 @@ export function ProductRelatedItems({
 
   return (
     <>
-      <div
-        ref={container}
-        className=" flex flex-col gap-spaced border-light mb-24"
-      >
-        <div
-          ref={marqueeContainer}
-          className="bg-light spaced-y-sm border-y-2 border-tertiary w-screen"
-        >
-          <div className="flex justify-center uppercase font-gopher overflow-hidden tracking-[0.3em]">
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-            <div className="marquee-item flex gap-spaced-sm spaced-r-sm">
-              <div className="whitespace-nowrap">Try Some of this </div>
-              <i className="bi bi-arrow-down" />
-            </div>
-          </div>
-        </div>
+      <div ref={container} className=" flex flex-col border-light border-t-2">
         <div className="recommended spaced grid grid-cols-2 lg:grid-cols-4 gap-spaced">
           <div className="*:!h-full">
             <ProductCard product={items[0]} />
@@ -146,6 +75,26 @@ export function ProductRelatedItems({
           </div>
           <div className="*:!h-full">
             <ProductCard product={items[3]} />
+          </div>
+        </div>
+        <div
+          ref={marqueeContainer}
+          className="bg-light spaced-y-sm border-y-2 border-tertiary w-screen"
+        >
+          <div className="flex justify-center overflow-hidden">
+            {Array.from(Array(15).keys()).map((key) => {
+              return (
+                <div
+                  key={key}
+                  className="marquee-item flex gap-spaced spaced-r items-center"
+                >
+                  <div className="whitespace-nowrap font-merchant uppercase text-2xl tracking-widest">
+                    Try Some of these{" "}
+                  </div>
+                  <i className="bi bi-arrow-up" />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

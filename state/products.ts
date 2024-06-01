@@ -7,7 +7,7 @@ interface ProductsState {
   isError: boolean;
   products: Product[];
   items: ProductItem[];
-  productList: ProductListingItem[];
+  productList: ProductListingOptions[];
   setIsLoading: (isLoading: boolean) => void;
   setProducts: (products: Product[]) => void;
   getProducts: () => void;
@@ -64,7 +64,8 @@ export const useProductsStore = create<ProductsState>((set) => ({
 
     await axios({
       method: "get",
-      url: `${API_URL}/list/${group}`,
+      // url: `${API_URL}/list/${group}`,
+      url: `${API_URL}/list`,
     })
       .then((res) => {
         set({ productList: res.data });

@@ -1,4 +1,5 @@
 declare global {
+  // products
   interface Product {
     _id: string;
     name: string;
@@ -18,6 +19,8 @@ declare global {
     allergens: string[];
     awards: string[];
     netWeight: string;
+    sort: number;
+    code: string;
   }
   interface ProductOption {
     _id: string;
@@ -30,15 +33,33 @@ declare global {
     amount: number;
     details: Product;
     attributes: ProductOption[];
+    attribute: ProductOption;
+    netWeight: string;
+    images: {
+      url: string;
+      tag: string;
+    }[];
+    default: boolean;
   }
-  interface ProductListingItem {
+
+  interface ProductPageItem extends Product {
+    variants: ProductItem[];
+  }
+
+  interface ProductListingOptions {
     _id: string;
-    name: string;
-    options: ProductItem[];
+    options: ProductListingItem[];
     details: Product;
   }
 
-  interface ProductOptionSelect extends ProductOption {
+  interface ProductListingItem {
+    _id: string;
+    name: string;
+    variants: ProductItem[];
+    details: Product;
+  }
+
+  interface ProductOptionSelect extends ProductItem {
     selected: boolean;
   }
 
@@ -47,6 +68,7 @@ declare global {
     options: ProductOptionSelect[];
   }
 
+  // user
   interface User {
     _id: string;
     name: string;
@@ -59,6 +81,8 @@ declare global {
       };
     };
   }
+
+  // cart
   interface CartItem {
     _id?: string;
     productItemId: string;
@@ -66,6 +90,8 @@ declare global {
     // price: number;
     count: number;
   }
+
+  // order
 
   interface OrderAddress {
     _id: string;
