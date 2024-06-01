@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ProductCard } from "@/components/products/card";
 
@@ -9,8 +9,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { mapListingOptionsToItems } from "@/utils/products";
 import { sliceArrayEveryN } from "@/utils/array";
-gsap.registerPlugin(useGSAP);
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function ProductsGrid({
   productListingOptions,
@@ -19,7 +18,10 @@ export function ProductsGrid({
 }) {
   const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
-  const productListingItems = mapListingOptionsToItems(productListingOptions);
+  const productListingItems = useMemo(
+    () => mapListingOptionsToItems(productListingOptions),
+    [productListingOptions]
+  );
 
   const getSlice = () => {
     setSlice(
@@ -33,33 +35,46 @@ export function ProductsGrid({
   useEffect(() => {
     getSlice();
     window.addEventListener("resize", getSlice);
+
     return () => {
       window.removeEventListener("resize", getSlice);
     };
   }, []);
 
-  const animateColumn = (column: string, yOffset: number) => {
+  const animateColumn = (column: string, yOffset: number | string) => {
     gsap.to(column, {
-      yPercent: yOffset,
+      marginTop: yOffset,
       ease: "none",
       scrollTrigger: {
         trigger: column,
         start: "top bottom",
         end: "bottom bottom",
         scrub: 1.2,
-        // markers: true,
+        markers: true,
       },
     });
   };
 
   useGSAP(
     () => {
-      /* animateColumn(".col-1", -8);
-      animateColumn(".col-2", -4);
-      animateColumn(".col-3", -12);
-      animateColumn(".col-4", -10); */
+      gsap.fromTo(
+        ".products",
+        {
+          yPercent: 15,
+        },
+        {
+          ease: "expo.out",
+          duration: 1,
+          yPercent: 0,
+        }
+      );
+
+      animateColumn(".col-1", "-56vw");
+      animateColumn(".col-2", "-10vw");
+      animateColumn(".col-3", "-25vw");
+      animateColumn(".col-4", "-40vw");
     },
-    { scope: container, dependencies: [productListingOptions] }
+    { scope: container, dependencies: [slice], revertOnUpdate: true }
   );
 
   const renderProducts = (startIndex: number) => {
@@ -71,18 +86,20 @@ export function ProductsGrid({
   };
 
   return (
-    <div className="flex gap-spaced relative" ref={container}>
-      <div className="flex flex-col flex-1 col col-1 gap-spaced h-min -mt-[18%]">
-        {slice ? renderProducts(0) : null}
-      </div>
-      <div className="flex flex-col flex-1 col col-2 gap-spaced h-min">
-        {slice ? renderProducts(1) : null}
-      </div>
-      <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min -mt-[4%]">
-        {slice ? renderProducts(2) : null}
-      </div>
-      <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min -mt-[12%]">
-        {slice ? renderProducts(3) : null}
+    <div ref={container}>
+      <div className="products flex gap-spaced relative mt-[8vw] spaced-b">
+        <div className="flex flex-col flex-1 col col-1 gap-spaced h-min -mt-[18vw]">
+          {slice ? renderProducts(0) : null}
+        </div>
+        <div className="flex flex-col flex-1 col col-2 gap-spaced h-min">
+          {slice ? renderProducts(1) : null}
+        </div>
+        <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min -mt-[4vw]">
+          {slice ? renderProducts(2) : null}
+        </div>
+        <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min -mt-[12vw]">
+          {slice ? renderProducts(3) : null}
+        </div>
       </div>
     </div>
   );
