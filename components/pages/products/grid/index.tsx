@@ -19,7 +19,6 @@ export function ProductsGrid({
 }) {
   const container = useRef<HTMLDivElement>(null);
   const [slice, setSlice] = useState<number>(0);
-
   const productListingItems = mapListingOptionsToItems(productListingOptions);
 
   const getSlice = () => {
@@ -47,7 +46,7 @@ export function ProductsGrid({
         trigger: column,
         start: "top bottom",
         end: "bottom bottom",
-        scrub: 0.8,
+        scrub: 1.2,
         // markers: true,
       },
     });
@@ -55,10 +54,10 @@ export function ProductsGrid({
 
   useGSAP(
     () => {
-      /* animateColumn(".col-1", -10);
-      animateColumn(".col-2", -25);
-      animateColumn(".col-3", -5);
-      animateColumn(".col-4", 10); */
+      /* animateColumn(".col-1", -8);
+      animateColumn(".col-2", -4);
+      animateColumn(".col-3", -12);
+      animateColumn(".col-4", -10); */
     },
     { scope: container, dependencies: [productListingOptions] }
   );
@@ -73,16 +72,16 @@ export function ProductsGrid({
 
   return (
     <div className="flex gap-spaced relative" ref={container}>
-      <div className="flex flex-col flex-1 col col-1 gap-spaced h-min">
+      <div className="flex flex-col flex-1 col col-1 gap-spaced h-min -mt-[18%]">
         {slice ? renderProducts(0) : null}
       </div>
       <div className="flex flex-col flex-1 col col-2 gap-spaced h-min">
         {slice ? renderProducts(1) : null}
       </div>
-      <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min">
+      <div className="flex-col flex-1 hidden col col-3 md:flex gap-spaced h-min -mt-[4%]">
         {slice ? renderProducts(2) : null}
       </div>
-      <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min">
+      <div className="flex-col flex-1 hidden col col-4 xl:flex gap-spaced h-min -mt-[12%]">
         {slice ? renderProducts(3) : null}
       </div>
     </div>

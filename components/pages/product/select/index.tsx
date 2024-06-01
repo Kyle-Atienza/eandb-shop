@@ -56,8 +56,9 @@ export function ProductSelect({ pageItem }: { pageItem: ProductPageItem }) {
           <div className="">
             <div className="flex flex-col sm:flex-row *:flex-1 items-stretch">
               {pageItem.variants.length > 1 ? (
-                <div className="flex items-center *:w-full sm:border-r-2 spaced-y-sm border-t-2 border-light">
+                <div className="flex items-center *:w-full sm:border-r-2 spaced-y-md lg:spaced-r-md border-t-2 border-light">
                   <select
+                    className="font-merchant text-2xl text-light text-center lg:text-left "
                     name=""
                     id=""
                     defaultValue={

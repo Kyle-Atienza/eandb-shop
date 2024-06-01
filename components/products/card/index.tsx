@@ -72,9 +72,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
 
   return (
     <Link
-      className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group border-2 border-tertiary
-      
-      `}
+      className={`product-card transition-all flex flex-col relative group mt-auto bg-light rounded group border-2 border-tertiary`}
       href={`/product/${path}`}
       ref={container}
     >
@@ -83,7 +81,7 @@ export function ProductCard({ product }: { product: ProductListingItem }) {
           <div className="absolute w-[130%] h-[130%] top-[-10%] left-1/2 -translate-x-1/2">
             {images.length ? (
               <Image
-                className={`transition-all object-cover object-center group-hover:scale-105 duration-500`}
+                className={`transition-all object-cover object-center group-hover:scale-110 duration-500`}
                 src={images[0].url}
                 alt=""
                 fill={true}

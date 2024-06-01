@@ -1,7 +1,7 @@
 currently doing:
-
 ui
 and now the animations don't work
+add initial loading animation
 
 
 cart top showing wavy border from nav

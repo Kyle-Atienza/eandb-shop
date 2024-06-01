@@ -37,7 +37,7 @@ export function Catalog({
 
   return (
     <div className="min-h-screen">
-      <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
+      {/* <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
         <Select
           className="w-[100px] md:w-[200px]"
           innerClassName="!bg-secondary border-light border-2"
@@ -54,7 +54,7 @@ export function Catalog({
             }
           }}
         />
-      </div>
+      </div> */}
       <div className="spaced-t">
         <ProductsGrid productListingOptions={productListingOptions} />
       </div>

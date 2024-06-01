@@ -29,7 +29,7 @@ export default async function Home({
 
   return (
     <>
-      <div className="mt-[-40px] sticky top-[160px]">
+      <div className="sticky top-[160px]">
         <div className="hero flex flex-col items-center justify-center h-[65vh] text-center ">
           <div className="flex flex-col items-center gap-spaced-md *:!text-light relative">
             <HeaderOne className="text-center *:whitespace-pre-line w-fit relative">
@@ -51,12 +51,12 @@ export default async function Home({
                 <InlineScrollDown />
               </span>
             </HeaderOne>
-            <div className="font-gopher w-full lg:w-2/5 text-lg lg:text-2xl relative !leading-[1em]">
+            {/* <div className="font-gopher w-full lg:w-2/5 text-lg lg:text-2xl relative !leading-[1em]">
               Explore a curated selection of fresh, organic, and locally sourced
               products. From farm-fresh fruits and vegetables to artisanal
               goods, experience the best nature has to offer right at your
               doorstep.
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
