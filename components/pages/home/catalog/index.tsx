@@ -1,12 +1,12 @@
-"use client";
-
+/* 
 import { Select } from "@/components/common/forms/select";
-import { ProductsGrid } from "../../products/grid";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useProductsStore } from "@/state/products";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; 
+*/
+import { ProductsGrid } from "../../products/grid";
 
-const productFilters = [
+/* const productFilters = [
   {
     value: "all",
     label: "All",
@@ -23,20 +23,27 @@ const productFilters = [
     value: "taro",
     label: "Taro",
   },
-];
+]; */
 
-export function Catalog({
-  productListingOptions,
-  filter,
-}: {
-  productListingOptions: ProductListingOptions[];
-  filter?: string;
-}) {
-  const pathname = usePathname();
-  const router = useRouter();
+const getProductsOptions = async (group?: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/products/options/${
+      group ? group : "all"
+    }`,
+    { next: { revalidate: 10 } }
+  );
+  return await res.json();
+};
+
+export async function Catalog({ filter }: { filter?: string }) {
+  /* const pathname = usePathname();
+  const router = useRouter(); */
+
+  const productListingOptions = await getProductsOptions(filter);
 
   return (
     <div className="min-h-screen">
+      {/* move to client component */}
       {/* <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
         <Select
           className="w-[100px] md:w-[200px]"

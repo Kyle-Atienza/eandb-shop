@@ -9,6 +9,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { mapListingOptionsToItems } from "@/utils/products";
 import { sliceArrayEveryN } from "@/utils/array";
+import { useAnimations } from "./useAnimations";
+import { useAnimationStore } from "@/state/animation";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function ProductsGrid({
@@ -16,8 +18,12 @@ export function ProductsGrid({
 }: {
   productListingOptions: ProductListingOptions[];
 }) {
-  const container = useRef<HTMLDivElement>(null);
+  const { setPreloading } = useAnimationStore();
+
   const [slice, setSlice] = useState<number>(0);
+
+  const { container } = useAnimations(slice);
+
   const productListingItems = useMemo(
     () => mapListingOptionsToItems(productListingOptions),
     [productListingOptions]
@@ -41,42 +47,11 @@ export function ProductsGrid({
     };
   }, []);
 
-  const animateColumn = (column: string, yOffset: number | string) => {
-    gsap.to(column, {
-      marginTop: yOffset,
-      ease: "none",
-      scrollTrigger: {
-        trigger: column,
-        start: "top bottom",
-        end: "bottom bottom",
-        scrub: 1.2,
-        // markers: true,
-      },
-    });
-  };
-
-  useGSAP(
-    () => {
-      gsap.fromTo(
-        ".products",
-        {
-          y: "50vh",
-        },
-        {
-          ease: "expo.out",
-          duration: 1.5,
-          y: 0,
-          delay: 0.8,
-        }
-      );
-
-      animateColumn(".col-1", "-56vw");
-      animateColumn(".col-2", "-10vw");
-      animateColumn(".col-3", "-25vw");
-      animateColumn(".col-4", "-40vw");
-    },
-    { scope: container, dependencies: [slice], revertOnUpdate: true }
-  );
+  useEffect(() => {
+    if (productListingOptions.length > 1) {
+      setPreloading(false);
+    }
+  }, [productListingOptions, setPreloading]);
 
   const renderProducts = (startIndex: number) => {
     return sliceArrayEveryN(productListingItems, slice, startIndex)?.map(
@@ -88,7 +63,7 @@ export function ProductsGrid({
 
   return (
     <div ref={container}>
-      <div className="products flex gap-spaced relative mt-[8vw] spaced-b">
+      <div className="products flex gap-spaced relative mt-[15vh] spaced-b">
         <div className="flex flex-col flex-1 col col-1 gap-spaced h-min -mt-[18vw]">
           {slice ? renderProducts(0) : null}
         </div>

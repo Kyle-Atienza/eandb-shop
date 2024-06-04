@@ -55,17 +55,28 @@ export function Hero() {
 
   return (
     <div ref={container} className="relative lg:h-[40vw] bg-secondary">
+      {/* <div className="marquee h-[70px] bg-dark flex items-center-0 items-center w-screen overflow-hidden">
+        <div className="flex absolute justify-end w-screen overflow-hidden">
+          {Array.from(Array(15).keys()).map((key) => {
+            return (
+              <p
+                key={key}
+                className="marquee-text font-merchant text-light text-3xl uppercase tracking-widest spaced-r-md whitespace-nowrap"
+              >
+                Healthy, Flavorful, Family-Made Treats!
+              </p>
+            );
+          })}
+        </div>
+      </div> */}
+      <div className="h-screen bg-light"></div>
+    </div>
+  );
+}
+
+/* 
+<div ref={container} className="relative lg:h-[40vw] bg-secondary">
       <div className="absolute top-0 left-0 w-full h-full">
-        {/* <video width="320" height="240" controls preload="none">
-      <source src="/path/to/video.mp4" type="video/mp4" />
-      <track
-        src="/path/to/captions.vtt"
-        kind="subtitles"
-        srcLang="en"
-        label="English"
-      />
-      Your browser does not support the video tag.
-    </video> */}
       </div>
       <div className="spaced h-full flex items-end">
         <h1
@@ -77,15 +88,6 @@ export function Hero() {
           <span>local goodness!</span>
         </h1>
       </div>
-      {/* <div className="w-[40vw] lg:w-[15vw] aspect-square absolute top-0 lg:top-[unset] lg:bottom-0 -translate-y-1/3 lg:translate-y-2/3 left-0 lg:left-[unset] -translate-x-1/3 lg:translate-x-0 lg:right-[25vw] mix-blend-difference border-light rounded-full">
-        <Image
-          className="circle-text "
-          src={circleTextv2}
-          fill
-          objectFit="contain"
-          alt="circle text"
-        />
-      </div> */}
       <div className="marquee h-[70px] bg-dark flex items-center-0 items-center w-screen overflow-hidden">
         <div className="flex absolute justify-end w-screen overflow-hidden">
           {Array.from(Array(15).keys()).map((key) => {
@@ -101,5 +103,4 @@ export function Hero() {
         </div>
       </div>
     </div>
-  );
-}
+*/

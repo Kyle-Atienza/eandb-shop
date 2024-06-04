@@ -17,6 +17,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { animatePageIn } from "@/utils/animations";
 import { useProductsStore } from "@/state/products";
+import { Preloader } from "@/components/template/preloader";
 gsap.registerPlugin(useGSAP);
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -50,6 +51,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <Navbar />
         <Drawer />
         <Toaster />
+        <Preloader />
       </div>
       <main id="main" className="flex flex-col flex-1 opacity-0">
         <div
