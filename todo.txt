@@ -1,10 +1,14 @@
 currently doing:
-ui
-and now the animations don't work
+add filter products
 add initial loading animation
+fix footer
+improve mobile
+add eandb farm logo as home link
+
+idea:
+add footer links on card grid
 
 
-cart top showing wavy border from nav
 delete cart item btn
 profile page
     - hide delete address on add address

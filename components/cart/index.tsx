@@ -2,15 +2,23 @@
 
 import { CartItem } from "./item";
 import Link from "next/link";
-import { useCart } from "@/hooks/useCart";
+import { useOrdersStore } from "@/state/orders";
+import { useUserStore } from "@/state/user";
+import { getCartItemData } from "@/utils/cart";
+import { useProductsStore } from "@/state/products";
+import { useEffect } from "react";
 
 export function CartItems() {
-  const { getCartItemData, cartItems } = useCart();
+  const { items } = useProductsStore();
+  const { cart, localCart } = useOrdersStore();
+  const { user } = useUserStore();
+
+  const cartItems = (user ? cart : localCart)?.items;
 
   return (
     <>
       {cartItems?.map((cartItem, index) => {
-        const itemData = getCartItemData(cartItem.productItemId);
+        const itemData = getCartItemData(items, cartItem.productItemId);
 
         if (itemData) {
           return (
@@ -23,10 +31,16 @@ export function CartItems() {
 }
 
 export function CartCheckout() {
-  const { getCartItemData, cartItems } = useCart();
+  const { items } = useProductsStore();
+  const { cart, localCart } = useOrdersStore();
+  const { user } = useUserStore();
+
+  const cartItems = (user ? cart : localCart)?.items;
+
   const totalAmount = cartItems?.reduce((total, cartItem) => {
     total +=
-      cartItem.count * (getCartItemData(cartItem.productItemId)?.amount || 0);
+      cartItem.count *
+      (getCartItemData(items, cartItem.productItemId)?.amount || 0);
     return total;
   }, 0);
 
@@ -47,13 +61,16 @@ export function CartCheckout() {
 }
 
 export default function Cart() {
-  const { getCartItemData, cartItems, isCartLoading } = useCart();
+  const { items, isLoading, isError, getProductItems } = useProductsStore();
 
-  const totalAmount = cartItems?.reduce((total, cartItem) => {
-    total +=
-      cartItem.count * (getCartItemData(cartItem.productItemId)?.amount || 0);
-    return total;
-  }, 0);
+  const isCartLoading = !items.length && isLoading && !isError;
+
+  useEffect(() => {
+    if (!items.length) {
+      getProductItems();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

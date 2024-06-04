@@ -10,6 +10,7 @@ export function useCart() {
 
   useEffect(() => {
     if (!items.length) {
+      console.log("why");
       getProductItems();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

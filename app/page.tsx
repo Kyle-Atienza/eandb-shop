@@ -33,7 +33,7 @@ export default async function Home({
           filter={searchParams?.products}
         />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
