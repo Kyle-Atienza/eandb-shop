@@ -19,6 +19,7 @@ export function Preloader() {
     if (pathname === "/") {
       setPreloading(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useGSAP(
