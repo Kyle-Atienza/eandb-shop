@@ -5,7 +5,7 @@ import { BackButton } from "@/components/decorations/back";
 import { useUserStore } from "@/state/user";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
@@ -15,6 +15,7 @@ export function Navbar() {
 
   const container = useRef(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   /* useGSAP(
     () => {
@@ -29,7 +30,11 @@ export function Navbar() {
     <div ref={container}>
       <div className="navbar fixed top-0 w-screen h-[100px] spaced-x">
         <div className="flex items-center justify-between h-full gap-spaced relative">
-          <div>{pathname.includes("/product/") ? <BackButton /> : null}</div>
+          <div>
+            {pathname.includes("/product") || pathname.includes("/profile") ? (
+              <BackButton />
+            ) : null}
+          </div>
           {/* middle */}
           {/* <TransitionLink
             href="/"
@@ -42,19 +47,31 @@ export function Navbar() {
           </TransitionLink> */}
           {/* left */}
           <div className="ml-auto">
-            <TransitionLink href={user ? "/profile" : "/account/login"}>
+            {!pathname.includes("/profile") ? (
+              <TransitionLink href={user ? "/profile" : "/account/login"}>
+                <div className="flex gap-spaced bg-light w-14 aspect-square items-center justify-center rounded-full transition-colors hover:bg-primary group border-2 border-tertiary">
+                  <div>
+                    {user ? (
+                      <i className="text-xl md:text-xl text-primary bi bi-person-fill group-hover:text-light"></i>
+                    ) : (
+                      <i className="text-xl md:text-xl bi bi-person"></i>
+                    )}
+                  </div>
+                </div>
+              </TransitionLink>
+            ) : (
               <div
-                className={` flex gap-spaced bg-light w-14 aspect-square items-center justify-center rounded-full transition-colors hover:bg-primary group border-2 border-tertiary`}
+                className="flex gap-spaced bg-danger w-14 aspect-square items-center justify-center rounded-full transition-colors hover:bg-primary group border-2 border-tertiary"
+                onClick={() => {
+                  signOut();
+                  router.push("/");
+                }}
               >
                 <div>
-                  {user ? (
-                    <i className="text-xl md:text-xl text-primary bi bi-person-fill group-hover:text-light"></i>
-                  ) : (
-                    <i className="text-xl md:text-xl bi bi-person"></i>
-                  )}
+                  <i className="text-xl md:text-xl bi bi-box-arrow-right text-light"></i>
                 </div>
               </div>
-            </TransitionLink>
+            )}
           </div>
         </div>
       </div>

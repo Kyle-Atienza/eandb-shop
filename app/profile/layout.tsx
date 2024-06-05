@@ -2,8 +2,10 @@
 
 import { SimpleButton } from "@/components/common/button";
 import { HeaderOne } from "@/components/common/header";
+import { useAnimationStore } from "@/state/animation";
 import { useUserStore } from "@/state/user";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface SideNavButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -31,16 +33,24 @@ function SideNavButton({
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { preloading, setPreloading } = useAnimationStore();
+
   const pathname = usePathname();
   const router = useRouter();
 
   const { user, signOut } = useUserStore();
 
+  useEffect(() => {
+    if (preloading) {
+      setPreloading(false);
+    }
+  }, []);
+
   return (
-    <div className="mt-[50px] spaced-x">
+    <div className=" spaced-x pt-[100px]">
       <div className="flex justify-between items-center">
         <HeaderOne>Hi {user?.name}</HeaderOne>
-        <SimpleButton
+        {/* <SimpleButton
           onClick={() => {
             signOut();
             router.push("/");
@@ -48,7 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           className="bg-danger h-fit"
         >
           Log Out
-        </SimpleButton>
+        </SimpleButton> */}
       </div>
       <div className="grid grid-cols-[200px_1fr] gap-spaced spaced-t">
         <div className="flex flex-col overflow-hidden border-2 rounded-md border-secondary h-fit">

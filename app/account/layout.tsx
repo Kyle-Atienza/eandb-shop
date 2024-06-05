@@ -2,12 +2,15 @@
 
 import { HeaderOne } from "@/components/common/header";
 import { Label } from "@/components/common/label";
+import { useAnimationStore } from "@/state/animation";
 import { useUserStore } from "@/state/user";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { setPreloading, preloading } = useAnimationStore();
+
   const pathname = usePathname();
   const router = useRouter();
   const isLogin = pathname.includes("login");
@@ -19,6 +22,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       router.push("/");
     }
   }, [user]);
+
+  useEffect(() => {
+    if (preloading) {
+      setPreloading(false);
+    }
+  }, []);
 
   return (
     <div className="flex justify-center items-center">
