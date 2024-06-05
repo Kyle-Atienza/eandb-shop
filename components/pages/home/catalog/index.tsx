@@ -44,7 +44,7 @@ export async function Catalog({ filter }: { filter?: string }) {
   return (
     <div className="min-h-screen">
       {/* move to client component */}
-      {/* <div className="sticky h-[70px] w-fit top-0 z-20 flex items-center">
+      {/* <div className="sticky h-[100px] w-fit top-0 z-20 flex items-center">
         <Select
           className="w-[100px] md:w-[200px]"
           innerClassName="!bg-secondary border-light border-2"

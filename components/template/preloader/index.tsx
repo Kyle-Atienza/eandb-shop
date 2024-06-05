@@ -39,13 +39,13 @@ export function Preloader() {
     <>
       <div
         ref={container}
-        className="fixed w-screen h-screen top-0 left-0 pointer-events-none "
+        className="fixed w-screen h-screen top-0 left-0 pointer-events-none z-50"
       >
-        {pathname === "/" ? (
-          <div className="preloader bg-tertiary absolute top-0 left-0 w-full h-full grid place-content-center">
-            Hello Preloader
+        {/* {pathname === "/" ? (
+          <div className="preloader bg-tertiary absolute top-0 left-0 w-full h-full grid place-content-center text-7xl text-light font-ranille">
           </div>
-        ) : null}
+        ) : null} */}
+        <div className="preloader bg-tertiary absolute top-0 left-0 w-full h-full grid place-content-center text-7xl text-light font-ranille"></div>
       </div>
     </>
   );

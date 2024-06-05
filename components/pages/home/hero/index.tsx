@@ -55,7 +55,7 @@ export function Hero() {
 
   return (
     <div ref={container} className="relative lg:h-[40vw] bg-secondary">
-      {/* <div className="marquee h-[70px] bg-dark flex items-center-0 items-center w-screen overflow-hidden">
+      {/* <div className="marquee h-[100px] bg-dark flex items-center-0 items-center w-screen overflow-hidden">
         <div className="flex absolute justify-end w-screen overflow-hidden">
           {Array.from(Array(15).keys()).map((key) => {
             return (
@@ -88,7 +88,7 @@ export function Hero() {
           <span>local goodness!</span>
         </h1>
       </div>
-      <div className="marquee h-[70px] bg-dark flex items-center-0 items-center w-screen overflow-hidden">
+      <div className="marquee h-[100px] bg-dark flex items-center-0 items-center w-screen overflow-hidden">
         <div className="flex absolute justify-end w-screen overflow-hidden">
           {Array.from(Array(15).keys()).map((key) => {
             return (

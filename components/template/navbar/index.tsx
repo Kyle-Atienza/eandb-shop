@@ -24,7 +24,7 @@ export function Navbar() {
 
   return (
     <div ref={container}>
-      <div className="navbar fixed top-0 w-screen h-[70px] spaced-x">
+      <div className="navbar fixed top-0 w-screen h-[100px] spaced-x">
         <div className="flex items-center justify-between h-full gap-spaced relative">
           {/* middle */}
           {/* <TransitionLink
@@ -40,13 +40,13 @@ export function Navbar() {
           <div className="ml-auto">
             <TransitionLink href={user ? "/profile" : "/account/login"}>
               <div
-                className={` flex gap-spaced bg-light w-9 md:w-10 aspect-square items-center justify-center rounded-full transition-colors hover:bg-primary group`}
+                className={` flex gap-spaced bg-light w-14 aspect-square items-center justify-center rounded-full transition-colors hover:bg-primary group border-2 border-tertiary`}
               >
                 <div>
                   {user ? (
-                    <i className="text-xl md:text-2xl text-primary bi bi-person-fill group-hover:text-light"></i>
+                    <i className="text-xl md:text-xl text-primary bi bi-person-fill group-hover:text-light"></i>
                   ) : (
-                    <i className="text-xl md:text-2xl bi bi-person"></i>
+                    <i className="text-xl md:text-xl bi bi-person"></i>
                   )}
                 </div>
               </div>

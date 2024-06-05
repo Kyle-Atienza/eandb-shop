@@ -23,7 +23,7 @@ export function BackButton() {
   );
 
   return (
-    <div ref={container} className="absolute top-0 left-0 spaced-l spaced-t-md">
+    <div ref={container} className="">
       <div className="sticky top-[100px]">
         <TransitionLink
           href="/"

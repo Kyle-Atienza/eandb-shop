@@ -43,12 +43,14 @@ export default async function Page({
   return (
     <>
       <div className="relative">
-        <div className="sticky top-[100px] z-20">
-          <BackButton />
+        <div className="h-0 spaced-x z-20 sticky top-0">
+          <div className="h-[100px] w-fit flex items-center ">
+            <BackButton />
+          </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 mt-[-40px]">
           <div className=" bg-light ">
-            <div className="lg:relative h-[calc(100vh-70px)] sticky top-0 grid place-content-center">
+            <div className="lg:relative h-[calc(100vh-100px)] sticky top-0 grid place-content-center">
               {image ? (
                 <Image
                   src={image}
@@ -66,7 +68,7 @@ export default async function Page({
                 <ProductSelect pageItem={productPageItem} />
               </div>
             </div>
-            <div className="relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
+            <div className="relative h-[75vh] lg:h-[calc((100vh-100px)/2)] flex items-center spaced-x justify-center  text-center flex-col bg-light">
               <div className="container flex flex-col items-center gap-spaced">
                 {productPageItem.taglines ? (
                   <HeaderOne className=" text-tertiary">
@@ -80,7 +82,7 @@ export default async function Page({
                 </div>
               </div>
             </div>
-            <div className="spaced-x bg-light relative h-[75vh] lg:h-[calc((100vh-70px)/2)] flex flex-col justify-center">
+            <div className="spaced-x bg-light relative h-[75vh] lg:h-[calc((100vh-100px)/2)] flex flex-col justify-center">
               <ProductDetails details={productDetails} />
             </div>
           </div>
