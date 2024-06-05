@@ -16,9 +16,9 @@ export function Preloader() {
   const { preloading, setPreloading } = useAnimationStore();
 
   useEffect(() => {
-    if (pathname === "/") {
-      setPreloading(true);
-    }
+    /* if (pathname === "/") {
+    } */
+    setPreloading(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

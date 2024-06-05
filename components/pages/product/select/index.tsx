@@ -1,14 +1,17 @@
 "use client";
 
 import { Label } from "@/components/common/label";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ProductQuantity } from "../quantity";
 import { useOrdersStore } from "@/state/orders";
 import { HeaderOne } from "@/components/common/header";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useAnimationStore } from "@/state/animation";
 
 export function ProductSelect({ pageItem }: { pageItem: ProductPageItem }) {
   const { addToCart } = useOrdersStore();
+  const { setPreloading } = useAnimationStore();
+
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -20,6 +23,12 @@ export function ProductSelect({ pageItem }: { pageItem: ProductPageItem }) {
       ? variant.attribute._id === searchParams.get("variant")
       : index === 0
   );
+
+  useEffect(() => {
+    if (pageItem) {
+      setPreloading(false);
+    }
+  }, [pageItem]);
 
   return (
     <>

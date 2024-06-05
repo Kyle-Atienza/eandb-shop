@@ -1,9 +1,11 @@
 "use client";
 
 import { TransitionLink } from "@/components/common/transition-link";
+import { BackButton } from "@/components/decorations/back";
 import { useUserStore } from "@/state/user";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
@@ -12,6 +14,7 @@ export function Navbar() {
   const { user, signOut } = useUserStore();
 
   const container = useRef(null);
+  const pathname = usePathname();
 
   /* useGSAP(
     () => {
@@ -26,6 +29,7 @@ export function Navbar() {
     <div ref={container}>
       <div className="navbar fixed top-0 w-screen h-[100px] spaced-x">
         <div className="flex items-center justify-between h-full gap-spaced relative">
+          <div>{pathname.includes("/product/") ? <BackButton /> : null}</div>
           {/* middle */}
           {/* <TransitionLink
             href="/"
